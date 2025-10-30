@@ -2,31 +2,13 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
 
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
-
-const modelConf = `
-[request_definition]
-r = sub, dom, obj, act
-
-[policy_definition]
-p = sub, dom, obj, act
-
-[role_definition]
-g = _, _, _   # <-- đây nè, thay vì g = _, _, dom
-
-[policy_effect]
-e = some(where (p.eft == allow))
-
-[matchers]
-m = g(r.sub, p.sub, r.dom) && r.dom == p.dom && r.obj == p.obj && r.act == p.act
-`
 
 func main() {
 	//----------------------------------------------------------
@@ -52,9 +34,7 @@ func main() {
 	//----------------------------------------------------------
 	// 🧩 2️⃣ Setup Enforcer
 	//----------------------------------------------------------
-	_ = os.WriteFile("model.conf", []byte(modelConf), 0644)
-
-	e, err := casbin.NewEnforcer("model.conf", adapter)
+	e, err := casbin.NewEnforcer("simple_model.conf", adapter)
 	if err != nil {
 		log.Fatalf("❌ failed to create Enforcer: %v", err)
 	}
