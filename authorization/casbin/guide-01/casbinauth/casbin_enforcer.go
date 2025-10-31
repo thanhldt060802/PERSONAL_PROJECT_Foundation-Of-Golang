@@ -12,15 +12,14 @@ import (
 var CasbinEnforcerInstance ICasbinEnforcer
 
 type ICasbinEnforcer interface {
-	AddGroupingPolicy(ctx context.Context, groupingPolicy *GroupingPolicy) error
-	AddGroupingPolicies(ctx context.Context, groupingPolicy *[]GroupingPolicy) error
-	RemoveGroupingPolicy(ctx context.Context, groupingPolicyId string, domainId string) error
-	RemoveGroupingPolicyByUser(ctx context.Context, groupingPolicyId string, userId string) error
-	RemoveGroupingPolicyOfDomain(ctx context.Context, domainId string) error
+	AddPoliciesToGroup(ctx context.Context, groupId string, policies *[]Policy) error
+	UpdatePoliciesForGroup(ctx context.Context, groupId string, policies *[]Policy) error
+	RemovePoliciesFromGroup(ctx context.Context, groupId string) error
 
-	AddPolicies(ctx context.Context, policy *[]Policy) error
-	RemovePolicyOfGroupingPolicy(ctx context.Context, groupingPolicyId string) error
-	RemovePolicyOfDomain(ctx context.Context, domainId string) error
+	AddGroupingPolicyToGroup(ctx context.Context, groupId string, groupingPolicy *GroupingPolicy) error
+	AddGroupingPoliciesToGroup(ctx context.Context, groupId string, groupingPolicies *[]GroupingPolicy) error
+	RemoveGroupingPolicyFromGroup(ctx context.Context, groupId string, subjectId string) error
+	RemoveGroupingPoliciesFromGroup(ctx context.Context, groupId string) error
 
 	Save(ctx context.Context) error
 }
@@ -29,13 +28,13 @@ type CasbinEnforcer struct {
 	enforcer *casbin.Enforcer
 }
 
-func NewCasbinEnforcer(db *gorm.DB) ICasbinEnforcer {
-	adapter, err := gormadapter.NewAdapterByDB(db)
+func NewCasbinEnforcer(configFile string, db *gorm.DB) ICasbinEnforcer {
+	adapter, err := gormadapter.NewAdapterByDBWithCustomTable(db, &CustomCasbinRule{})
 	if err != nil {
 		log.Fatalf("Failed to create Casbin adapter: %v", err.Error())
 	}
 
-	enforcer, err := casbin.NewEnforcer("model.conf", adapter)
+	enforcer, err := casbin.NewEnforcer(configFile, adapter)
 	if err != nil {
 		log.Fatalf("Failed to create Enforcer: %v", err.Error())
 	}
@@ -49,47 +48,54 @@ func NewCasbinEnforcer(db *gorm.DB) ICasbinEnforcer {
 	}
 }
 
-// AddGroupingPolicies implements ICasbinEnforcer.
-func (c *CasbinEnforcer) AddGroupingPolicies(ctx context.Context, groupingPolicy *[]GroupingPolicy) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) AddPoliciesToGroup(ctx context.Context, groupId string, policies *[]Policy) error {
+	for _, policy := range *policies {
+		if _, err := casbinEnf.enforcer.AddPolicy(groupId, policy.Domain, policy.Object, policy.Action, policy.Condition); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-// AddGroupingPolicy implements ICasbinEnforcer.
-func (c *CasbinEnforcer) AddGroupingPolicy(ctx context.Context, groupingPolicy *GroupingPolicy) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) UpdatePoliciesForGroup(ctx context.Context, groupId string, policies *[]Policy) error {
+	if err := casbinEnf.RemovePoliciesFromGroup(ctx, groupId); err != nil {
+		return err
+	}
+	if err := casbinEnf.AddPoliciesToGroup(ctx, groupId, policies); err != nil {
+		return err
+	}
+	return nil
 }
 
-// AddPolicies implements ICasbinEnforcer.
-func (c *CasbinEnforcer) AddPolicies(ctx context.Context, policy *[]Policy) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) RemovePoliciesFromGroup(ctx context.Context, groupId string) error {
+	_, err := casbinEnf.enforcer.RemoveFilteredPolicy(0, groupId)
+	return err
 }
 
-// RemoveGroupingPolicy implements ICasbinEnforcer.
-func (c *CasbinEnforcer) RemoveGroupingPolicy(ctx context.Context, groupingPolicyId string, domainId string) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) AddGroupingPolicyToGroup(ctx context.Context, groupId string, groupingPolicy *GroupingPolicy) error {
+	_, err := casbinEnf.enforcer.AddGroupingPolicy(groupingPolicy.Subject, groupId, groupingPolicy.Domain)
+	return err
 }
 
-// RemoveGroupingPolicyByUser implements ICasbinEnforcer.
-func (c *CasbinEnforcer) RemoveGroupingPolicyByUser(ctx context.Context, groupingPolicyId string, userId string) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) AddGroupingPoliciesToGroup(ctx context.Context, groupId string, groupingPolicies *[]GroupingPolicy) error {
+	for _, groupingPolicy := range *groupingPolicies {
+		if _, err := casbinEnf.enforcer.AddGroupingPolicy(groupingPolicy.Subject, groupId, groupingPolicy.Domain); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-// RemoveGroupingPolicyOfDomain implements ICasbinEnforcer.
-func (c *CasbinEnforcer) RemoveGroupingPolicyOfDomain(ctx context.Context, domainId string) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) RemoveGroupingPolicyFromGroup(ctx context.Context, groupId string, subjectId string) error {
+	_, err := casbinEnf.enforcer.RemoveFilteredGroupingPolicy(0, subjectId, groupId)
+	return err
 }
 
-// RemovePolicyOfDomain implements ICasbinEnforcer.
-func (c *CasbinEnforcer) RemovePolicyOfDomain(ctx context.Context, domainId string) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) RemoveGroupingPoliciesFromGroup(ctx context.Context, groupId string) error {
+	_, err := casbinEnf.enforcer.RemoveFilteredGroupingPolicy(1, groupId)
+	return err
 }
 
-// RemovePolicyOfGroupingPolicy implements ICasbinEnforcer.
-func (c *CasbinEnforcer) RemovePolicyOfGroupingPolicy(ctx context.Context, groupingPolicyId string) error {
-	panic("unimplemented")
-}
-
-// Save implements ICasbinEnforcer.
-func (c *CasbinEnforcer) Save(ctx context.Context) error {
-	panic("unimplemented")
+func (casbinEnf *CasbinEnforcer) Save(ctx context.Context) error {
+	return casbinEnf.enforcer.SavePolicy()
 }
