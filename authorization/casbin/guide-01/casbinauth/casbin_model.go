@@ -15,6 +15,14 @@ func (CustomCasbinRule) TableName() string {
 	return "custom_casbin_rule"
 }
 
+type Request struct {
+	Subject      string
+	Domain       string
+	Object       string
+	Action       string
+	CtxCondition string
+}
+
 type Policy struct {
 	Domain    string
 	Object    string

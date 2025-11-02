@@ -12,14 +12,22 @@ import (
 var CasbinEnforcerInstance ICasbinEnforcer
 
 type ICasbinEnforcer interface {
+	GetPoliciesOfGroup(ctx context.Context, groupId string) (*[]Policy, error)
+	GetPoliciesOfDomain(ctx context.Context, domainId string) (*[]Policy, error)
 	AddPoliciesToGroup(ctx context.Context, groupId string, policies *[]Policy) error
 	UpdatePoliciesForGroup(ctx context.Context, groupId string, policies *[]Policy) error
 	RemovePoliciesFromGroup(ctx context.Context, groupId string) error
+	RemovePoliciesFromDomain(ctx context.Context, domainId string) error
 
+	GetGroupingPoliciesOfGroup(ctx context.Context, groupId string) (*[]GroupingPolicy, error)
+	GetGroupingPoliciesOfDomain(ctx context.Context, domainId string) (*[]GroupingPolicy, error)
 	AddGroupingPolicyToGroup(ctx context.Context, groupId string, groupingPolicy *GroupingPolicy) error
 	AddGroupingPoliciesToGroup(ctx context.Context, groupId string, groupingPolicies *[]GroupingPolicy) error
 	RemoveGroupingPolicyFromGroup(ctx context.Context, groupId string, subjectId string) error
 	RemoveGroupingPoliciesFromGroup(ctx context.Context, groupId string) error
+	RemoveGroupingPoliciesFromDomain(ctx context.Context, domainId string) error
+
+	Enforce(ctx context.Context, request Request) (bool, error)
 
 	Save(ctx context.Context) error
 }
