@@ -34,7 +34,7 @@ func main() {
 	//----------------------------------------------------------
 	// 🧩 2️⃣ Setup Enforcer
 	//----------------------------------------------------------
-	e, err := casbin.NewEnforcer("simple_model.conf", adapter)
+	e, err := casbin.NewEnforcer("config/simple_model.conf", adapter)
 	if err != nil {
 		log.Fatalf("❌ failed to create Enforcer: %v", err)
 	}
@@ -48,66 +48,66 @@ func main() {
 	//----------------------------------------------------------
 	fmt.Println("\n👉 Add policies (role permissions):")
 
-	e.AddPolicy("admin", "tenantA", "project", "read")
-	e.AddPolicy("admin", "tenantA", "project", "write")
-	e.AddPolicy("editor", "tenantA", "project", "read")
-	e.AddPolicy("viewer", "tenantB", "dashboard", "view")
+	// e.AddPolicy("admin", "tenantA", "project", "read", "1", "2", "3", "4", "5")
+	// e.AddPolicy("admin", "tenantA", "project", "write")
+	// e.AddPolicy("editor", "tenantA", "project", "read")
+	// e.AddPolicy("viewer", "tenantB", "dashboard", "view")
 
 	e.SavePolicy()
 	printPolicies(e)
 
-	//----------------------------------------------------------
-	// 4️⃣ Add Grouping (user → role)
-	//----------------------------------------------------------
-	fmt.Println("\n👉 Assign users to roles:")
-	e.AddGroupingPolicy("alice", "admin", "tenantA")
-	e.AddGroupingPolicy("bob", "editor", "tenantA")
-	e.AddGroupingPolicy("charlie", "viewer", "tenantB")
-	e.SavePolicy()
-	printGroupings(e)
+	// //----------------------------------------------------------
+	// // 4️⃣ Add Grouping (user → role)
+	// //----------------------------------------------------------
+	// fmt.Println("\n👉 Assign users to roles:")
+	// e.AddGroupingPolicy("alice", "admin", "tenantA")
+	// e.AddGroupingPolicy("bob", "editor", "tenantA")
+	// e.AddGroupingPolicy("charlie", "viewer", "tenantB")
+	// e.SavePolicy()
+	// printGroupings(e)
 
-	//----------------------------------------------------------
-	// 5️⃣ Enforce tests
-	//----------------------------------------------------------
-	fmt.Println("\n👉 Enforce checks:")
-	testEnforce(e, "alice", "tenantA", "project", "write")    // ✅
-	testEnforce(e, "bob", "tenantA", "project", "write")      // ❌
-	testEnforce(e, "charlie", "tenantB", "dashboard", "view") // ✅
-	testEnforce(e, "charlie", "tenantA", "project", "read")   // ❌
-	testEnforce(e, "unknown", "tenantA", "project", "read")   // ❌
+	// //----------------------------------------------------------
+	// // 5️⃣ Enforce tests
+	// //----------------------------------------------------------
+	// fmt.Println("\n👉 Enforce checks:")
+	// testEnforce(e, "alice", "tenantA", "project", "write")    // ✅
+	// testEnforce(e, "bob", "tenantA", "project", "write")      // ❌
+	// testEnforce(e, "charlie", "tenantB", "dashboard", "view") // ✅
+	// testEnforce(e, "charlie", "tenantA", "project", "read")   // ❌
+	// testEnforce(e, "unknown", "tenantA", "project", "read")   // ❌
 
-	//----------------------------------------------------------
-	// 6️⃣ Update Policy
-	//----------------------------------------------------------
-	fmt.Println("\n👉 Update policy: (admin write → delete, add new)")
-	e.RemovePolicy("admin", "tenantA", "project", "write")
-	e.AddPolicy("admin", "tenantA", "project", "delete")
-	e.SavePolicy()
-	printPolicies(e)
+	// //----------------------------------------------------------
+	// // 6️⃣ Update Policy
+	// //----------------------------------------------------------
+	// fmt.Println("\n👉 Update policy: (admin write → delete, add new)")
+	// e.RemovePolicy("admin", "tenantA", "project", "write")
+	// e.AddPolicy("admin", "tenantA", "project", "delete")
+	// e.SavePolicy()
+	// printPolicies(e)
 
-	testEnforce(e, "alice", "tenantA", "project", "write")  // ❌
-	testEnforce(e, "alice", "tenantA", "project", "delete") // ✅
+	// testEnforce(e, "alice", "tenantA", "project", "write")  // ❌
+	// testEnforce(e, "alice", "tenantA", "project", "delete") // ✅
 
-	//----------------------------------------------------------
-	// 7️⃣ Remove Grouping
-	//----------------------------------------------------------
-	fmt.Println("\n👉 Remove user from role (bob ← editor)")
-	e.RemoveGroupingPolicy("bob", "editor", "tenantA")
-	e.SavePolicy()
-	printGroupings(e)
+	// //----------------------------------------------------------
+	// // 7️⃣ Remove Grouping
+	// //----------------------------------------------------------
+	// fmt.Println("\n👉 Remove user from role (bob ← editor)")
+	// e.RemoveGroupingPolicy("bob", "editor", "tenantA")
+	// e.SavePolicy()
+	// printGroupings(e)
 
-	testEnforce(e, "bob", "tenantA", "project", "read") // ❌
+	// testEnforce(e, "bob", "tenantA", "project", "read") // ❌
 
-	//----------------------------------------------------------
-	// 8️⃣ Remove Filtered Policy
-	//----------------------------------------------------------
-	fmt.Println("\n👉 Remove all policies for tenantA:")
-	e.RemoveFilteredPolicy(1, "tenantA")
-	e.SavePolicy()
-	printPolicies(e)
+	// //----------------------------------------------------------
+	// // 8️⃣ Remove Filtered Policy
+	// //----------------------------------------------------------
+	// fmt.Println("\n👉 Remove all policies for tenantA:")
+	// e.RemoveFilteredPolicy(1, "tenantA")
+	// e.SavePolicy()
+	// printPolicies(e)
 
-	testEnforce(e, "alice", "tenantA", "project", "delete")   // ❌
-	testEnforce(e, "charlie", "tenantB", "dashboard", "view") // ✅ still ok
+	// testEnforce(e, "alice", "tenantA", "project", "delete")   // ❌
+	// testEnforce(e, "charlie", "tenantB", "dashboard", "view") // ✅ still ok
 
 	//----------------------------------------------------------
 	fmt.Println("\n✅ All done — check your PostgreSQL 'casbin_rule' table to inspect stored rules.")

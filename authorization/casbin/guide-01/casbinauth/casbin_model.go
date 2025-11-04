@@ -20,17 +20,19 @@ type Request struct {
 	Domain       string
 	Object       string
 	Action       string
-	CtxCondition string
+	CtxCondition map[string]string
 }
 
 type Policy struct {
-	Domain    string
-	Object    string
-	Action    string
-	Condition string
+	SubjectGroup string
+	Domain       string
+	Object       string
+	Action       string
+	Condition    string
 }
 
 type GroupingPolicy struct {
-	Subject string
-	Domain  string
+	Subject      string
+	SubjectGroup string
+	Domain       string
 }
