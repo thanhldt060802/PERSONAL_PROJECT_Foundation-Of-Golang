@@ -1,0 +1,18 @@
+{
+    "app": {
+        "name": "service-b",
+        "version": "v1.0.1",
+        "port": 8002
+    },
+    "db": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "my_db",
+        "username": "postgres",
+        "password": "12345678"
+    },
+    "jaeger": {
+        "otlp_host": "localhost",
+        "otlp_port": 4318
+    }
+}
