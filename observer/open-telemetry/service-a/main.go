@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"thanhldt060802/common/observer"
+	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/opentelemetry"
+	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/middleware/auth"
 	"thanhldt060802/repository"
@@ -42,8 +45,16 @@ func init() {
 		Password: viper.GetString("db.password"),
 	})
 
+	redisclient.RedisClientConnInstance = redisclient.NewRedisClient(redisclient.RedisConfig{
+		Host:     viper.GetString("redis.host"),
+		Port:     viper.GetInt("redis.port"),
+		Database: viper.GetInt("redis.database"),
+		Password: viper.GetString("redis.password"),
+	})
+	pubsub.RedisPubInstance = pubsub.NewRedisPub[*observer.MessageTracing](redisclient.RedisClientConnInstance.GetClient())
+
 	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
-		ServiceName: server.APP_NAME,
+		ServiceName: viper.GetString("app.name"),
 		Host:        viper.GetString("jaeger.otlp_host"),
 		Port:        viper.GetInt("jaeger.otlp_port"),
 	})
@@ -89,7 +100,7 @@ func main() {
 		<!doctype html>
 		<html>
 			<head>
-				<title>MyService APIs</title>
+				<title>A Service APIs</title>
 				<meta charset="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</head>

@@ -1,7 +1,7 @@
 package main
 
 import (
-	tracer "thanhldt060802/common/observer"
+	"thanhldt060802/common/observer"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/opentelemetry"
 	"thanhldt060802/internal/redisclient"
@@ -23,8 +23,6 @@ func init() {
 		log.Fatalf("Read from config file failed: %v", err)
 	}
 
-	appName := viper.GetString("app.name")
-
 	sqlclient.SqlClientConnInstance = sqlclient.NewSqlClient(sqlclient.SqlConfig{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetInt("db.port"),
@@ -33,19 +31,19 @@ func init() {
 		Password: viper.GetString("db.password"),
 	})
 
-	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
-		ServiceName: appName,
-		Host:        viper.GetString("jaeger.otlp_host"),
-		Port:        viper.GetInt("jaeger.otlp_port"),
-	})
-
 	redisclient.RedisClientConnInstance = redisclient.NewRedisClient(redisclient.RedisConfig{
 		Host:     viper.GetString("redis.host"),
 		Port:     viper.GetInt("redis.port"),
 		Database: viper.GetInt("redis.database"),
 		Password: viper.GetString("redis.password"),
 	})
-	pubsub.RedisSubInstance = pubsub.NewRedisSub[*tracer.MessageTracing](redisclient.RedisClientConnInstance.GetClient())
+	pubsub.RedisSubInstance = pubsub.NewRedisSub[*observer.MessageTracing](redisclient.RedisClientConnInstance.GetClient())
+
+	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
+		ServiceName: viper.GetString("app.name"),
+		Host:        viper.GetString("jaeger.otlp_host"),
+		Port:        viper.GetInt("jaeger.otlp_port"),
+	})
 
 	initRepository()
 }
@@ -56,6 +54,7 @@ func main() {
 	exampleService := service.NewExampleService()
 	exampleService.InitSubscriber()
 
+	log.Infof("Ready to consume message")
 	select {}
 }
 

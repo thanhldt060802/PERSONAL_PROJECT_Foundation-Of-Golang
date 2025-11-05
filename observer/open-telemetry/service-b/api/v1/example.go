@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"thanhldt060802/common/observer"
+	"thanhldt060802/common/response"
 	"thanhldt060802/model"
 	"thanhldt060802/service"
 
@@ -40,7 +41,7 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
-}) (res *model.Example, err error) {
+}) (res *response.GenericResponse[*model.Example], err error) {
 	ctx, span := observer.StartSpanInternal(ctx)
 	defer span.End()
 
@@ -50,5 +51,6 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 		return
 	}
 
-	return example, nil
+	res = response.Ok(example)
+	return
 }

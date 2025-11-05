@@ -46,6 +46,10 @@ func (s *ExampleService) InitSubscriber() {
 			return
 		}
 
-		fmt.Println("Another service fetched: ", *example)
+		if example == nil {
+			fmt.Println("Example example_uuid='" + exampleUuid + "' not found")
+		} else {
+			fmt.Println(*example)
+		}
 	})
 }

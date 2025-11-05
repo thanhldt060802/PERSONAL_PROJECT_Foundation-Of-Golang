@@ -43,7 +43,7 @@ func init() {
 	})
 
 	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
-		ServiceName: server.APP_NAME,
+		ServiceName: viper.GetString("app.name"),
 		Host:        viper.GetString("jaeger.otlp_host"),
 		Port:        viper.GetInt("jaeger.otlp_port"),
 	})
@@ -89,7 +89,7 @@ func main() {
 		<!doctype html>
 		<html>
 			<head>
-				<title>MyService APIs</title>
+				<title>B Service APIs</title>
 				<meta charset="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 			</head>
