@@ -37,6 +37,19 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 		},
 		handler.GetById,
 	)
+
+	hureg.Register(
+		apiGroup,
+		huma.Operation{
+			OperationID: "pub-sub-get-example-by-id",
+			Method:      http.MethodGet,
+			Path:        "/{example_uuid}/pub-sub",
+			Security:    authMdw.DefaultAuthSecurity,
+			Description: "Get example by id (pub-sub).",
+			Middlewares: huma.Middlewares{authMdw.NewAuthMiddleware(api)},
+		},
+		handler.PubSub_GetById,
+	)
 }
 
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
@@ -53,4 +66,20 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 
 	res = response.Ok(example)
 	return
+}
+
+func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
+	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
+}) (res *response.GenericResponse[*string], err error) {
+	ctx, span := observer.StartSpanInternal(ctx)
+	defer span.End()
+
+	result, err := handler.exampleService.PubSub_GetById(ctx, req.ExampleUuid)
+	if err != nil {
+		span.Err = err
+		return
+	}
+
+	res = response.Ok(&result)
+	return res, nil
 }

@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"thanhldt060802/common/observer"
+	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/opentelemetry"
+	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/middleware/auth"
 	"thanhldt060802/repository"
@@ -41,6 +44,14 @@ func init() {
 		Username: viper.GetString("db.username"),
 		Password: viper.GetString("db.password"),
 	})
+
+	redisclient.RedisClientConnInstance = redisclient.NewRedisClient(redisclient.RedisConfig{
+		Host:     viper.GetString("redis.host"),
+		Port:     viper.GetInt("redis.port"),
+		Database: viper.GetInt("redis.database"),
+		Password: viper.GetString("redis.password"),
+	})
+	pubsub.RedisPubInstance = pubsub.NewRedisPub[*observer.MessageTracing](redisclient.RedisClientConnInstance.GetClient())
 
 	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
 		ServiceName: viper.GetString("app.name"),
