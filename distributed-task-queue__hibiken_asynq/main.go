@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -44,24 +45,36 @@ func main() {
 					"mytask": 3,
 				},
 				RetryDelayFunc: func(n int, e error, t *asynq.Task) time.Duration {
-					return 5 * time.Second
+					return 1 * time.Second
 				},
 			},
 		)
 
 		mux := asynq.NewServeMux()
 
+		breakRetry := 5
+
 		// Handler for queue task
 		mux.HandleFunc("myqueuetask:hello", func(ctx context.Context, t *asynq.Task) error {
-			// time.Sleep(5 * time.Second)
+			// // time.Sleep(5 * time.Second)
+			// var data map[string]interface{}
+			// json.Unmarshal(t.Payload(), &data)
+			// // if rand.IntN(2) == 0 {
+			// // 	fmt.Printf("[myqueuetask:hello - task: %s] Payload: %v - FAILED\n", t.ResultWriter().TaskID(), data)
+			// // 	return errors.New("simulate error")
+			// // }
+			// fmt.Printf("[1- myqueuetask:hello - task: %s] Payload: %v - SUCCESS\n", t.ResultWriter().TaskID(), data)
+			// return nil
+
+			breakRetry--
+			if breakRetry == 0 {
+				fmt.Println("Exhausted")
+				return asynq.SkipRetry
+			}
 			var data map[string]interface{}
 			json.Unmarshal(t.Payload(), &data)
-			// if rand.IntN(2) == 0 {
-			// 	fmt.Printf("[myqueuetask:hello - task: %s] Payload: %v - FAILED\n", t.ResultWriter().TaskID(), data)
-			// 	return errors.New("simulate error")
-			// }
-			fmt.Printf("[1- myqueuetask:hello - task: %s] Payload: %v - SUCCESS\n", t.ResultWriter().TaskID(), data)
-			return nil
+			fmt.Printf("[myqueuetask:hello - task: %s] Payload: %v - FAILED\n", t.ResultWriter().TaskID(), data)
+			return errors.New("simulate error")
 		})
 
 		// Handler for schedule task
@@ -85,81 +98,81 @@ func main() {
 		select {}
 	}()
 
-	go func() {
-		srv := asynq.NewServer(
-			asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
-			asynq.Config{
-				Concurrency: 3, // distributed worker = chạy nhiều instance
-				Queues: map[string]int{
-					"mytask": 3,
-				},
-				RetryDelayFunc: func(n int, e error, t *asynq.Task) time.Duration {
-					return 5 * time.Second
-				},
-			},
-		)
+	// go func() {
+	// 	srv := asynq.NewServer(
+	// 		asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
+	// 		asynq.Config{
+	// 			Concurrency: 3, // distributed worker = chạy nhiều instance
+	// 			Queues: map[string]int{
+	// 				"mytask": 3,
+	// 			},
+	// 			RetryDelayFunc: func(n int, e error, t *asynq.Task) time.Duration {
+	// 				return 5 * time.Second
+	// 			},
+	// 		},
+	// 	)
 
-		mux := asynq.NewServeMux()
+	// 	mux := asynq.NewServeMux()
 
-		// Handler for queue task
-		mux.HandleFunc("myqueuetask:hello", func(ctx context.Context, t *asynq.Task) error {
-			// time.Sleep(5 * time.Second)
-			var data map[string]interface{}
-			json.Unmarshal(t.Payload(), &data)
-			// if rand.IntN(2) == 0 {
-			// 	fmt.Printf("[myqueuetask:hello - task: %s] Payload: %v - FAILED\n", t.ResultWriter().TaskID(), data)
-			// 	return errors.New("simulate error")
-			// }
-			fmt.Printf("[2 - myqueuetask:hello - task: %s] Payload: %v - SUCCESS\n", t.ResultWriter().TaskID(), data)
-			return nil
-		})
+	// 	// Handler for queue task
+	// 	mux.HandleFunc("myqueuetask:hello", func(ctx context.Context, t *asynq.Task) error {
+	// 		// time.Sleep(5 * time.Second)
+	// 		var data map[string]interface{}
+	// 		json.Unmarshal(t.Payload(), &data)
+	// 		// if rand.IntN(2) == 0 {
+	// 		// 	fmt.Printf("[myqueuetask:hello - task: %s] Payload: %v - FAILED\n", t.ResultWriter().TaskID(), data)
+	// 		// 	return errors.New("simulate error")
+	// 		// }
+	// 		fmt.Printf("[2 - myqueuetask:hello - task: %s] Payload: %v - SUCCESS\n", t.ResultWriter().TaskID(), data)
+	// 		return nil
+	// 	})
 
-		// Handler for schedule task
-		mux.HandleFunc("myscheduletask:goodbye", func(ctx context.Context, t *asynq.Task) error {
-			// time.Sleep(5 * time.Second)
-			var data map[string]interface{}
-			json.Unmarshal(t.Payload(), &data)
-			// if rand.IntN(2) == 0 {
-			// 	fmt.Printf("[myscheduletask:goodbye] Payload: %v - FAILED\n", data)
-			// 	return errors.New("simulate error")
-			// }
-			fmt.Printf("[myscheduletask:goodbye] Payload: %v - SUCCESS\n", data)
-			return nil
-		})
+	// 	// Handler for schedule task
+	// 	mux.HandleFunc("myscheduletask:goodbye", func(ctx context.Context, t *asynq.Task) error {
+	// 		// time.Sleep(5 * time.Second)
+	// 		var data map[string]interface{}
+	// 		json.Unmarshal(t.Payload(), &data)
+	// 		// if rand.IntN(2) == 0 {
+	// 		// 	fmt.Printf("[myscheduletask:goodbye] Payload: %v - FAILED\n", data)
+	// 		// 	return errors.New("simulate error")
+	// 		// }
+	// 		fmt.Printf("[myscheduletask:goodbye] Payload: %v - SUCCESS\n", data)
+	// 		return nil
+	// 	})
 
-		log.Println("Worker started...")
-		if err := srv.Run(mux); err != nil {
-			log.Fatal(err)
-		}
+	// 	log.Println("Worker started...")
+	// 	if err := srv.Run(mux); err != nil {
+	// 		log.Fatal(err)
+	// 	}
 
-		select {}
-	}()
+	// 	select {}
+	// }()
 
 	// 1️⃣ Creating a normal job
-	go func() {
-		log.Println("Test normal task...")
+	// go func() {
+	// 	log.Println("Test normal task...")
 
-		client := asynq.NewClient(
-			asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
-		)
-		defer client.Close()
+	// 	client := asynq.NewClient(
+	// 		asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
+	// 	)
+	// 	defer client.Close()
 
-		{
-			count := 1
-			for {
-				dataBytes, _ := json.Marshal(map[string]interface{}{
-					"count": count,
-				})
-				task := asynq.NewTask("myqueuetask:hello", dataBytes, asynq.Queue("mytask"))
-				_, err := client.Enqueue(task)
-				if err != nil {
-					log.Fatal(err)
-				}
-				count++
-				time.Sleep(100 * time.Millisecond)
-			}
-		}
-	}()
+	// 	{
+	// 		count := 1
+	// 		for {
+	// 			dataBytes, _ := json.Marshal(map[string]interface{}{
+	// 				"count": count,
+	// 			})
+	// 			task := asynq.NewTask("myqueuetask:hello", dataBytes, asynq.Queue("mytask"))
+	// 			_, err := client.Enqueue(task)
+	// 			if err != nil {
+	// 				log.Fatal(err)
+	// 			}
+	// 			count++
+	// 			time.Sleep(100 * time.Millisecond)
+	// 		}
+	// 	}
+	// }()
 
 	// 2️⃣ Delay job — chạy sau 10 giây
 	// go func() {
@@ -188,30 +201,41 @@ func main() {
 	// }()
 
 	// 3️⃣ Retry policy (5 lần, backoff mặc định)
-	// go func() {
-	// 	log.Println("Test normal retry task...")
+	go func() {
+		log.Println("Test normal retry task...")
 
-	// 	client := asynq.NewClient(
-	// 		asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
-	// 	)
-	// 	defer client.Close()
+		client := asynq.NewClient(
+			asynq.RedisClientOpt{Addr: "127.0.0.1:6379", Password: "12345678", DB: 1},
+		)
+		defer client.Close()
 
-	// 	{
-	// 		count := 1
-	// 		for {
-	// 			dataBytes, _ := json.Marshal(map[string]interface{}{
-	// 				"count": count,
-	// 			})
-	// 			retryTask := asynq.NewTask("myqueuetask:hello", dataBytes, asynq.Queue("mytask"))
-	// 			_, err := client.Enqueue(retryTask, asynq.ProcessIn(5*time.Second), asynq.MaxRetry(1))
-	// 			if err != nil {
-	// 				log.Fatal(err)
-	// 			}
-	// 			count++
-	// 			time.Sleep(2 * time.Second)
-	// 		}
-	// 	}
-	// }()
+		// {
+		// 	count := 1
+		// 	for {
+		// 		dataBytes, _ := json.Marshal(map[string]interface{}{
+		// 			"count": count,
+		// 		})
+		// 		retryTask := asynq.NewTask("myqueuetask:hello", dataBytes, asynq.Queue("mytask"))
+		// 		_, err := client.Enqueue(retryTask, asynq.ProcessIn(5*time.Second), asynq.MaxRetry(2))
+		// 		if err != nil {
+		// 			log.Fatal(err)
+		// 		}
+		// 		count++
+		// 		time.Sleep(2 * time.Second)
+		// 	}
+		// }
+
+		{
+			dataBytes, _ := json.Marshal(map[string]interface{}{
+				"count": 100,
+			})
+			retryTask := asynq.NewTask("myqueuetask:hello", dataBytes, asynq.Queue("mytask"))
+			_, err := client.Enqueue(retryTask, asynq.MaxRetry(100))
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}()
 
 	// 4️⃣ Scheduling with CRON (ví dụ chạy daily)
 	// go func() {
