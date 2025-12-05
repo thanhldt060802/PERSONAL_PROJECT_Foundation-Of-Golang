@@ -19,10 +19,10 @@ type IHybridSpan interface {
 	// Export trace carrier to add into payload which will be sent via Pub/Sub system
 	ExportTraceCarrier() TraceCarrier
 
-	// Log feature
+	// Continue declare features for Logger
 	// ...
 
-	// Meter feature
+	// Continue declare features for Meter
 	// ...
 }
 
@@ -31,6 +31,8 @@ type HybridSpan struct {
 	Error error
 
 	trace.Span
+	// Logger
+	// Metric
 }
 
 func NewHybridSpan(ctx context.Context) (context.Context, *HybridSpan) {

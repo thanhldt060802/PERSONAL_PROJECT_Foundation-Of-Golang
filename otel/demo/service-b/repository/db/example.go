@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"thanhldt060802/common/observer"
+	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
@@ -61,7 +61,7 @@ func (repo *ExampleRepo) GenerateData(ctx context.Context) {
 }
 
 func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := observer.StartSpanInternal(ctx)
+	ctx, span := otel.NewHybridSpan(ctx)
 	defer span.End()
 
 	example := new(model.Example)
@@ -80,7 +80,7 @@ func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*mode
 		)
 		return nil, nil
 	} else if err != nil {
-		span.Err = err
+		span.Error = err
 		return nil, err
 	} else {
 		span.SetAttributes(

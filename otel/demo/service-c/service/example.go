@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"thanhldt060802/common/observer"
 	"thanhldt060802/common/pubsub"
+	"thanhldt060802/internal/lib/otel"
+	"thanhldt060802/model"
 	"thanhldt060802/repository"
 
 	"go.opentelemetry.io/otel/attribute"
@@ -25,29 +25,23 @@ func NewExampleService() IExampleService {
 }
 
 func (s *ExampleService) InitSubscriber() {
-	pubsub.RedisSubInstance.Subscribe(context.Background(), "observer.pubsub.testing", func(data *observer.MessageTracing) {
-		subCtx, span := observer.StartSpanInternal(data.ExtractSpanContext())
+	pubsub.RedisSubInstance.Subscribe(context.Background(), "otel.pubsub.testing", func(message *model.ExamplePubSubMessage) {
+		subCtx, span := otel.NewHybridSpan(message.ExtractContext())
 		defer span.End()
 
 		span.AddEvent("Subscribe message from Redis", trace.WithAttributes(
-			attribute.String("redis.channel", "observer.pubsub.testing"),
-			attribute.String("redis.message.payload", fmt.Sprintf("%v", data.Payload)),
+			attribute.String("redis.channel", "otel.pubsub.testing"),
+			attribute.String("redis.message.example_uuid", fmt.Sprintf("%v", message.ExampleUuid)),
 		))
 
-		exampleUuid, ok := data.Payload.(string)
-		if !ok {
-			span.Err = errors.New("invalid payload")
-			return
-		}
-
-		example, err := repository.ExampleRepo.GetById(subCtx, exampleUuid)
+		example, err := repository.ExampleRepo.GetById(subCtx, message.ExampleUuid)
 		if err != nil {
-			span.Err = err
+			span.Error = err
 			return
 		}
 
 		if example == nil {
-			fmt.Println("Example example_uuid='" + exampleUuid + "' not found")
+			fmt.Println("Example example_uuid='" + message.ExampleUuid + "' not found")
 		} else {
 			fmt.Println(*example)
 		}

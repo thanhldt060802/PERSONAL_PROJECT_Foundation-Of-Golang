@@ -4,13 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"reflect"
-	"thanhldt060802/common/observer"
+	"thanhldt060802/model"
 
 	"github.com/redis/go-redis/v9"
 	log "github.com/sirupsen/logrus"
 )
 
-var RedisSubInstance IRedisSub[*observer.MessageTracing]
+var RedisSubInstance IRedisSub[*model.ExamplePubSubMessage]
 
 type IRedisSub[T any] interface {
 	Subscribe(ctx context.Context, channel string, handler func(data T))

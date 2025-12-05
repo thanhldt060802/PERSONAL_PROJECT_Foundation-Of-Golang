@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"thanhldt060802/common/observer"
 	"thanhldt060802/common/pubsub"
-	"thanhldt060802/internal/opentelemetry"
+	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/middleware/auth"
+	"thanhldt060802/model"
 	"thanhldt060802/repository"
 	"thanhldt060802/repository/db"
 	server "thanhldt060802/server/http"
@@ -24,6 +24,8 @@ import (
 
 	apiV1 "thanhldt060802/api/v1"
 )
+
+var ShutdownTracer func()
 
 func init() {
 	viper.SetConfigName("config")
@@ -51,9 +53,9 @@ func init() {
 		Database: viper.GetInt("redis.database"),
 		Password: viper.GetString("redis.password"),
 	})
-	pubsub.RedisPubInstance = pubsub.NewRedisPub[*observer.MessageTracing](redisclient.RedisClientConnInstance.GetClient())
+	pubsub.RedisPubInstance = pubsub.NewRedisPub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	opentelemetry.ShutdownTracer = opentelemetry.NewTracer(opentelemetry.TracerEndPointConfig{
+	ShutdownTracer = otel.NewTracer(otel.TracerEndPointConfig{
 		ServiceName: viper.GetString("app.name"),
 		Host:        viper.GetString("jaeger.otlp_host"),
 		Port:        viper.GetInt("jaeger.otlp_port"),
@@ -63,7 +65,7 @@ func init() {
 }
 
 func main() {
-	defer opentelemetry.ShutdownTracer()
+	defer ShutdownTracer()
 
 	router := server.NewHTTPServer()
 

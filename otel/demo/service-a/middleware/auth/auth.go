@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"thanhldt060802/common/observer"
+	"thanhldt060802/internal/lib/otel"
 
 	"github.com/cardinalby/hureg"
 	"github.com/danielgtaylor/huma/v2"
@@ -45,7 +45,7 @@ func NewAuthMiddleware(api hureg.APIGen) func(ctx huma.Context, next func(huma.C
 }
 
 func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Context)) {
-	tmpCtx, span := observer.StartSpanInternal(ctx.Context())
+	tmpCtx, span := otel.NewHybridSpan(ctx.Context())
 	defer span.End()
 
 	authHeaderValue := ctx.Header("Authorization")
@@ -53,8 +53,8 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 
 	if len(authHeaderValue) < 1 {
 		log.Error("========> invalid credentials")
-		span.Err = fmt.Errorf("missing token")
-		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), span.Err)
+		span.Error = fmt.Errorf("missing token")
+		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), span.Error)
 		return
 	}
 
@@ -63,7 +63,7 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 	ctx = huma.WithValue(ctx, "token", strings.Replace(authHeaderValue, "Bearer ", "", 1))
 
 	if err := AuthMdw.AuthMiddleware(ctx.Context()); err != nil {
-		span.Err = err
+		span.Error = err
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
 		return
 	}

@@ -13,8 +13,6 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 )
 
-var ShutdownTracer func() = func() {}
-
 type TracerEndPointConfig struct {
 	ServiceName string
 	Host        string
@@ -24,7 +22,8 @@ type TracerEndPointConfig struct {
 func NewTracer(config TracerEndPointConfig) func() {
 	ctx := context.Background()
 
-	exporter, err := otlptracehttp.New(ctx,
+	exporter, err := otlptracehttp.New(
+		ctx,
 		otlptracehttp.WithInsecure(),
 		otlptracehttp.WithEndpoint(fmt.Sprintf("%v:%v", config.Host, config.Port)),
 	)

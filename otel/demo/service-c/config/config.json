@@ -3,7 +3,7 @@
         "name": "service-c"
     },
     "jaeger": {
-        "otlp_host": "localhost",
+        "otlp_host": "192.168.1.38",
         "otlp_port": 4318
     },
     "db": {

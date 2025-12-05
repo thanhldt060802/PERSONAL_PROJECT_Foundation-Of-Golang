@@ -1,4 +1,4 @@
-package opentelemetry
+package otel
 
 import (
 	"context"
@@ -12,8 +12,6 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 )
-
-var ShutdownTracer func() = func() {}
 
 type TracerEndPointConfig struct {
 	ServiceName string

@@ -3,8 +3,8 @@ package v1
 import (
 	"context"
 	"net/http"
-	"thanhldt060802/common/observer"
 	"thanhldt060802/common/response"
+	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/model"
 	"thanhldt060802/service"
 
@@ -81,12 +81,12 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*model.Example], err error) {
-	ctx, span := observer.StartSpanInternal(ctx)
+	ctx, span := otel.NewHybridSpan(ctx)
 	defer span.End()
 
 	example, err := handler.exampleService.GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.Error = err
 		return
 	}
 
@@ -97,12 +97,12 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 func (handler *apiExample) CrossService_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*model.Example], err error) {
-	ctx, span := observer.StartSpanInternal(ctx)
+	ctx, span := otel.NewHybridSpan(ctx)
 	defer span.End()
 
 	example, err := handler.exampleService.CrossService_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.Error = err
 		return
 	}
 
@@ -113,12 +113,12 @@ func (handler *apiExample) CrossService_GetById(ctx context.Context, req *struct
 func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*string], err error) {
-	ctx, span := observer.StartSpanInternal(ctx)
+	ctx, span := otel.NewHybridSpan(ctx)
 	defer span.End()
 
 	result, err := handler.exampleService.PubSub_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.Error = err
 		return
 	}
 
@@ -129,12 +129,12 @@ func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 func (handler *apiExample) Hybrid_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*string], err error) {
-	ctx, span := observer.StartSpanInternal(ctx)
+	ctx, span := otel.NewHybridSpan(ctx)
 	defer span.End()
 
 	result, err := handler.exampleService.Hybrid_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.Error = err
 		return
 	}
 

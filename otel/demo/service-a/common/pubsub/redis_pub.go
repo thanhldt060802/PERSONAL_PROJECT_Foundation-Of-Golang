@@ -3,13 +3,13 @@ package pubsub
 import (
 	"context"
 	"encoding/json"
-	"thanhldt060802/common/observer"
+	"thanhldt060802/model"
 
 	"github.com/redis/go-redis/v9"
 	log "github.com/sirupsen/logrus"
 )
 
-var RedisPubInstance IRedisPub[*observer.MessageTracing]
+var RedisPubInstance IRedisPub[*model.ExamplePubSubMessage]
 
 type IRedisPub[T any] interface {
 	Publish(ctx context.Context, channel string, data T) error
