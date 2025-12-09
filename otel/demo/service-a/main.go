@@ -25,7 +25,7 @@ import (
 	apiV1 "thanhldt060802/api/v1"
 )
 
-var ShutdownTracer func()
+var ShutdownObserver func()
 
 func init() {
 	viper.SetConfigName("config")
@@ -55,17 +55,18 @@ func init() {
 	})
 	pubsub.RedisPubInstance = pubsub.NewRedisPub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	ShutdownTracer = otel.NewTracer(otel.TracerEndPointConfig{
-		ServiceName: viper.GetString("app.name"),
-		Host:        viper.GetString("jaeger.otlp_host"),
-		Port:        viper.GetInt("jaeger.otlp_port"),
+	ShutdownObserver = otel.NewOtelObserver(&otel.ObserverEndPointConfig{
+		ServiceName:  viper.GetString("app.name"),
+		Host:         viper.GetString("observer.otlp_host"),
+		Port:         viper.GetInt("observer.otlp_port"),
+		LocalLogFile: viper.GetString("observer.local_log_file"),
 	})
 
 	initRepository()
 }
 
 func main() {
-	defer ShutdownTracer()
+	defer ShutdownObserver()
 
 	router := server.NewHTTPServer()
 

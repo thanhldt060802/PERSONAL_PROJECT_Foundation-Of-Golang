@@ -19,16 +19,18 @@ type IHybridSpan interface {
 	// Export trace carrier to add into payload which will be sent via Pub/Sub system
 	ExportTraceCarrier() TraceCarrier
 
-	// Log feature
-	// ...
+	Info(format string, args ...any)
+	Warn(format string, args ...any)
+	Debug(format string, args ...any)
+	Error(format string, args ...any)
 
 	// Meter feature
 	// ...
 }
 
 type HybridSpan struct {
-	Ctx   context.Context
-	Error error
+	Ctx context.Context
+	Err error
 
 	trace.Span
 }
@@ -45,9 +47,9 @@ func NewHybridSpan(ctx context.Context) (context.Context, *HybridSpan) {
 }
 
 func (span *HybridSpan) End() {
-	if span.Error != nil {
-		span.RecordError(span.Error)
-		span.SetStatus(codes.Error, span.Error.Error())
+	if span.Err != nil {
+		span.RecordError(span.Err)
+		span.SetStatus(codes.Error, span.Err.Error())
 	} else {
 		span.SetStatus(codes.Ok, "success")
 	}

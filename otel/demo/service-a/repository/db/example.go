@@ -81,7 +81,7 @@ func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*mode
 		)
 		return nil, nil
 	} else if err != nil {
-		span.Error = err
+		span.Err = err
 		return nil, err
 	} else {
 		span.SetAttributes(

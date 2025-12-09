@@ -86,7 +86,7 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 
 	example, err := handler.exampleService.GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Error = err
+		span.Err = err
 		return
 	}
 
@@ -102,7 +102,7 @@ func (handler *apiExample) CrossService_GetById(ctx context.Context, req *struct
 
 	example, err := handler.exampleService.CrossService_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Error = err
+		span.Err = err
 		return
 	}
 
@@ -118,7 +118,7 @@ func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 
 	result, err := handler.exampleService.PubSub_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Error = err
+		span.Err = err
 		return
 	}
 
@@ -134,7 +134,7 @@ func (handler *apiExample) Hybrid_GetById(ctx context.Context, req *struct {
 
 	result, err := handler.exampleService.Hybrid_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Error = err
+		span.Err = err
 		return
 	}
 

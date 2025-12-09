@@ -4,9 +4,10 @@
         "version": "v1.0.1",
         "port": 8001
     },
-    "jaeger": {
+    "observer": {
         "otlp_host": "192.168.1.38",
-        "otlp_port": 4318
+        "otlp_port": 4318,
+        "local_log_file": "tmp/console.log"
     },
     "db": {
         "host": "localhost",

@@ -3,7 +3,7 @@ package otel
 import (
 	"context"
 	"fmt"
-	"log"
+	stdLog "log"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
@@ -13,13 +13,7 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 )
 
-type TracerEndPointConfig struct {
-	ServiceName string
-	Host        string
-	Port        int
-}
-
-func NewTracer(config TracerEndPointConfig) func() {
+func initTracer(config *ObserverEndPointConfig) func() {
 	ctx := context.Background()
 
 	exporter, err := otlptracehttp.New(
@@ -28,7 +22,7 @@ func NewTracer(config TracerEndPointConfig) func() {
 		otlptracehttp.WithEndpoint(fmt.Sprintf("%v:%v", config.Host, config.Port)),
 	)
 	if err != nil {
-		log.Fatalf("Create exporter failed: %v", err.Error())
+		stdLog.Fatalf("Failed to create exporter for Tracer: %v", err.Error())
 	}
 
 	resource := resource.NewWithAttributes(

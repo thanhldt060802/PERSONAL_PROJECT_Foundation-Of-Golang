@@ -53,8 +53,8 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 
 	if len(authHeaderValue) < 1 {
 		log.Error("========> invalid credentials")
-		span.Error = fmt.Errorf("missing token")
-		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), span.Error)
+		span.Err = fmt.Errorf("missing token")
+		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), span.Err)
 		return
 	}
 
@@ -63,7 +63,7 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 	ctx = huma.WithValue(ctx, "token", strings.Replace(authHeaderValue, "Bearer ", "", 1))
 
 	if err := AuthMdw.AuthMiddleware(ctx.Context()); err != nil {
-		span.Error = err
+		span.Err = err
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
 		return
 	}
