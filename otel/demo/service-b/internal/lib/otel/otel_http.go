@@ -1,6 +1,7 @@
 package otel
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -8,8 +9,31 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
-func GinMiddleware(serviceName string) gin.HandlerFunc {
-	return otelgin.Middleware(serviceName)
+type (
+	clientIPKeyType struct{}
+)
+
+var (
+	ClientIP = clientIPKeyType{}
+)
+
+func GinMiddlewares(serviceName string) []gin.HandlerFunc {
+	mdws := []gin.HandlerFunc{}
+
+	injectExtraInfoMdw := func(c *gin.Context) {
+		ctx := c.Request.Context()
+
+		if _, ok := ctx.Value(ClientIP).(string); !ok {
+			ctx = context.WithValue(ctx, ClientIP, c.ClientIP())
+		}
+
+		c.Request = c.Request.WithContext(ctx)
+		c.Next()
+	}
+
+	mdws = append(mdws, injectExtraInfoMdw, otelgin.Middleware(serviceName))
+
+	return mdws
 }
 
 func HttpTransport() *otelhttp.Transport {

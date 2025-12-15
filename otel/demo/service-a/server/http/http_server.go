@@ -18,7 +18,7 @@ var (
 
 func NewHTTPServer() *gin.Engine {
 	engine := gin.New()
-	engine.Use(otel.GinMiddleware(APP_NAME))
+	engine.Use(otel.GinMiddlewares(APP_NAME)...)
 	engine.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"service-name": APP_NAME,

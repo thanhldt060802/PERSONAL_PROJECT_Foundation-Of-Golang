@@ -48,7 +48,7 @@ func initTracer(config *ObserverConfig) func(ctx context.Context) {
 		),
 	)
 
-	tracer = otel.Tracer(config.ServiceName + "/observer")
+	tracer = otel.Tracer(config.ServiceName + "/otel")
 
 	return func(ctx context.Context) {
 		if err := tracerProvider.Shutdown(ctx); err != nil {

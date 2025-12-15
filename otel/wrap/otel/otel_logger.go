@@ -14,6 +14,7 @@ import (
 	"go.opentelemetry.io/otel/sdk/log"
 	"go.opentelemetry.io/otel/sdk/resource"
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	"go.opentelemetry.io/otel/trace"
 )
 
 var (
@@ -133,8 +134,17 @@ func (h *multiHandler) Enabled(ctx context.Context, level slog.Level) bool {
 }
 
 func (h *multiHandler) Handle(ctx context.Context, record slog.Record) error {
+	traceID, spanID := getTraceInfo(ctx)
+	clientIP := getClientIpFromCtx(ctx)
+
+	r := record.Clone()
+	r.AddAttrs(
+		slog.String("trace_id", traceID),
+		slog.String("span_id", spanID),
+		slog.String("client_ip", clientIP),
+	)
+
 	for _, handler := range h.handlers {
-		r := record.Clone()
 		if err := handler.Handle(ctx, r); err != nil {
 			return err
 		}
@@ -169,7 +179,6 @@ func InfoLog(ctx context.Context, format string, args ...any) {
 		ctx,
 		slog.LevelInfo,
 		msg,
-		slog.String("client_ip", getClientIpFromCtx(ctx)),
 		slog.String("meta", meta),
 	)
 }
@@ -183,7 +192,6 @@ func WarnLog(ctx context.Context, format string, args ...any) {
 		ctx,
 		slog.LevelWarn,
 		msg,
-		slog.String("client_ip", getClientIpFromCtx(ctx)),
 		slog.String("meta", meta),
 	)
 }
@@ -197,7 +205,6 @@ func DebugLog(ctx context.Context, format string, args ...any) {
 		ctx,
 		slog.LevelDebug,
 		msg,
-		slog.String("client_ip", getClientIpFromCtx(ctx)),
 		slog.String("meta", meta),
 	)
 }
@@ -211,12 +218,24 @@ func ErrorLog(ctx context.Context, format string, args ...any) {
 		ctx,
 		slog.LevelError,
 		msg,
-		slog.String("client_ip", getClientIpFromCtx(ctx)),
 		slog.String("meta", meta),
 	)
 }
 
 func getClientIpFromCtx(ctx context.Context) string {
+	if ctx == nil {
+		return ""
+	}
+
 	ip, _ := ctx.Value(ClientIP).(string)
 	return ip
+}
+
+func getTraceInfo(ctx context.Context) (string, string) {
+	span := trace.SpanFromContext(ctx)
+	if span == nil || !span.SpanContext().IsValid() {
+		return "", ""
+	}
+	spanContext := span.SpanContext()
+	return spanContext.TraceID().String(), spanContext.SpanID().String()
 }

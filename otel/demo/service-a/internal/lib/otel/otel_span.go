@@ -2,7 +2,6 @@ package otel
 
 import (
 	"context"
-	"net/http"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -65,13 +64,7 @@ func (span *HybridSpan) SetAttribute(key string, value any) {
 
 func (span *HybridSpan) AddEvent(eventName string, eventAttributes map[string]any) {
 	attrs := mapToAttribute(eventAttributes)
-	span.coreSpan.AddEvent(eventName, trace.WithTimestamp(time.Now()), trace.WithAttributes(attrs...))
-}
-
-// CROSS HTTP FEATURE DEFINITION FOR SPAN
-
-func (span *HybridSpan) InjectToRequestHeader(rHeader http.Header) {
-	otel.GetTextMapPropagator().Inject(span.ctx, propagation.HeaderCarrier(rHeader))
+	span.coreSpan.AddEvent(eventName, trace.WithAttributes(attrs...))
 }
 
 // CROSS PUB/SUB SYSTEM FEATURE DEFINITION FOR SPAN

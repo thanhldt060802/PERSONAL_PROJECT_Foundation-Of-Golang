@@ -17,7 +17,7 @@ var (
 	ClientIP = clientIPKeyType{}
 )
 
-func GinMiddleware(serviceName string) []gin.HandlerFunc {
+func GinMiddlewares(serviceName string) []gin.HandlerFunc {
 	mdws := []gin.HandlerFunc{}
 
 	injectExtraInfoMdw := func(c *gin.Context) {
