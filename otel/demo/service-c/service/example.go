@@ -7,9 +7,6 @@ import (
 	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
-
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 )
 
 type (
@@ -26,17 +23,17 @@ func NewExampleService() IExampleService {
 
 func (s *ExampleService) InitSubscriber() {
 	pubsub.RedisSubInstance.Subscribe(context.Background(), "otel.pubsub.testing", func(message *model.ExamplePubSubMessage) {
-		subCtx, span := otel.NewHybridSpan(message.ExtractContext())
-		defer span.End()
+		subCtx, span := otel.NewHybridSpan(message.ExtractContext(), "SubscribeMessage")
+		defer span.Done()
 
-		span.AddEvent("Subscribe message from Redis", trace.WithAttributes(
-			attribute.String("redis.channel", "otel.pubsub.testing"),
-			attribute.String("redis.message.example_uuid", fmt.Sprintf("%v", message.ExampleUuid)),
-		))
+		span.AddEvent("Subscribe message from Redis", map[string]any{
+			"redis.channel":              "otel.pubsub.testing",
+			"redis.message.example_uuid": fmt.Sprintf("%v", message.ExampleUuid),
+		})
 
 		example, err := repository.ExampleRepo.GetById(subCtx, message.ExampleUuid)
 		if err != nil {
-			span.Error = err
+			span.SetError(err)
 			return
 		}
 

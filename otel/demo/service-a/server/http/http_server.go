@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"thanhldt060802/internal/lib/otel"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
 
 func NewHTTPServer() *gin.Engine {
 	engine := gin.New()
-	engine.Use(otelgin.Middleware(APP_NAME))
+	engine.Use(otel.GinMiddleware(APP_NAME))
 	engine.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"service-name": APP_NAME,

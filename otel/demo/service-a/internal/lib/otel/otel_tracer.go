@@ -2,27 +2,30 @@ package otel
 
 import (
 	"context"
-	"fmt"
-	stdLog "log"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/sdk/trace"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
+	"go.opentelemetry.io/otel/trace"
 )
 
-func initTracer(config *ObserverEndPointConfig) func() {
-	ctx := context.Background()
+var (
+	tracer trace.Tracer
+)
 
+// INIT TRACER
+
+func initTracer(config *ObserverConfig) func(ctx context.Context) {
 	exporter, err := otlptracehttp.New(
-		ctx,
+		context.Background(),
 		otlptracehttp.WithInsecure(),
-		otlptracehttp.WithEndpoint(fmt.Sprintf("%v:%v", config.Host, config.Port)),
+		otlptracehttp.WithEndpoint(config.EndPoint),
 	)
 	if err != nil {
-		stdLog.Fatalf("Failed to create exporter for Tracer: %v", err.Error())
+		stdLog.Fatalf("Failed to create exporter for Tracer: %v", err)
 	}
 
 	resource := resource.NewWithAttributes(
@@ -30,20 +33,26 @@ func initTracer(config *ObserverEndPointConfig) func() {
 		semconv.ServiceName(config.ServiceName),
 	)
 
-	tracerProvider := trace.NewTracerProvider(
-		trace.WithBatcher(exporter),
-		trace.WithResource(resource),
+	tracerProvider := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(exporter),
+		sdktrace.WithResource(resource),
 	)
 
 	otel.SetTracerProvider(tracerProvider)
+
+	// Set policy for cross-service (HTTP, gRPC)
 	otel.SetTextMapPropagator(
 		propagation.NewCompositeTextMapPropagator(
 			propagation.TraceContext{},
 			propagation.Baggage{},
 		),
-	) // Important for cross-service and pub/sub system
+	)
 
-	return func() {
-		tracerProvider.Shutdown(ctx)
+	tracer = otel.Tracer(config.ServiceName + "/observer")
+
+	return func(ctx context.Context) {
+		if err := tracerProvider.Shutdown(ctx); err != nil {
+			stdLog.Printf("Error occurred when shutting down Tracer provider: %v", err)
+		}
 	}
 }

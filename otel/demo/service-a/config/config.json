@@ -5,9 +5,10 @@
         "port": 8001
     },
     "observer": {
-        "otlp_host": "192.168.1.38",
-        "otlp_port": 4318,
-        "local_log_file": "tmp/console.log"
+        "end_point": "192.168.1.38:4318",
+        "local_log_file": "tmp/console.log",
+        "local_log_level": "info",
+        "metric_collection_interval_sec": 5
     },
     "db": {
         "host": "localhost",

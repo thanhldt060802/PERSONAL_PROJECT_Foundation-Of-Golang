@@ -3,6 +3,7 @@ package otel
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
@@ -10,64 +11,79 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-type IHybridSpan interface {
-	// End span to end collection flow
-	End()
+// DEFINE HYBRID SPAN
 
-	// Inject to header of request to receiver service will detect chain context
-	InjectToRequestHeader(rHeader http.Header)
-	// Export trace carrier to add into payload which will be sent via Pub/Sub system
-	ExportTraceCarrier() TraceCarrier
-
-	Info(format string, args ...any)
-	Warn(format string, args ...any)
-	Debug(format string, args ...any)
-	Error(format string, args ...any)
-
-	// Meter feature
-	// ...
-}
-
-type HybridSpan struct {
-	Ctx context.Context
-	Err error
-
-	trace.Span
-}
-
-func NewHybridSpan(ctx context.Context) (context.Context, *HybridSpan) {
-	modulePath, actionName := callbackInfo()
-	ctxSpan, span := otel.Tracer(modulePath).Start(ctx, actionName)
+func NewHybridSpan(ctx context.Context, operation string) (context.Context, *HybridSpan) {
+	ctxSpan, span := tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
 
 	hybridSpan := HybridSpan{
-		Ctx:  ctxSpan,
-		Span: span,
+		coreSpan:       span,
+		ctx:            ctxSpan,
+		spanAttributes: make(map[string]any),
 	}
 	return ctxSpan, &hybridSpan
 }
 
-func (span *HybridSpan) End() {
-	if span.Err != nil {
-		span.RecordError(span.Err)
-		span.SetStatus(codes.Error, span.Err.Error())
-	} else {
-		span.SetStatus(codes.Ok, "success")
-	}
-	span.Span.End()
+type HybridSpan struct {
+	coreSpan trace.Span
+
+	ctx context.Context
+	err error
+
+	spanAttributes map[string]any
 }
 
-func (span *HybridSpan) InjectToRequestHeader(rHeader http.Header) {
-	otel.GetTextMapPropagator().Inject(span.Ctx, propagation.HeaderCarrier(rHeader))
+// DEFINE STANDARD FEATURE FOR SPAN
+
+func (span *HybridSpan) Done() {
+	attrs := mapToAttribute(span.spanAttributes)
+	span.coreSpan.SetAttributes(attrs...)
+
+	if span.err != nil {
+		span.coreSpan.RecordError(span.err)
+		span.coreSpan.SetStatus(codes.Error, span.err.Error())
+		span.coreSpan.End(trace.WithStackTrace(true))
+	} else {
+		span.coreSpan.SetStatus(codes.Ok, "success")
+		span.coreSpan.End()
+	}
 }
+
+func (span *HybridSpan) Context() context.Context {
+	return span.ctx
+}
+
+func (span *HybridSpan) SetError(err error) {
+	span.err = err
+}
+
+// DEFINE ADDITIONAL FEATURE FOR SPAN
+
+func (span *HybridSpan) SetAttribute(key string, value any) {
+	span.spanAttributes[key] = value
+}
+
+func (span *HybridSpan) AddEvent(eventName string, eventAttributes map[string]any) {
+	attrs := mapToAttribute(eventAttributes)
+	span.coreSpan.AddEvent(eventName, trace.WithTimestamp(time.Now()), trace.WithAttributes(attrs...))
+}
+
+// CROSS HTTP FEATURE DEFINITION FOR SPAN
+
+func (span *HybridSpan) InjectToRequestHeader(rHeader http.Header) {
+	otel.GetTextMapPropagator().Inject(span.ctx, propagation.HeaderCarrier(rHeader))
+}
+
+// CROSS PUB/SUB SYSTEM FEATURE DEFINITION FOR SPAN
+
+type TraceCarrier propagation.MapCarrier
 
 func (span *HybridSpan) ExportTraceCarrier() TraceCarrier {
 	carrier := propagation.MapCarrier{}
-	otel.GetTextMapPropagator().Inject(span.Ctx, carrier)
+	otel.GetTextMapPropagator().Inject(span.ctx, carrier)
 
 	return TraceCarrier(carrier)
 }
-
-type TraceCarrier propagation.MapCarrier
 
 func (traceCarrier TraceCarrier) ExtractContext() context.Context {
 	return otel.GetTextMapPropagator().Extract(context.Background(), propagation.MapCarrier(traceCarrier))

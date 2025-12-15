@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/internal/redisclient"
@@ -13,6 +14,7 @@ import (
 	"thanhldt060802/repository/db"
 	server "thanhldt060802/server/http"
 	"thanhldt060802/service"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
@@ -55,14 +57,38 @@ func init() {
 	})
 	pubsub.RedisPubInstance = pubsub.NewRedisPub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	ShutdownObserver = otel.NewOtelObserver(&otel.ObserverEndPointConfig{
-		ServiceName:  viper.GetString("app.name"),
-		Host:         viper.GetString("observer.otlp_host"),
-		Port:         viper.GetInt("observer.otlp_port"),
-		LocalLogFile: viper.GetString("observer.local_log_file"),
-	})
-
-	initRepository()
+	otelObserverConfig := otel.ObserverConfig{
+		ServiceName:              viper.GetString("app.name"),
+		EndPoint:                 viper.GetString("observer.end_point"),
+		LocalLogFile:             viper.GetString("observer.local_log_file"),
+		LocalLogLevel:            otel.LogLevel(viper.GetString("observer.local_log_level")),
+		MetricCollectionInterval: time.Duration(viper.GetInt("observer.metric_collection_interval_sec")) * time.Second,
+	}
+	{
+		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
+			Type:        otel.METRIC_TYPE_COUNTER,
+			Name:        constant.HTTP_REQUESTS_TOTAL,
+			Description: "Total number of HTTP requests",
+		})
+		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
+			Type:        otel.METRIC_TYPE_UP_DOWN_COUNTER,
+			Name:        constant.ACTIVE_JOBS,
+			Description: "Current running job",
+		})
+		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
+			Type:        otel.METRIC_TYPE_HISTOGRAM,
+			Name:        constant.JOB_PROCESS_LATENCY_SEC,
+			Description: "Job process latency (milisecond)",
+			Unit:        "ms",
+		})
+		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
+			Type:        otel.METRIC_TYPE_GAUGE,
+			Name:        constant.CPU_USAGE_PERCENT,
+			Description: "CPU usage (%)",
+			Unit:        "%",
+		})
+	}
+	ShutdownObserver = otel.NewOtelObserver(&otelObserverConfig)
 }
 
 func main() {
@@ -121,11 +147,19 @@ func main() {
 
 	auth.AuthMdw = auth.NewSimpleAuthMiddleware()
 
+	initRepository()
+
 	apiV1.RegisterAPIExample(api, service.NewExampleService())
+
+	startGaugeCollector()
 
 	server.Start(router)
 }
 
 func initRepository() {
 	repository.ExampleRepo = db.NewExampleRepo()
+}
+
+func startGaugeCollector() {
+	service.StartGaugeCollector()
 }

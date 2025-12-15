@@ -81,12 +81,14 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*model.Example], err error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Handler")
+	defer span.Done()
+
+	otel.InfoLog(ctx, "[Handler layer] - Get Example by example_uuid='%s'", req.ExampleUuid)
 
 	example, err := handler.exampleService.GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		otel.ErrorLog(ctx, "[Handler layer] - Failed to get Example by example_uuid='%s': %v", req.ExampleUuid, err)
 		return
 	}
 
@@ -97,12 +99,12 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 func (handler *apiExample) CrossService_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*model.Example], err error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "CrossService_GetExampleById-Handler")
+	defer span.Done()
 
 	example, err := handler.exampleService.CrossService_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return
 	}
 
@@ -113,12 +115,12 @@ func (handler *apiExample) CrossService_GetById(ctx context.Context, req *struct
 func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*string], err error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "PubSub_GetExampleById-Handler")
+	defer span.Done()
 
 	result, err := handler.exampleService.PubSub_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return
 	}
 
@@ -129,12 +131,12 @@ func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 func (handler *apiExample) Hybrid_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*string], err error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "Hybrid_GetExampleById-Handler")
+	defer span.Done()
 
 	result, err := handler.exampleService.Hybrid_GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return
 	}
 

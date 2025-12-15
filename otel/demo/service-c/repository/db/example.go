@@ -12,8 +12,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/uptrace/bun"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 )
 
 type ExampleRepo struct {
@@ -62,31 +60,28 @@ func (repo *ExampleRepo) GenerateData(ctx context.Context) {
 }
 
 func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Repository")
+	defer span.Done()
+
+	otel.InfoLog(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
 
 	example := new(model.Example)
 
 	query := sqlclient.SqlClientConnInstance.GetDB().NewSelect().Model(example).
 		Where("example_uuid = ?", exampleUuid)
 
-	span.AddEvent("Start query", trace.WithAttributes(
-		attribute.String("sql", query.String()),
-	))
+	span.AddEvent("Execute SQL", map[string]any{
+		"sql": query.String(),
+	})
 
 	err := query.Scan(ctx)
 	if err == sql.ErrNoRows {
-		span.SetAttributes(
-			attribute.String("data", "null"),
-		)
 		return nil, nil
 	} else if err != nil {
-		span.Error = err
+		otel.ErrorLog(ctx, "[Repository layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		span.SetError(err)
 		return nil, err
 	} else {
-		span.SetAttributes(
-			attribute.String("data", fmt.Sprintf(`{ "example_uuid": "%v"}`, example.ExampleUuid)),
-		)
 		return example, nil
 	}
 }

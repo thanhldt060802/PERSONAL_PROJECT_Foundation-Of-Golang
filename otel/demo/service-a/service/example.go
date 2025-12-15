@@ -5,15 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/rand/v2"
 	"net/http"
 	"thanhldt060802/common/apperror"
+	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
-
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
+	"time"
 )
 
 type (
@@ -32,55 +32,88 @@ func NewExampleService() IExampleService {
 }
 
 func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Service")
+	defer span.Done()
+
+	otel.InfoLog(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
+
+	if rand.IntN(3) == 0 {
+		err := errors.New("simulate error")
+		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		span.SetError(err)
+		return nil, apperror.ErrInternalServerError(err, "Failed to preprocess", "ERR_PREPROCESS")
+	}
+
+	otel.RecordCounter(ctx, constant.HTTP_REQUESTS_TOTAL, 1, nil)
+
+	go func(ctx context.Context) {
+		_, span := otel.NewHybridSpan(ctx, "AsyncJob")
+		defer span.Done()
+
+		otel.RecordUpDownCounter(span.Context(), constant.ACTIVE_JOBS, 1, nil)
+		otel.InfoLog(ctx, "[Async job] Start process job")
+
+		N := 3 + rand.IntN(3)
+		for i := 0; i < N; i++ {
+			latency := 10 + rand.IntN(10)
+			time.Sleep(time.Duration(latency) * time.Second)
+			otel.RecordHistogram(ctx, constant.JOB_PROCESS_LATENCY_SEC, float64(latency), nil)
+		}
+
+		otel.RecordUpDownCounter(ctx, constant.ACTIVE_JOBS, -1, nil)
+		otel.InfoLog(ctx, "[Async job] End process job")
+	}(ctx)
 
 	example, err := repository.ExampleRepo.GetById(ctx, exampleUuid)
 	if err != nil {
-		span.Err = err
+		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': %v", exampleUuid, err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to get example")
 	} else if example == nil {
+		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': Example not found", exampleUuid)
 		return nil, apperror.ErrNotFound("Example example_uuid='"+exampleUuid+"' not found", "ERR_EXAMPLE_NOT_FOUND")
 	}
 	return example, nil
 }
 
 func (s *ExampleService) CrossService_GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "CrossService_GetExampleById-Service")
+	defer span.Done()
 
 	url := fmt.Sprintf("http://localhost:8002/service-b/v1/example/%v", exampleUuid)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to init cross-service")
 	}
-	span.InjectToRequestHeader(req.Header)
-
-	span.AddEvent("Request HTTP to service-b", trace.WithAttributes(
-		attribute.String("url", url),
-	))
-
-	client := http.Client{}
 	req.Header.Set("Authorization", ctx.Value("auth_header").(string))
+
+	span.AddEvent("Request HTTP to service-b", map[string]any{
+		"url": url,
+	})
+
+	// span.InjectToRequestHeader(req.Header)
+	client := http.Client{
+		Transport: otel.HttpTransport(),
+	}
 
 	res, err := client.Do(req)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to request to service-b")
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		span.Err = errors.New("response is not OK")
-		return nil, apperror.ErrServiceUnavailable(span.Err, "Response is not OK from service-b")
+		err := errors.New("response is not OK")
+		span.SetError(err)
+		return nil, apperror.ErrServiceUnavailable(err, "Response is not OK from service-b")
 	}
 
 	resWrapper := new(struct {
 		Data model.Example
 	})
 	if err := json.NewDecoder(res.Body).Decode(resWrapper); err != nil {
-		span.Err = err
+		span.SetError(err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to decode response from service-b")
 	}
 	example := &resWrapper.Data
@@ -89,21 +122,21 @@ func (s *ExampleService) CrossService_GetById(ctx context.Context, exampleUuid s
 }
 
 func (s *ExampleService) PubSub_GetById(ctx context.Context, exampleUuid string) (string, error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "PubSub_GetExampleById-Service")
+	defer span.Done()
 
 	message := model.ExamplePubSubMessage{
 		TraceCarrier: span.ExportTraceCarrier(),
 		ExampleUuid:  exampleUuid,
 	}
 
-	span.AddEvent("Publish message to Redis", trace.WithAttributes(
-		attribute.String("redis.channel", "otel.pubsub.testing"),
-		attribute.String("redis.message.example_uuid", fmt.Sprintf("%v", message.ExampleUuid)),
-	))
+	span.AddEvent("Publish message to Redis", map[string]any{
+		"redis.channel":              "otel.pubsub.testing",
+		"redis.message.example_uuid": fmt.Sprintf("%v", message.ExampleUuid),
+	})
 
 	if err := pubsub.RedisPubInstance.Publish(ctx, "otel.pubsub.testing", &message); err != nil {
-		span.Err = err
+		span.SetError(err)
 		return "", apperror.ErrServiceUnavailable(err, "Failed to publish message to Redis")
 	}
 
@@ -111,41 +144,44 @@ func (s *ExampleService) PubSub_GetById(ctx context.Context, exampleUuid string)
 }
 
 func (s *ExampleService) Hybrid_GetById(ctx context.Context, exampleUuid string) (string, error) {
-	ctx, span := otel.NewHybridSpan(ctx)
-	defer span.End()
+	ctx, span := otel.NewHybridSpan(ctx, "Hybrid_GetExampleById-Service")
+	defer span.Done()
 
 	url := fmt.Sprintf("http://localhost:8002/service-b/v1/example/%v/pub-sub", exampleUuid)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return "", apperror.ErrServiceUnavailable(err, "Failed to init cross-service")
 	}
-	span.InjectToRequestHeader(req.Header)
-
-	span.AddEvent("Request HTTP to service-b", trace.WithAttributes(
-		attribute.String("url", url),
-	))
-
-	client := http.Client{}
 	req.Header.Set("Authorization", ctx.Value("auth_header").(string))
+
+	span.AddEvent("Request HTTP to service-b", map[string]any{
+		"url": url,
+	})
+
+	// span.InjectToRequestHeader(req.Header)
+	client := http.Client{
+		Transport: otel.HttpTransport(),
+	}
 
 	res, err := client.Do(req)
 	if err != nil {
-		span.Err = err
+		span.SetError(err)
 		return "", apperror.ErrServiceUnavailable(err, "Failed to request to service-b")
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		span.Err = errors.New("response is not OK")
-		return "", apperror.ErrServiceUnavailable(span.Err, "Response is not OK from service-b")
+		err := errors.New("response is not OK")
+		span.SetError(err)
+		return "", apperror.ErrServiceUnavailable(err, "Response is not OK from service-b")
 	}
 
 	resWrapper := new(struct {
 		Data string
 	})
 	if err := json.NewDecoder(res.Body).Decode(resWrapper); err != nil {
-		span.Err = err
+		span.SetError(err)
 		return "", apperror.ErrServiceUnavailable(err, "Failed to decode response from service-b")
 	}
 	result := resWrapper.Data

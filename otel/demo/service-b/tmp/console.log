@@ -1,0 +1,828 @@
+{"time":"2025-12-15T17:00:49.8972435+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:00:49.8972435+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:00:49.8972435+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:00:49.8972435+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:01:38.9002137+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:07:32.1683257+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:32.1683257+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:32.1688882+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:32.1688882+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:33.7370669+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:33.7370669+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:33.7370669+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:33.7370669+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:33.9503294+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:33.9503294+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:33.9558195+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:33.9558195+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.2065202+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.2065202+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.2072735+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.2072735+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:34.3121552+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.3121552+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.3127216+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.3127216+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:34.3840134+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.3851496+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.3851496+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.3856552+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:34.4822843+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.4822843+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.482874+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.482874+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:34.58944+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.5900278+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.5900278+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:34.5900278+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.7051873+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.7057273+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.7057273+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.7057273+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:34.808115+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.8087361+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.8087361+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:34.8087361+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.9323723+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:34.9323723+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:34.9330584+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:34.9330584+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.0485028+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.0485028+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.0491128+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.0491128+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.1611362+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.1616549+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.1616549+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.1616549+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.2809238+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.281575+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.281575+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.281575+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.4011443+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.4019235+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.4019235+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.4019235+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.5289384+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.5289384+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.5289384+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.5289384+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.64256+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.64256+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.643267+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.643267+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.7627331+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.7627331+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.7627331+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:35.7627331+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:35.8914896+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:35.8921777+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:35.8921777+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:35.8921777+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.0167361+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.0167361+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.0167361+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.0167361+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:36.131944+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.131944+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.131944+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:36.1325019+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.2661471+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.2661471+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.2668946+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:36.2668946+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.3909769+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.3909769+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.3915102+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.3915102+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:36.513982+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.5145773+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.5145773+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:36.5151738+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.6376728+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.6382907+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.6382907+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.638811+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:36.7547812+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.755437+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.755437+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.755437+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:36.8796113+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:36.8796113+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:36.8796113+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:36.8796113+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:37.0124277+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.0124277+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.0131999+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.0131999+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:37.1368686+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.1368686+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.13741+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:37.13741+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.2773506+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.2773506+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.2779626+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.278268+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:37.3943589+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.3943589+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.3972218+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.3972218+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:37.5376086+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.5376086+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.5383821+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:37.5383821+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.6675978+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.6688913+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.6688913+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.6688913+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:37.8000136+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.8005377+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.8005377+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:37.8010826+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:37.9234268+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:37.9234268+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:37.9239989+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:37.9239989+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.0564202+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.0569331+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.0569331+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:38.0569331+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.1962429+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.1962429+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.1962429+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.1962429+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:38.3202802+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.3202802+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.3208475+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:38.3208475+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.4495925+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.4495925+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.4495925+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.4495925+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:38.5817136+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.5822547+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.5822547+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.5822547+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:38.7066363+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.7066363+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.7073076+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.7073076+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:38.844875+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.844875+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.8457413+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:38.8457413+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:38.9822436+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:38.9828148+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:38.9828148+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:38.9828148+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.1016322+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.1022085+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.1022085+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.1022085+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:39.2436698+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.2436698+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.244504+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.244504+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:39.3793087+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.3799192+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.3799192+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.3799192+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:39.5227192+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.5227192+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.5232598+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.5232598+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:39.6414089+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.6414089+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.6419318+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:39.6419318+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.7834121+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.7834121+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.7834121+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.7834121+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:39.9143897+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:39.9149489+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:39.9149489+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:39.9149489+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.0548865+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.0548865+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.0554938+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.0554938+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.1981954+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.1981954+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.1987656+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:40.1987656+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.3297273+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.3302987+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.3308972+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.3308972+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.4682681+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.4682681+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.4682681+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.4689182+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.5886197+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.5892593+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.5892593+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.5892593+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.7284032+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.7290374+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.7290374+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:40.7290374+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.8634892+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.8634892+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.8634892+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:40.8634892+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:40.9963161+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:40.9970028+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:40.9970028+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:40.9970028+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.1344112+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.1350588+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.1350588+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.1350588+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:41.2694201+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.2694201+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.2701544+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.2701544+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:41.4165679+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.4165679+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.417369+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.417369+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:41.5435138+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.5441316+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.5441316+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.5441316+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:41.6790174+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.6796391+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.6796391+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.6796391+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:41.8162411+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.8168845+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.8168845+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:41.8168845+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:41.9396271+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:41.9396271+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:41.9396271+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:41.9396271+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.0756644+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.0774044+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.0782572+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.0782572+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:42.2123285+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.2129772+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.2129772+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:42.213725+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.3619235+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.3619235+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.3624985+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.3624985+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:42.4777261+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.4777261+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.4777261+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:42.478294+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.6078322+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.608582+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.608582+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.608582+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:42.7339001+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.7346083+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.7346083+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.7351862+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:42.8681292+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:42.8687049+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:42.8687049+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:42.8687049+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:43.0019888+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.0019888+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.0019888+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.0019888+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:43.123303+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.123303+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.1238956+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:43.1238956+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.2606681+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.2606681+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.2606681+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:43.2612835+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.3979213+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.3979213+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.3979213+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.3979213+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:43.5136598+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.5136598+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.5143071+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.5143071+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:43.6492279+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.6492279+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.6492279+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:43.6492279+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:43.7777701+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:43.7777701+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:43.7785272+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:43.7785272+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.0412212+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.0419254+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.0419254+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.0419254+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:44.176413+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.1771754+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.1771754+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.1771754+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:44.2974492+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.2979562+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.2979562+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:44.2979562+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.4315446+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.4315446+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.4315446+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.4323421+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:44.564428+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.5651599+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.5651599+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.5651599+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:44.7059544+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.7059544+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.7059544+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:44.7059544+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.8415251+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.8415251+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.8415251+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.8415251+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:44.9717687+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:44.9717687+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:44.972556+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:44.972556+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:45.1000522+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.1005803+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.1005803+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:45.1005803+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.2388297+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.2388297+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.2399504+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.2399504+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:45.3643271+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.3649758+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.3649758+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:45.3649758+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.5115808+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.5115808+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.5115808+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:45.5121675+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.645252+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.6459886+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.6459886+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.6459886+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:45.784147+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.7846651+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.7846651+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.7846651+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:45.9142749+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:45.9149254+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:45.9149254+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:45.9149254+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.0550617+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.0558582+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.0558582+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.0558582+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.1907683+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.1907683+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.1915228+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.1915228+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.3346825+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.3346825+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.3354437+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.3354437+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.4656251+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.4665944+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.4679087+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:46.46842+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.6086216+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.6092827+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.6092827+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.6092827+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.7384931+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.7390112+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.7390112+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:46.7390112+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:46.8817828+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:46.8817828+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:46.8825691+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:46.8825691+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.0220208+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.0226676+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.0226676+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.0226676+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:47.1529729+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.1537045+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.1537045+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.1537045+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:47.2962639+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.2969244+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.2969244+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.2969244+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:47.4380197+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.4380197+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.4388147+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:47.4388147+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.5911126+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.5911126+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.5911126+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:47.5917358+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.7287778+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.729852+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.729852+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.729852+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:47.8520064+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.8525516+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.8525516+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.8525516+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:47.9799163+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:47.9805394+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:47.9805394+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:47.9805394+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.1148954+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.1156957+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.1156957+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.1156957+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.2428043+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.2428043+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.2435102+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.2435102+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.3789127+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.3789127+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.3798233+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.3798233+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.4975083+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.4975083+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.4975083+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.4975083+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.6264204+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.6264204+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.6264204+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.6264204+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.7407195+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.7412826+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.7412826+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:48.7412826+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:48.8596241+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:48.8603148+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:48.8603148+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:48.8603148+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.018552+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.0191211+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.0191211+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.0196997+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:49.1244198+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.1244198+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.1250371+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.1250371+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:49.2282429+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.2282429+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.2282429+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:49.2288584+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.3322946+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.3322946+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.3328002+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.3328002+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:49.4460312+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.4460312+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.4467148+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.4467148+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:49.5429675+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.5429675+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.5429675+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:49.5434819+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.7804096+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.7810577+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.7810577+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.7810577+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:49.8806625+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:49.8806625+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:49.8812029+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:49.8812029+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:50.0104885+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.0104885+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.0111037+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.0111037+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:50.2353304+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.2358384+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.2358384+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:50.2358384+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.3511027+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.3523235+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.3523235+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.3523235+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:50.4923472+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.4930908+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.4930908+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.4930908+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:50.6183571+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.6183571+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.6183571+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:50.6183571+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.7496267+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.7496267+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.7502329+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:50.7502329+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:50.8617155+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:50.8623612+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:50.8623612+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:50.8623612+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.0003712+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.0003712+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.0009901+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.0009901+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.1082797+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.108909+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.108909+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.108909+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.229794+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.2304133+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.2304133+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.2304133+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.3460031+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.3460031+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.3468485+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.3468485+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.4626042+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.4626042+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.4626042+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.4631927+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.5892216+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.5892216+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.5898301+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:51.5898301+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.7254245+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.726097+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.726097+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.726097+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.8392576+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.839782+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.839782+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:51.839782+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:51.959083+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:51.9596527+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:51.9596527+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:51.9596527+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.0808685+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.081487+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.081487+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.081487+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:52.2018031+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.2018031+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.202385+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.202385+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:52.3256713+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.3256713+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.3264138+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:52.3264138+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.4474985+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.4474985+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.4480544+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:52.4480544+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.6030702+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.6036329+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.6036329+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.6036329+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:52.7166355+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.7166355+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.7172562+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.7172562+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:52.842276+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.8429347+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.8429347+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.8429347+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:52.9718275+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:52.9718275+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:52.9718275+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:52.9718275+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:53.1084354+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.1084354+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.1089973+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.1089973+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:53.2299914+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.2299914+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.2299914+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.2299914+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:53.5818508+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.582505+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.582505+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:53.582505+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.697464+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.6980439+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.6980439+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:53.6980439+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.8489329+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.8495196+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.8495196+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.8495196+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:53.9827728+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:53.9827728+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:53.9833791+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:53.9833791+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:54.1172861+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.1179079+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.1179079+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:54.1185727+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.2410231+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.2410231+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.2417774+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:54.2417774+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.3680647+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.3680647+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.3686309+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.3686309+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:54.5083763+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.5083763+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.5088525+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:54.5088525+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.6496448+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.6502171+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.6502171+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:54.6502171+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.7860537+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.7866825+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.7866825+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.7866825+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:54.9038353+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:54.9038353+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:54.9043861+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:54.9043861+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:55.0358376+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.0358376+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.0358376+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:55.0363826+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.1728039+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.1728039+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.1734347+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:55.1734347+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.2994672+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.2994672+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.3000844+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:55.2994672+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.439188+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.4396989+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.4396989+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:55.4396989+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.5697819+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.5704738+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.5704738+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:55.5704738+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.6997579+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.7003503+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.7003503+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.7003503+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:55.8438058+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.8444797+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.8444797+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.8444797+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:55.9945012+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:55.9950463+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:55.9950463+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:55.9950463+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:56.1222996+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:56.1229182+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:56.1229182+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:56.1229182+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:56.2556192+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:56.2556192+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:56.2556192+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:56.2556192+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:56.390193+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:56.390193+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:56.3907037+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:56.3907037+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:56.6793615+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:56.6798952+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:56.6798952+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:56.6798952+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:57.0694513+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:57.0702429+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:57.0702429+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:57.0702429+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:57.5218265+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:57.5224417+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:57.5224417+07:00","level":"INFO","msg":"[Repository layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:65"}
+{"time":"2025-12-15T17:07:57.5224417+07:00","level":"INFO","msg":"[Async job] Start process job","meta":"example.go:50"}
+{"time":"2025-12-15T17:07:57.9123668+07:00","level":"INFO","msg":"[Handler layer] - Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:61"}
+{"time":"2025-12-15T17:07:57.9123668+07:00","level":"INFO","msg":"[Service layer] Get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:34"}
+{"time":"2025-12-15T17:07:57.9130628+07:00","level":"ERROR","msg":"[Service layer] Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a'","meta":"example.go:38"}
+{"time":"2025-12-15T17:07:57.9130628+07:00","level":"ERROR","msg":"[Handler layer] - Failed to get Example by example_uuid='09fc65f8-9ebc-4718-b60d-e9a6b22a732a': simulate error","meta":"example.go:65"}
+{"time":"2025-12-15T17:08:14.0241578+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:15.8481878+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:16.1415528+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:16.6481615+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:16.6714743+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:19.9763087+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:20.3152571+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:20.3334315+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:20.7089468+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:23.6822136+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:24.1646106+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:24.2456813+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:24.4858736+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:25.9221079+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:26.7404765+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:27.4529287+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:27.7505238+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:28.1557198+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:29.1190959+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:29.2726673+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:29.4045208+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:30.1949015+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:30.6119703+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:31.0853365+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:31.2821362+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:31.3943513+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:31.5257911+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:31.6438511+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:32.5167918+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:32.8453437+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:33.5940329+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:33.9587682+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:34.0580828+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:34.1115221+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:34.3494965+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:34.6117273+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:34.7327158+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:35.0151856+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:35.1269377+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:35.399636+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:35.6497402+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:35.9362019+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:36.2002346+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:36.2604595+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:36.7025062+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:37.4977028+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:38.1807945+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:38.4735324+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:38.6815995+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:38.9189719+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:38.9740273+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:39.3852985+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:39.6520307+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:39.8520181+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:40.2058315+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:40.7667481+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:41.0043734+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:41.1051397+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:41.2108333+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:41.7122447+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:41.7592082+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:42.2470512+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:42.738328+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:42.788079+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:43.022771+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:43.340135+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:44.7540087+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:45.3350882+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:45.3738945+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:45.786888+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:47.5851977+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:47.9061995+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:48.8503185+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:48.9862035+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:49.3888504+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:49.4368765+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:50.3654898+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:50.5251874+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:50.8708092+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:50.8839982+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:50.9860791+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:51.4657006+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:52.0272893+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:52.0523625+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:52.4508776+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:53.0462418+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:53.2874973+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.1127327+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.2739164+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.4206833+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.5336642+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.5481318+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.6111715+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.721937+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.7303316+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:54.8449587+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:55.856159+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:57.3008926+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:57.8673728+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:57.8829388+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:08:59.0825018+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:00.2351286+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:00.4020764+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:01.2338111+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:01.7917853+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:02.504471+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:02.6320644+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:03.0601147+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:03.3556864+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:03.3841632+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:04.7878586+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:05.0045361+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:07.567632+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:08.3030905+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:12.0024736+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:12.7460902+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:14.8466973+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:16.0742599+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
+{"time":"2025-12-15T17:09:18.0146681+07:00","level":"INFO","msg":"[Async job] End process job","meta":"example.go:60"}
