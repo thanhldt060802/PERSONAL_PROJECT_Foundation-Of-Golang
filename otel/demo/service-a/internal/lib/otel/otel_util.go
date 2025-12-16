@@ -1,11 +1,14 @@
 package otel
 
 import (
+	"context"
 	"log"
 	"math"
+	"net"
 	"os"
 
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // stdLog is the standard logger for internal logging within the otel package
@@ -117,4 +120,65 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 	}
 
 	return attrs
+}
+
+// getTraceInfo extracts the trace ID and span ID from the context.
+// Returns empty strings if no valid trace context is found.
+func getTraceInfo(ctx context.Context) (string, string) {
+	span := trace.SpanFromContext(ctx)
+	if span == nil || !span.SpanContext().IsValid() {
+		return "", ""
+	}
+	spanContext := span.SpanContext()
+	return spanContext.TraceID().String(), spanContext.SpanID().String()
+}
+
+// getClientIpFromCtx retrieves the client IP address from the context.
+// Returns an empty string if the context is nil or the IP is not found.
+func getClientIpFromCtx(ctx context.Context) string {
+	if ctx == nil {
+		return ""
+	}
+
+	ip, _ := ctx.Value(ClientIP).(string)
+	return ip
+}
+
+// getLocalIP extracts the IP address.
+// Returns empty strings if no IP is found.
+func getLocalIP() string {
+	ifaces, err := net.Interfaces()
+	if err != nil {
+		return ""
+	}
+
+	for _, iface := range ifaces {
+		if iface.Flags&net.FlagUp == 0 ||
+			iface.Flags&net.FlagLoopback != 0 {
+			continue
+		}
+
+		addrs, err := iface.Addrs()
+		if err != nil {
+			continue
+		}
+
+		for _, addr := range addrs {
+			var ip net.IP
+			switch v := addr.(type) {
+			case *net.IPNet:
+				ip = v.IP
+			case *net.IPAddr:
+				ip = v.IP
+			}
+			if ip == nil || ip.IsLoopback() {
+				continue
+			}
+			if ip.To4() != nil {
+				return ip.String()
+			}
+		}
+	}
+
+	return ""
 }

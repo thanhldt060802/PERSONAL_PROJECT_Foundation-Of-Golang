@@ -12,11 +12,11 @@ import (
 	"time"
 
 	"go.opentelemetry.io/contrib/bridges/otelslog"
+	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
 	"go.opentelemetry.io/otel/sdk/log"
 	"go.opentelemetry.io/otel/sdk/resource"
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
-	"go.opentelemetry.io/otel/trace"
 )
 
 var (
@@ -66,6 +66,7 @@ func initLogger(config *ObserverConfig) func(ctx context.Context) {
 			semconv.SchemaURL,
 			semconv.ServiceName(config.ServiceName),
 			semconv.ServiceVersion(config.ServiceVersion),
+			attribute.String("service.instance.ip", getLocalIP()),
 		)
 
 		// Create logger provider with batch processor for efficient log export
@@ -278,26 +279,4 @@ func logWithMeta(ctx context.Context, level slog.Level, format string, args ...a
 		msg,
 		slog.String("meta", meta),
 	)
-}
-
-// getClientIpFromCtx retrieves the client IP address from the context.
-// Returns an empty string if the context is nil or the IP is not found.
-func getClientIpFromCtx(ctx context.Context) string {
-	if ctx == nil {
-		return ""
-	}
-
-	ip, _ := ctx.Value(ClientIP).(string)
-	return ip
-}
-
-// getTraceInfo extracts the trace ID and span ID from the context.
-// Returns empty strings if no valid trace context is found.
-func getTraceInfo(ctx context.Context) (string, string) {
-	span := trace.SpanFromContext(ctx)
-	if span == nil || !span.SpanContext().IsValid() {
-		return "", ""
-	}
-	spanContext := span.SpanContext()
-	return spanContext.TraceID().String(), spanContext.SpanID().String()
 }
