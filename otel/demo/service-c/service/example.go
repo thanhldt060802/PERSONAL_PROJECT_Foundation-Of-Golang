@@ -23,7 +23,7 @@ func NewExampleService() IExampleService {
 
 func (s *ExampleService) InitSubscriber() {
 	pubsub.RedisSubInstance.Subscribe(context.Background(), "otel.pubsub.testing", func(message *model.ExamplePubSubMessage) {
-		subCtx, span := otel.NewHybridSpan(message.ExtractContext(), "SubscribeMessage")
+		subCtx, span := otel.NewSpan(message.ExtractContext(), "SubscribeMessage")
 		defer span.Done()
 
 		span.AddEvent("Subscribe message from Redis", map[string]any{

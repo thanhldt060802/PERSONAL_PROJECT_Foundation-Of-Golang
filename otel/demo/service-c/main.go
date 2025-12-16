@@ -44,6 +44,7 @@ func init() {
 
 	otelObserverConfig := otel.ObserverConfig{
 		ServiceName:              viper.GetString("app.name"),
+		ServiceVersion:           viper.GetString("app.version"),
 		EndPoint:                 viper.GetString("observer.end_point"),
 		LocalLogFile:             viper.GetString("observer.local_log_file"),
 		LocalLogLevel:            otel.LogLevel(viper.GetString("observer.local_log_level")),

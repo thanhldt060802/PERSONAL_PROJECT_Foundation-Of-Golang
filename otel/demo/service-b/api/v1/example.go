@@ -55,7 +55,7 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*model.Example], err error) {
-	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Handler")
+	ctx, span := otel.NewSpan(ctx, "GetExampleById-Handler")
 	defer span.Done()
 
 	otel.InfoLog(ctx, "[Handler layer] - Get Example by example_uuid='%s'", req.ExampleUuid)
@@ -73,7 +73,7 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 func (handler *apiExample) PubSub_GetById(ctx context.Context, req *struct {
 	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
 }) (res *response.GenericResponse[*string], err error) {
-	ctx, span := otel.NewHybridSpan(ctx, "PubSub_GetExampleById-Handler")
+	ctx, span := otel.NewSpan(ctx, "PubSub_GetExampleById-Handler")
 	defer span.Done()
 
 	result, err := handler.exampleService.PubSub_GetById(ctx, req.ExampleUuid)

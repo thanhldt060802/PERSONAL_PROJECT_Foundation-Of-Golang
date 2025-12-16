@@ -28,10 +28,12 @@ func NewExampleService() IExampleService {
 }
 
 func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Service")
+	ctx, span := otel.NewSpan(ctx, "GetExampleById-Service")
 	defer span.Done()
 
 	otel.InfoLog(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
+
+	otel.RecordCounter(ctx, constant.HTTP_REQUESTS_TOTAL, 1, nil)
 
 	if rand.IntN(3) == 0 {
 		err := errors.New("simulate error")
@@ -40,10 +42,8 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 		return nil, apperror.ErrInternalServerError(err, "Failed to preprocess", "ERR_PREPROCESS")
 	}
 
-	otel.RecordCounter(ctx, constant.HTTP_REQUESTS_TOTAL, 1, nil)
-
 	go func(ctx context.Context) {
-		_, span := otel.NewHybridSpan(ctx, "AsyncJob")
+		ctx, span := otel.NewSpan(ctx, "AsyncJob")
 		defer span.Done()
 
 		otel.RecordUpDownCounter(span.Context(), constant.ACTIVE_JOBS, 1, nil)
@@ -72,7 +72,7 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 }
 
 func (s *ExampleService) PubSub_GetById(ctx context.Context, exampleUuid string) (string, error) {
-	ctx, span := otel.NewHybridSpan(ctx, "PubSub_GetExampleById-Service")
+	ctx, span := otel.NewSpan(ctx, "PubSub_GetExampleById-Service")
 	defer span.Done()
 
 	message := model.ExamplePubSubMessage{

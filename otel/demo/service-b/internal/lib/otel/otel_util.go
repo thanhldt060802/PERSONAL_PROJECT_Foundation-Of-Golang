@@ -8,9 +8,24 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 )
 
+// stdLog is the standard logger for internal logging within the otel package
 var stdLog = log.New(os.Stdout, "[otel] ", log.LstdFlags)
 
-// Accept for String, StringSlice, Bool, BoolSlice, Int, IntSlice, Int64, Int64Slice, Float64, Float64Slice.
+// mapToAttribute converts a map of arbitrary values to OpenTelemetry attributes.
+// It handles type conversion and validation for supported OpenTelemetry attribute types.
+// Unsupported types are logged and dropped.
+//
+// Parameters:
+//   - attrMap: Map of attribute keys and values
+//
+// Returns:
+//   - []attribute.KeyValue: Slice of OpenTelemetry attributes
+//
+// Supported types:
+//   - string, bool
+//   - int, int64, uint, uint64
+//   - float32, float64
+//   - []string, []bool, []int, []int64, []float64
 func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 	if len(attrMap) == 0 {
 		return nil
@@ -25,14 +40,19 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 
 		switch val := v.(type) {
 
+		// Scalar string type
 		case string:
 			{
 				attrs = append(attrs, attribute.String(k, val))
 			}
+
+		// Boolean type
 		case bool:
 			{
 				attrs = append(attrs, attribute.Bool(k, val))
 			}
+
+		// Integer types
 		case int:
 			{
 				attrs = append(attrs, attribute.Int64(k, int64(val)))
@@ -47,11 +67,13 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 			}
 		case uint64:
 			{
+				// Only convert if within int64 range
 				if val <= math.MaxInt64 {
 					attrs = append(attrs, attribute.Int64(k, int64(val)))
 				}
 			}
 
+		// Floating-point types
 		case float32:
 			{
 				attrs = append(attrs, attribute.Float64(k, float64(val)))
@@ -61,6 +83,7 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 				attrs = append(attrs, attribute.Float64(k, val))
 			}
 
+		// Slice types
 		case []string:
 			{
 				attrs = append(attrs, attribute.StringSlice(k, val))
@@ -71,6 +94,7 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 			}
 		case []int:
 			{
+				// Convert []int to []int64
 				convVal := make([]int64, len(val))
 				for i := range val {
 					convVal[i] = int64(val[i])
@@ -86,6 +110,7 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 				attrs = append(attrs, attribute.Float64Slice(k, val))
 			}
 
+		// Unsupported type
 		default:
 			stdLog.Printf("Pair[key:value] with value type is not allowed, key '%s' will be dropped", k)
 		}

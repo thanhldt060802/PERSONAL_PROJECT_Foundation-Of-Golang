@@ -60,7 +60,7 @@ func (repo *ExampleRepo) GenerateData(ctx context.Context) {
 }
 
 func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewHybridSpan(ctx, "GetExampleById-Repository")
+	ctx, span := otel.NewSpan(ctx, "GetExampleById-Repository")
 	defer span.Done()
 
 	otel.InfoLog(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
