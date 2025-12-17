@@ -1,6 +1,7 @@
 {
     "app": {
-        "name": "service-c"
+        "name": "service-c",
+        "version": "v1.0.1"
     },
     "observer": {
         "end_point": "192.168.1.38:4318",

@@ -4,14 +4,14 @@ import "thanhldt060802/internal/lib/otel"
 
 var (
 	// Counter
-	HTTP_REQUESTS_TOTAL otel.MetricName = "http_requests_total"
+	HTTP_REQUESTS otel.MetricName = "http_requests"
 
 	// UpDownCounter
 	ACTIVE_JOBS otel.MetricName = "active_jobs"
 
 	// Histogram
-	JOB_PROCESS_LATENCY_SEC otel.MetricName = "job_process_latency_sec"
+	JOB_PROCESS_DATA_SIZE otel.MetricName = "job_process_data_szie"
 
 	// Gauge
-	CPU_USAGE_PERCENT otel.MetricName = "service_a_cpu_usage_percent"
+	CPU_USAGE otel.MetricName = "cpu_usage"
 )

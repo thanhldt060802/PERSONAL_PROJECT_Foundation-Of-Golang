@@ -33,7 +33,7 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 
 	otel.InfoLog(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
 
-	otel.RecordCounter(ctx, constant.HTTP_REQUESTS_TOTAL, 1, nil)
+	otel.RecordCounter(ctx, constant.HTTP_REQUESTS, 1, nil)
 
 	if rand.IntN(3) == 0 {
 		err := errors.New("simulate error")
@@ -51,9 +51,8 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 
 		N := 3 + rand.IntN(3)
 		for i := 0; i < N; i++ {
-			latency := 10 + rand.IntN(10)
-			time.Sleep(time.Duration(latency) * time.Second)
-			otel.RecordHistogram(ctx, constant.JOB_PROCESS_LATENCY_SEC, float64(latency), nil)
+			time.Sleep(time.Duration(10+rand.IntN(10)) * time.Second)
+			otel.RecordHistogram(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
 		}
 
 		otel.RecordUpDownCounter(ctx, constant.ACTIVE_JOBS, -1, nil)

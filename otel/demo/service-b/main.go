@@ -68,25 +68,27 @@ func init() {
 	{
 		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
 			Type:        otel.METRIC_TYPE_COUNTER,
-			Name:        constant.HTTP_REQUESTS_TOTAL,
-			Description: "Total number of HTTP requests",
+			Name:        constant.HTTP_REQUESTS,
+			Description: "Number of HTTP requests (count)",
+			Unit:        "1",
 		})
 		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
 			Type:        otel.METRIC_TYPE_UP_DOWN_COUNTER,
 			Name:        constant.ACTIVE_JOBS,
-			Description: "Current running job",
+			Description: "Current running job (count)",
+			Unit:        "1",
 		})
 		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
 			Type:        otel.METRIC_TYPE_HISTOGRAM,
-			Name:        constant.JOB_PROCESS_LATENCY_SEC,
-			Description: "Job process latency (second)",
-			Unit:        "s",
+			Name:        constant.JOB_PROCESS_DATA_SIZE,
+			Description: "Job process data size (byte)",
+			Unit:        "By",
 		})
 		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
 			Type:        otel.METRIC_TYPE_GAUGE,
-			Name:        constant.CPU_USAGE_PERCENT,
+			Name:        constant.CPU_USAGE,
 			Description: "CPU usage (%)",
-			Unit:        "%",
+			Unit:        "1",
 		})
 	}
 	ShutdownObserver = otel.NewOtelObserver(&otelObserverConfig)

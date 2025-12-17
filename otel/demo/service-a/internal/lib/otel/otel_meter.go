@@ -81,7 +81,7 @@ func initMeter(config *ObserverConfig) func(ctx context.Context) {
 			semconv.SchemaURL,
 			semconv.ServiceName(config.ServiceName),
 			semconv.ServiceVersion(config.ServiceVersion),
-			attribute.String("service.instance.ip", getLocalIP()),
+			attribute.String("host.ip", getLocalIP()),
 		)
 
 		// Create meter provider with periodic reader for automatic metric collection

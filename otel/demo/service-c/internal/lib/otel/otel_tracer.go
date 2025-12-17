@@ -53,7 +53,7 @@ func initTracer(config *ObserverConfig) func(ctx context.Context) {
 			semconv.SchemaURL,
 			semconv.ServiceName(config.ServiceName),
 			semconv.ServiceVersion(config.ServiceVersion),
-			attribute.String("service.instance.ip", getLocalIP()),
+			attribute.String("host.ip", getLocalIP()),
 		)
 
 		// Create tracer provider with batch span processor for efficient export
