@@ -125,7 +125,7 @@ func (s *ExampleService) PubSub_GetById(ctx context.Context, exampleUuid string)
 	defer span.Done()
 
 	message := model.ExamplePubSubMessage{
-		TraceCarrier: span.ExportTraceCarrier(),
+		TraceCarrier: otel.ExportTraceCarrier(ctx),
 		ExampleUuid:  exampleUuid,
 	}
 

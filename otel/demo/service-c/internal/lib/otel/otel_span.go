@@ -32,14 +32,15 @@ import (
 //	    span.SetError(err)
 //	}
 func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
-	ctxSpan, coreSpan := tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
+	spanCtx, coreSpan := tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
 
 	span := Span{
 		coreSpan:       coreSpan,
-		ctx:            ctxSpan,
+		parentCtx:      ctx,
+		spanCtx:        spanCtx,
 		spanAttributes: make(map[string]any),
 	}
-	return ctxSpan, &span
+	return spanCtx, &span
 }
 
 // Span is a wrapper around OpenTelemetry's trace.Span that provides
@@ -47,8 +48,9 @@ func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
 type Span struct {
 	coreSpan trace.Span // The underlying OpenTelemetry span
 
-	ctx context.Context // Context containing this span
-	err error           // Error to be recorded when span ends
+	parentCtx context.Context // Parent context of this span
+	spanCtx   context.Context // Context containing this span
+	err       error           // Error to be recorded when span ends
 
 	spanAttributes map[string]any // Attributes to be added to the span
 }
@@ -73,10 +75,16 @@ func (span *Span) Done() {
 	}
 }
 
+// ParentContext returns the parent context of this span.
+// Use this context for same level operations to maintain trace hierarchy.
+func (span *Span) ParentContext() context.Context {
+	return span.spanCtx
+}
+
 // Context returns the context containing this span.
-// Use this context for child operations to maintain trace hierarchy.
+// Use this context for child level operations to maintain trace hierarchy.
 func (span *Span) Context() context.Context {
-	return span.ctx
+	return span.spanCtx
 }
 
 // SetError sets an error to be recorded when the span ends.
@@ -114,18 +122,18 @@ func (span *Span) AddEvent(eventName string, eventAttributes map[string]any) {
 type TraceCarrier propagation.MapCarrier
 
 // ExportTraceCarrier exports the trace context into a carrier format
-// that can be transmitted to other services (e.g., via HTTP headers).
+// that can be transmitted to other services by Pub/Sub environment.
 //
 // Returns:
 //   - TraceCarrier: Serialized trace context
 //
 // Example:
 //
-//	carrier := span.ExportTraceCarrier()
-//	// Send carrier in HTTP request headers
-func (span *Span) ExportTraceCarrier() TraceCarrier {
+//	carrier := ExportTraceCarrier(ctx)
+//	// Assign to payload and publish via Pub/Sub environment
+func ExportTraceCarrier(ctx context.Context) TraceCarrier {
 	carrier := propagation.MapCarrier{}
-	otel.GetTextMapPropagator().Inject(span.ctx, carrier)
+	otel.GetTextMapPropagator().Inject(ctx, carrier)
 
 	return TraceCarrier(carrier)
 }
