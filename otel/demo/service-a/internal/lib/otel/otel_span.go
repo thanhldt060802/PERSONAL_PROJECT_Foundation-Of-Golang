@@ -78,7 +78,7 @@ func (span *Span) Done() {
 // ParentContext returns the parent context of this span.
 // Use this context for same level operations to maintain trace hierarchy.
 func (span *Span) ParentContext() context.Context {
-	return span.spanCtx
+	return span.parentCtx
 }
 
 // Context returns the context containing this span.
