@@ -6,6 +6,7 @@ import (
 	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
+	internalOtel "thanhldt060802/internal/otel"
 	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/middleware/auth"
@@ -16,6 +17,7 @@ import (
 	"thanhldt060802/service"
 	"time"
 
+	"github.com/redis/go-redis/v9"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/cardinalby/hureg"
@@ -92,6 +94,12 @@ func init() {
 		})
 	}
 	ShutdownObserver = otel.NewOtelObserver(&otelObserverConfig)
+
+	internalOtel.OtelCache = otel.NewOtelCacheWithRedisClient(redis.NewClient(&redis.Options{
+		Addr:     viper.GetString("observer_redis.address"),
+		DB:       viper.GetInt("observer_redis.database"),
+		Password: viper.GetString("observer_redis.password"),
+	}))
 }
 
 func main() {

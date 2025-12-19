@@ -178,14 +178,12 @@ func (h *multiHandler) Enabled(ctx context.Context, level slog.Level) bool {
 // then dispatches it to all registered handlers
 func (h *multiHandler) Handle(ctx context.Context, record slog.Record) error {
 	traceID, spanID := getTraceInfo(ctx)
-	clientIP := getClientIpFromCtx(ctx)
 
 	// Clone and enrich the record with additional attributes
 	r := record.Clone()
 	r.AddAttrs(
 		slog.String("trace_id", traceID),
 		slog.String("span_id", spanID),
-		slog.String("client_ip", clientIP),
 	)
 
 	// Dispatch to all handlers

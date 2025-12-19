@@ -10,6 +10,11 @@
         "local_log_level": "info",
         "metric_collection_interval_sec": 5
     },
+    "observer_redis": {
+        "address": "localhost:6379",
+        "database": 1,
+        "password": "12345678"
+    },
     "db": {
         "host": "localhost",
         "port": 5432,

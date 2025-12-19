@@ -133,17 +133,6 @@ func getTraceInfo(ctx context.Context) (string, string) {
 	return spanContext.TraceID().String(), spanContext.SpanID().String()
 }
 
-// getClientIpFromCtx retrieves the client IP address from the context.
-// Returns an empty string if the context is nil or the IP is not found.
-func getClientIpFromCtx(ctx context.Context) string {
-	if ctx == nil {
-		return ""
-	}
-
-	ip, _ := ctx.Value(ClientIP).(string)
-	return ip
-}
-
 // getLocalIP extracts the IP address.
 // Returns empty strings if no IP is found.
 func getLocalIP() string {

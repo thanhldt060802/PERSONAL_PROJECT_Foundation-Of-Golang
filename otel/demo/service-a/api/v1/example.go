@@ -76,6 +76,19 @@ func RegisterAPIExample(api hureg.APIGen, exampleService service.IExampleService
 		},
 		handler.Hybrid_GetById,
 	)
+
+	hureg.Register(
+		apiGroup,
+		huma.Operation{
+			OperationID: "bulk-async-get-example-by-id",
+			Method:      http.MethodGet,
+			Path:        "/{example_uuid}/bulk-async",
+			Security:    authMdw.DefaultAuthSecurity,
+			Description: "Get example by id (bulk async).",
+			Middlewares: huma.Middlewares{authMdw.NewAuthMiddleware(api)},
+		},
+		handler.BulkAsync_GetById,
+	)
 }
 
 func (handler *apiExample) GetById(ctx context.Context, req *struct {
@@ -135,6 +148,22 @@ func (handler *apiExample) Hybrid_GetById(ctx context.Context, req *struct {
 	defer span.Done()
 
 	result, err := handler.exampleService.Hybrid_GetById(ctx, req.ExampleUuid)
+	if err != nil {
+		span.SetError(err)
+		return
+	}
+
+	res = response.Ok(&result)
+	return res, nil
+}
+
+func (handler *apiExample) BulkAsync_GetById(ctx context.Context, req *struct {
+	ExampleUuid string `path:"example_uuid" format:"uuid" doc:"Example uuid"`
+}) (res *response.GenericResponse[*string], err error) {
+	ctx, span := otel.NewSpan(ctx, "BulkAsync_GetExampleById-Handler")
+	defer span.Done()
+
+	result, err := handler.exampleService.BulkAsync_GetById(ctx, req.ExampleUuid)
 	if err != nil {
 		span.SetError(err)
 		return

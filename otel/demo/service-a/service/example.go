@@ -11,6 +11,7 @@ import (
 	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
+	internalOtel "thanhldt060802/internal/otel"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
 	"time"
@@ -22,6 +23,7 @@ type (
 		CrossService_GetById(ctx context.Context, exampleUuid string) (*model.Example, error)
 		PubSub_GetById(ctx context.Context, exampleUuid string) (string, error)
 		Hybrid_GetById(ctx context.Context, exampleUuid string) (string, error)
+		BulkAsync_GetById(ctx context.Context, exampleUuid string) (string, error)
 	}
 	ExampleService struct {
 	}
@@ -55,7 +57,7 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 
 		N := 3 + rand.IntN(3)
 		for i := 0; i < N; i++ {
-			time.Sleep(time.Duration(10+rand.IntN(10)) * time.Second)
+			time.Sleep(time.Duration(3+rand.IntN(3)) * time.Second)
 			otel.RecordHistogram(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
 		}
 
@@ -186,4 +188,50 @@ func (s *ExampleService) Hybrid_GetById(ctx context.Context, exampleUuid string)
 	result := resWrapper.Data
 
 	return result, nil
+}
+
+func (s *ExampleService) BulkAsync_GetById(ctx context.Context, exampleUuid string) (string, error) {
+	for i := 1; i <= 5; i++ {
+		ctx, span := otel.NewSpan(context.Background(), "BulkAsync_GetExampleById-Service")
+		defer span.Done()
+
+		key := fmt.Sprintf("%s-%d", exampleUuid, i)
+		if err := internalOtel.OtelCache.SetTraceCarrierFromGroup("my-job", key, otel.ExportTraceCarrier(ctx)); err != nil {
+			otel.ErrorLog(ctx, "Failed to set cache trace carrier: %v", err)
+		}
+
+		go func(exampleUuid string, count int) {
+			ctx, span := otel.NewSpan(context.Background(), "BulkAsync_GetExampleById-Worker")
+
+			key := fmt.Sprintf("%s-%d", exampleUuid, i)
+			traceCarrier, err := internalOtel.OtelCache.GetTraceCarrierFromGroup("my-job", key)
+			if err != nil {
+				otel.ErrorLog(ctx, "Failed to get cache trace carrier: %v", err)
+			} else {
+				ctx, span = otel.NewSpan(traceCarrier.ExtractContext(), "BulkAsync_GetExampleById-Worker")
+			}
+
+			defer span.Done()
+
+			time.Sleep(5 * time.Second)
+
+			example, err := repository.ExampleRepo.GetById(ctx, exampleUuid)
+			if err != nil {
+				span.SetError(err)
+				return
+			}
+
+			if example == nil {
+				fmt.Println("Example example_uuid='" + exampleUuid + "' not found")
+			} else {
+				fmt.Println(*example)
+			}
+
+			if err := internalOtel.OtelCache.DeleteTraceCarrierFromGroup("my-job", key); err != nil {
+				otel.ErrorLog(ctx, "Failed to delete cache trace carrier: %v", err)
+			}
+		}(exampleUuid, i)
+	}
+
+	return "success", nil
 }
