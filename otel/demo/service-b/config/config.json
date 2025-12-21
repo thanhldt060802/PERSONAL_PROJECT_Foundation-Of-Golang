@@ -5,7 +5,7 @@
         "port": 8002
     },
     "observer": {
-        "end_point": "192.168.1.38:4318",
+        "end_point": "sdvasdvasdv",
         "local_log_file": "tmp/console.log",
         "local_log_level": "info",
         "metric_collection_interval_sec": 5

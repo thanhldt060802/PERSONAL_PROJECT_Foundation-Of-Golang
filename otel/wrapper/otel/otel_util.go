@@ -11,24 +11,8 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// stdLog is the standard logger for internal logging within the otel package
 var stdLog = log.New(os.Stdout, "[otel] ", log.LstdFlags)
 
-// mapToAttribute converts a map of arbitrary values to OpenTelemetry attributes.
-// It handles type conversion and validation for supported OpenTelemetry attribute types.
-// Unsupported types are logged and dropped.
-//
-// Parameters:
-//   - attrMap: Map of attribute keys and values
-//
-// Returns:
-//   - []attribute.KeyValue: Slice of OpenTelemetry attributes
-//
-// Supported types:
-//   - string, bool
-//   - int, int64, uint, uint64
-//   - float32, float64
-//   - []string, []bool, []int, []int64, []float64
 func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 	if len(attrMap) == 0 {
 		return nil
@@ -122,8 +106,6 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 	return attrs
 }
 
-// getTraceInfo extracts the trace ID and span ID from the context.
-// Returns empty strings if no valid trace context is found.
 func getTraceInfo(ctx context.Context) (string, string) {
 	span := trace.SpanFromContext(ctx)
 	if span == nil || !span.SpanContext().IsValid() {
@@ -133,8 +115,6 @@ func getTraceInfo(ctx context.Context) (string, string) {
 	return spanContext.TraceID().String(), spanContext.SpanID().String()
 }
 
-// getLocalIP extracts the IP address.
-// Returns empty strings if no IP is found.
 func getLocalIP() string {
 	ifaces, err := net.Interfaces()
 	if err != nil {
