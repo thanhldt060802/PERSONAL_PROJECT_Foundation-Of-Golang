@@ -16,28 +16,35 @@ import (
 )
 
 var (
-	meter      metric.Meter
+	// meter is global Meter instance for metric collecting
+	meter metric.Meter
+	// mCollector is global metric manager for all registered metric
 	mCollector *metricCollector
 )
 
+// Default Meter settings
 const (
 	defaultMeterInterval = time.Millisecond * 10000
 )
 
+// MetricName is a type-safe metric name identifier
 type MetricName string
 
 func (mName MetricName) String() string {
 	return string(mName)
 }
 
+// Get returns the metric name with prefix
 func (mName MetricName) Get() MetricName {
 	return METRIC_NAME_PREFIX + mName
 }
 
 const (
+	// Prefix to avoid naming conflicts
 	METRIC_NAME_PREFIX MetricName = "custom_"
 )
 
+// MetricType defines the type of metric to collect
 type MetricType string
 
 const (
@@ -47,6 +54,7 @@ const (
 	METRIC_TYPE_GAUGE           MetricType = "gauge"           // Point-in-time value
 )
 
+// MeterConfig configures the metrics collection component
 type MeterConfig struct {
 	ServiceName    string            // Name of the service
 	ServiceVersion string            // Version of the service
@@ -55,9 +63,11 @@ type MeterConfig struct {
 	HttpHeader     map[string]string // Additional HTTP headers
 
 	MetricCollectionInterval time.Duration // Interval for collecting and exporting metrics
-	metricDefs               []*MetricDef  // List of metric definitions to register
+	MetricDefs               []*MetricDef  // List of metric definitions to register
 }
 
+// initMeter initializes the global meter and returns a cleanup function.
+// Metrics are collected periodically and exported via OTLP HTTP.
 func initMeter(config *MeterConfig) func(ctx context.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -99,7 +109,7 @@ func initMeter(config *MeterConfig) func(ctx context.Context) {
 	mCollector = newMetricCollector()
 
 	// Register all configured metrics
-	for _, metricDef := range config.metricDefs {
+	for _, metricDef := range config.MetricDefs {
 		switch metricDef.Type {
 		case METRIC_TYPE_COUNTER:
 			{
@@ -140,6 +150,7 @@ func initMeter(config *MeterConfig) func(ctx context.Context) {
 	}
 }
 
+// metricCollector manages all registered metrics
 type metricCollector struct {
 	counters       map[MetricName]metric.Int64Counter
 	upDownCounters map[MetricName]metric.Int64UpDownCounter
@@ -147,12 +158,14 @@ type metricCollector struct {
 	gauges         map[MetricName]*observableGaugeState
 }
 
+// gaugeValue stores the current gauge value with metadata
 type gaugeValue struct {
 	value     float64
 	attrs     []attribute.KeyValue
 	updatedAt time.Time
 }
 
+// observableGaugeState wraps an observable gauge with its current value
 type observableGaugeState struct {
 	instrument metric.Float64ObservableGauge
 	currentVal *gaugeValue
@@ -168,15 +181,15 @@ func newMetricCollector() *metricCollector {
 	}
 }
 
-type (
-	MetricDef struct {
-		Type        MetricType
-		Name        MetricName
-		Description string
-		Unit        string
-	}
-)
+// MetricDef defines a metric to be registered
+type MetricDef struct {
+	Type        MetricType
+	Name        MetricName
+	Description string
+	Unit        string
+}
 
+// registerCounter creates and registers a counter metric
 func (mc *metricCollector) registerCounter(metricDef *MetricDef) error {
 	if _, exists := mc.counters[metricDef.Name.Get()]; exists {
 		return fmt.Errorf("counter '%s' already exists", metricDef.Name)
@@ -198,6 +211,7 @@ func (mc *metricCollector) registerCounter(metricDef *MetricDef) error {
 	return nil
 }
 
+// registerUpDownCounter creates and registers an up-down counter metric
 func (mc *metricCollector) registerUpDownCounter(metricDef *MetricDef) error {
 	if _, exists := mc.upDownCounters[metricDef.Name.Get()]; exists {
 		return fmt.Errorf("updowncounter '%s' already exists", metricDef.Name)
@@ -219,6 +233,7 @@ func (mc *metricCollector) registerUpDownCounter(metricDef *MetricDef) error {
 	return nil
 }
 
+// registerHistogram creates and registers a histogram metric
 func (mc *metricCollector) registerHistogram(metricDef *MetricDef) error {
 	if _, exists := mc.histograms[metricDef.Name.Get()]; exists {
 		return fmt.Errorf("histogram '%s' already exists", metricDef.Name)
@@ -240,6 +255,7 @@ func (mc *metricCollector) registerHistogram(metricDef *MetricDef) error {
 	return nil
 }
 
+// registerGauge creates and registers a gauge metric with callback
 func (mc *metricCollector) registerGauge(metricDef *MetricDef) error {
 	if _, exists := mc.gauges[metricDef.Name.Get()]; exists {
 		return fmt.Errorf("gauge '%s' already exists", metricDef.Name)
@@ -283,6 +299,14 @@ func (mc *metricCollector) registerGauge(metricDef *MetricDef) error {
 	return nil
 }
 
+// Context-aware metric recording functions
+
+// RecordCounterWithCtx increments a counter by the given value.
+// Counter values must be non-negative.
+//
+// Example:
+//
+//	otel.RecordCounterWithCtx(ctx, "requests", 1, map[string]any{"method": "GET"})
 func RecordCounterWithCtx(ctx context.Context, name MetricName, value int64, metricAttrs map[string]any) {
 	counter, ok := mCollector.counters[name.Get()]
 	if !ok {
@@ -299,6 +323,13 @@ func RecordCounterWithCtx(ctx context.Context, name MetricName, value int64, met
 	counter.Add(ctx, value, metric.WithAttributes(attrs...))
 }
 
+// RecordUpDownCounterWithCtx adds the value to an up-down counter.
+// Value can be positive (increment) or negative (decrement).
+//
+// Example:
+//
+//	otel.RecordUpDownCounterWithCtx(ctx, "connections", 1, map[string]any{"type": "websocket"})
+//	otel.RecordUpDownCounterWithCtx(ctx, "connections", -1, map[string]any{"type": "websocket"})
 func RecordUpDownCounterWithCtx(ctx context.Context, name MetricName, value int64, metricAttrs map[string]any) {
 	upDownCounter, ok := mCollector.upDownCounters[name.Get()]
 	if !ok {
@@ -310,6 +341,12 @@ func RecordUpDownCounterWithCtx(ctx context.Context, name MetricName, value int6
 	upDownCounter.Add(ctx, value, metric.WithAttributes(attrs...))
 }
 
+// RecordHistogramWithCtx records a value in a histogram.
+// Histograms aggregate value distributions (e.g., latency percentiles).
+//
+// Example:
+//
+//	otel.RecordHistogramWithCtx(ctx, "latency", 123.45, map[string]any{"endpoint": "/api/users"})
 func RecordHistogramWithCtx(ctx context.Context, name MetricName, value float64, metricAttrs map[string]any) {
 	histogram, ok := mCollector.histograms[name.Get()]
 	if !ok {
@@ -321,6 +358,12 @@ func RecordHistogramWithCtx(ctx context.Context, name MetricName, value float64,
 	histogram.Record(ctx, value, metric.WithAttributes(attrs...))
 }
 
+// RecordGauge updates a gauge to the given value.
+// Gauges represent current state (e.g., CPU usage, queue size).
+//
+// Example:
+//
+//	otel.RecordGauge("memory_usage", 75.5, map[string]any{"host": "server-1"})
 func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
 	gaugeState, ok := mCollector.gauges[name.Get()]
 	if !ok {
@@ -339,14 +382,20 @@ func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
 	gaugeState.currentVal.updatedAt = time.Now()
 }
 
+// Context-less metric recording functions
+// Use these when context is not available
+
+// RecordCounter increments a counter without trace context
 func RecordCounter(name MetricName, value int64, metricAttrs map[string]any) {
 	RecordCounterWithCtx(context.Background(), name, value, metricAttrs)
 }
 
+// RecordUpDownCounter updates an up-down counter without trace context
 func RecordUpDownCounter(name MetricName, value int64, metricAttrs map[string]any) {
 	RecordUpDownCounterWithCtx(context.Background(), name, value, metricAttrs)
 }
 
+// RecordHistogram records a histogram value without trace context
 func RecordHistogram(name MetricName, value float64, metricAttrs map[string]any) {
 	RecordHistogramWithCtx(context.Background(), name, value, metricAttrs)
 }

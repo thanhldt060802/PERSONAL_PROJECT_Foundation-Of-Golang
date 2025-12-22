@@ -6,7 +6,6 @@ import (
 	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
-	internalOtel "thanhldt060802/internal/otel"
 	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/middleware/auth"
@@ -17,7 +16,6 @@ import (
 	"thanhldt060802/service"
 	"time"
 
-	"github.com/redis/go-redis/v9"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/cardinalby/hureg"
@@ -29,7 +27,7 @@ import (
 	apiV1 "thanhldt060802/api/v1"
 )
 
-var ShutdownObserver func()
+var shutdownObserver func()
 
 func init() {
 	viper.SetConfigName("config")
@@ -59,51 +57,78 @@ func init() {
 	})
 	pubsub.RedisPubInstance = pubsub.NewRedisPub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	otelObserverConfig := otel.ObserverConfig{
-		ServiceName:              viper.GetString("app.name"),
-		ServiceVersion:           viper.GetString("app.version"),
-		EndPoint:                 viper.GetString("observer.end_point"),
-		LocalLogFile:             viper.GetString("observer.local_log_file"),
-		LocalLogLevel:            otel.LogLevel(viper.GetString("observer.local_log_level")),
-		MetricCollectionInterval: time.Duration(viper.GetInt("observer.metric_collection_interval_sec")) * time.Second,
-	}
-	{
-		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
-			Type:        otel.METRIC_TYPE_COUNTER,
-			Name:        constant.HTTP_REQUESTS,
-			Description: "Number of HTTP requests (count)",
-			Unit:        "1",
-		})
-		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
-			Type:        otel.METRIC_TYPE_UP_DOWN_COUNTER,
-			Name:        constant.ACTIVE_JOBS,
-			Description: "Current running job (count)",
-			Unit:        "1",
-		})
-		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
-			Type:        otel.METRIC_TYPE_HISTOGRAM,
-			Name:        constant.JOB_PROCESS_DATA_SIZE,
-			Description: "Job process data size (byte)",
-			Unit:        "By",
-		})
-		otelObserverConfig.AddMetricCollecter(&otel.MetricDef{
-			Type:        otel.METRIC_TYPE_GAUGE,
-			Name:        constant.CPU_USAGE,
-			Description: "CPU usage (%)",
-			Unit:        "1",
-		})
-	}
-	ShutdownObserver = otel.NewOtelObserver(&otelObserverConfig)
-
-	internalOtel.OtelCache = otel.NewOtelCacheWithRedisClient(redis.NewClient(&redis.Options{
-		Addr:     viper.GetString("observer_redis.address"),
-		DB:       viper.GetInt("observer_redis.database"),
-		Password: viper.GetString("observer_redis.password"),
-	}))
+	shutdownObserver = otel.NewOtelObserver(
+		otel.WithTracer(&otel.TracerConfig{
+			ServiceName:    viper.GetString("app.name"),
+			ServiceVersion: viper.GetString("app.version"),
+			EndPoint:       viper.GetString("observer.tracer.end_point"),
+			Insecure:       true,
+			HttpHeader: map[string]string{
+				"Authorization": "Bearer " + viper.GetString("observer.tracer.bearer_token"),
+			},
+		}),
+		otel.WithLogger(&otel.LoggerConfig{
+			ServiceName:    viper.GetString("app.name"),
+			ServiceVersion: viper.GetString("app.version"),
+			EndPoint:       viper.GetString("observer.logger.end_point"),
+			Insecure:       true,
+			HttpHeader: map[string]string{
+				"Authorization": "Bearer " + viper.GetString("observer.logger.bearer_token"),
+			},
+			LocalLogFile:  viper.GetString("observer.logger.local_log_file"),
+			LocalLogLevel: otel.LogLevel(viper.GetString("observer.local_log_level")),
+		}),
+		otel.WithMeter(&otel.MeterConfig{
+			ServiceName:    viper.GetString("app.name"),
+			ServiceVersion: viper.GetString("app.version"),
+			EndPoint:       viper.GetString("observer.meter.end_point"),
+			Insecure:       true,
+			HttpHeader: map[string]string{
+				"Authorization": "Bearer " + viper.GetString("observer.meter.bearer_token"),
+			},
+			MetricCollectionInterval: time.Duration(viper.GetInt("observer.metric_collection_interval_sec")) * time.Second,
+			MetricDefs: []*otel.MetricDef{
+				{
+					Type:        otel.METRIC_TYPE_COUNTER,
+					Name:        constant.HTTP_REQUESTS,
+					Description: "Number of HTTP requests (count)",
+					Unit:        "1",
+				},
+				{
+					Type:        otel.METRIC_TYPE_UP_DOWN_COUNTER,
+					Name:        constant.ACTIVE_JOBS,
+					Description: "Current running job (count)",
+					Unit:        "1",
+				},
+				{
+					Type:        otel.METRIC_TYPE_HISTOGRAM,
+					Name:        constant.JOB_PROCESS_DATA_SIZE,
+					Description: "Job process data size (byte)",
+					Unit:        "By",
+				},
+				{
+					Type:        otel.METRIC_TYPE_GAUGE,
+					Name:        constant.CPU_USAGE,
+					Description: "CPU usage (%)",
+					Unit:        "1",
+				},
+			},
+		}),
+		otel.WithRedisCache(&otel.RedisConfig{
+			Address:         viper.GetString("observer.cache_redis.address"),
+			Database:        viper.GetInt("observer.cache_redis.database"),
+			Password:        viper.GetString("observer.cache_redis.password"),
+			PoolSize:        20,
+			PoolTimeoutSec:  20,
+			IdleTimeoutSec:  10,
+			ReadTimeoutSec:  20,
+			WriteTimeoutSec: 20,
+		}),
+	)
 }
 
 func main() {
-	defer ShutdownObserver()
+	defer shutdownObserver()
 
 	router := server.NewHTTPServer()
 

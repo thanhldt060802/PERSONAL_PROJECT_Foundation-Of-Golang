@@ -11,7 +11,6 @@ import (
 	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
 	"thanhldt060802/internal/lib/otel"
-	internalOtel "thanhldt060802/internal/otel"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
 	"time"
@@ -37,13 +36,13 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 	ctx, span := otel.NewSpan(ctx, "GetExampleById-Service")
 	defer span.Done()
 
-	otel.InfoLog(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
+	otel.InfoLogWithCtx(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
 
-	otel.RecordCounter(ctx, constant.HTTP_REQUESTS, 1, nil)
+	otel.RecordCounterWithCtx(ctx, constant.HTTP_REQUESTS, 1, nil)
 
 	if rand.IntN(3) == 0 {
 		err := errors.New("simulate error")
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s'", exampleUuid)
 		span.SetError(err)
 		return nil, apperror.ErrInternalServerError(err, "Failed to preprocess", "ERR_PREPROCESS")
 	}
@@ -52,25 +51,25 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 		ctx, span := otel.NewSpan(ctx, "AsyncJob")
 		defer span.Done()
 
-		otel.RecordUpDownCounter(span.Context(), constant.ACTIVE_JOBS, 1, nil)
-		otel.InfoLog(ctx, "[Async job] Start process job")
+		otel.RecordUpDownCounterWithCtx(span.Context(), constant.ACTIVE_JOBS, 1, nil)
+		otel.InfoLogWithCtx(ctx, "[Async job] Start process job")
 
 		N := 3 + rand.IntN(3)
 		for i := 0; i < N; i++ {
 			time.Sleep(time.Duration(3+rand.IntN(3)) * time.Second)
-			otel.RecordHistogram(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
+			otel.RecordHistogramWithCtx(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
 		}
 
-		otel.RecordUpDownCounter(ctx, constant.ACTIVE_JOBS, -1, nil)
-		otel.InfoLog(ctx, "[Async job] End process job")
+		otel.RecordUpDownCounterWithCtx(ctx, constant.ACTIVE_JOBS, -1, nil)
+		otel.InfoLogWithCtx(ctx, "[Async job] End process job")
 	}(ctx)
 
 	example, err := repository.ExampleRepo.GetById(ctx, exampleUuid)
 	if err != nil {
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': %v", exampleUuid, err)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s': %v", exampleUuid, err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to get example")
 	} else if example == nil {
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': Example not found", exampleUuid)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s': Example not found", exampleUuid)
 		return nil, apperror.ErrNotFound("Example example_uuid='"+exampleUuid+"' not found", "ERR_EXAMPLE_NOT_FOUND")
 	}
 	return example, nil
@@ -196,17 +195,17 @@ func (s *ExampleService) BulkAsync_GetById(ctx context.Context, exampleUuid stri
 		defer span.Done()
 
 		key := fmt.Sprintf("%s-%d", exampleUuid, i)
-		if err := internalOtel.OtelCache.SetTraceCarrierFromGroup("my-job", key, otel.ExportTraceCarrier(ctx)); err != nil {
-			otel.ErrorLog(ctx, "Failed to set cache trace carrier: %v", err)
+		if err := otel.SetCacheTraceCarrierFromGroup("my-job", key, otel.ExportTraceCarrier(ctx)); err != nil {
+			otel.ErrorLogWithCtx(ctx, "Failed to set cache trace carrier: %v", err)
 		}
 
 		go func(exampleUuid string, count int) {
 			ctx, span := otel.NewSpan(context.Background(), "BulkAsync_GetExampleById-Worker")
 
 			key := fmt.Sprintf("%s-%d", exampleUuid, i)
-			traceCarrier, err := internalOtel.OtelCache.GetTraceCarrierFromGroup("my-job", key)
+			traceCarrier, err := otel.GetCacheTraceCarrierFromGroup("my-job", key)
 			if err != nil {
-				otel.ErrorLog(ctx, "Failed to get cache trace carrier: %v", err)
+				otel.ErrorLogWithCtx(ctx, "Failed to get cache trace carrier: %v", err)
 			} else {
 				ctx, span = otel.NewSpan(traceCarrier.ExtractContext(), "BulkAsync_GetExampleById-Worker")
 			}
@@ -227,8 +226,8 @@ func (s *ExampleService) BulkAsync_GetById(ctx context.Context, exampleUuid stri
 				fmt.Println(*example)
 			}
 
-			if err := internalOtel.OtelCache.DeleteTraceCarrierFromGroup("my-job", key); err != nil {
-				otel.ErrorLog(ctx, "Failed to delete cache trace carrier: %v", err)
+			if err := otel.DeleteCacheTraceCarrierFromGroup("my-job", key); err != nil {
+				otel.ErrorLogWithCtx(ctx, "Failed to delete cache trace carrier: %v", err)
 			}
 		}(exampleUuid, i)
 	}

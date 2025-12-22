@@ -8,13 +8,13 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
-// GinMiddlewares returns a slice of Gin middleware handlers for OpenTelemetry integration.
+// GinMiddlewares returns Gin middleware for automatic trace propagation.
+// Adds tracing to all HTTP requests handled by Gin router.
 //
-// Parameters:
-//   - serviceName: The name of the service to be used in tracing spans
+// Example:
 //
-// Returns:
-//   - []gin.HandlerFunc: A slice of middleware handlers to be registered with Gin router
+//	r := gin.New()
+//	r.Use(otel.GinMiddlewares("api-service")...)
 func GinMiddlewares(serviceName string) []gin.HandlerFunc {
 	mdws := []gin.HandlerFunc{}
 
@@ -24,11 +24,16 @@ func GinMiddlewares(serviceName string) []gin.HandlerFunc {
 	return mdws
 }
 
-// HttpTransport creates and returns an HTTP transport wrapped with OpenTelemetry instrumentation.
-// This transport automatically traces outgoing HTTP requests.
+// HttpTransport returns an HTTP transport with trace propagation.
+// Use this with http.Client to propagate trace context in outbound requests.
 //
-// Returns:
-//   - *otelhttp.Transport: An HTTP transport with OpenTelemetry tracing enabled
+// Example:
+//
+//	client := &http.Client{
+//	    Transport: otel.HttpTransport(),
+//	}
+//	req, _ := http.NewRequestWithContext(ctx, "GET", "https://api.example.com", nil)
+//	resp, _ := client.Do(req)
 func HttpTransport() *otelhttp.Transport {
 	return otelhttp.NewTransport(http.DefaultTransport)
 }

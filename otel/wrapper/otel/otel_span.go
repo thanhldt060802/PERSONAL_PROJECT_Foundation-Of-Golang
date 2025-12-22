@@ -10,6 +10,14 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+// NewSpan creates a new trace span for the given operation.
+// Returns the span context and a Span wrapper that must be closed with Done().
+//
+// Example:
+//
+//	ctx, span := otel.NewSpan(ctx, "database.query")
+//	defer span.Done()
+//	span.SetAttribute("query", "SELECT * FROM users")
 func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
 	spanCtx, coreSpan := tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
 
@@ -22,6 +30,8 @@ func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
 	return spanCtx, &span
 }
 
+// Span wraps an OpenTelemetry span with additional functionality.
+// Attributes and errors are accumulated and applied when Done() is called.
 type Span struct {
 	coreSpan trace.Span // The underlying OpenTelemetry span
 
@@ -32,6 +42,12 @@ type Span struct {
 	spanAttributes map[string]any // Attributes to be added to the span
 }
 
+// Done finalizes the span by:
+//   - Applying all accumulated attributes
+//   - Recording any error and setting error status
+//   - Ending the span with timestamp
+//
+// Must be called to ensure span is exported.
 func (span *Span) Done() {
 	// Convert and set all accumulated attributes
 	attrs := mapToAttribute(span.spanAttributes)
@@ -49,29 +65,53 @@ func (span *Span) Done() {
 	}
 }
 
+// ParentContext returns the context before this span was created.
+// Useful for creating sibling spans instead of child spans.
 func (span *Span) ParentContext() context.Context {
 	return span.parentCtx
 }
 
+// Context returns the context containing this span.
+// Use this context to create child spans or propagate trace context.
 func (span *Span) Context() context.Context {
 	return span.spanCtx
 }
 
+// SetError marks the span as failed.
+// The error will be recorded when Done() is called.
 func (span *Span) SetError(err error) {
 	span.err = err
 }
 
+// SetAttribute adds a key-value attribute to the span.
+// Attributes provide additional context about the operation.
+// Common attributes: user_id, request_id, http.status_code, db.statement
 func (span *Span) SetAttribute(key string, value any) {
 	span.spanAttributes[key] = value
 }
 
+// AddEvent records a point-in-time event within the span.
+// Useful for marking important moments like cache hits or retry attempts.
+//
+// Example:
+//
+//	span.AddEvent("cache.hit", map[string]any{"key": "user:123"})
 func (span *Span) AddEvent(eventName string, eventAttributes map[string]any) {
 	attrs := mapToAttribute(eventAttributes)
 	span.coreSpan.AddEvent(eventName, trace.WithAttributes(attrs...))
 }
 
+// TraceCarrier wraps trace context for propagation across process boundaries.
+// Used with message queues, job systems, or any async communication.
 type TraceCarrier propagation.MapCarrier
 
+// ExportTraceCarrier extracts trace context from the given context.
+// The returned TraceCarrier can be serialized and sent to another service.
+//
+// Example:
+//
+//	carrier := otel.ExportTraceCarrier(ctx)
+//	// Send carrier via message queue, store in Redis, etc.
 func ExportTraceCarrier(ctx context.Context) TraceCarrier {
 	carrier := propagation.MapCarrier{}
 	otel.GetTextMapPropagator().Inject(ctx, carrier)
@@ -79,6 +119,13 @@ func ExportTraceCarrier(ctx context.Context) TraceCarrier {
 	return TraceCarrier(carrier)
 }
 
+// ExtractContext recreates a context from the trace carrier.
+// Use this to continue the trace in another service or async job.
+//
+// Example:
+//
+//	ctx := carrier.ExtractContext()
+//	ctx, span := otel.NewSpan(ctx, "AsyncJob")
 func (traceCarrier TraceCarrier) ExtractContext() context.Context {
 	return otel.GetTextMapPropagator().Extract(context.Background(), propagation.MapCarrier(traceCarrier))
 }

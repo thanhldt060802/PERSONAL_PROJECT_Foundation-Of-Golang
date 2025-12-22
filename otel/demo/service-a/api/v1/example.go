@@ -97,11 +97,11 @@ func (handler *apiExample) GetById(ctx context.Context, req *struct {
 	ctx, span := otel.NewSpan(ctx, "GetExampleById-Handler")
 	defer span.Done()
 
-	otel.InfoLog(ctx, "[Handler layer] - Get Example by example_uuid='%s'", req.ExampleUuid)
+	otel.InfoLogWithCtx(ctx, "[Handler layer] - Get Example by example_uuid='%s'", req.ExampleUuid)
 
 	example, err := handler.exampleService.GetById(ctx, req.ExampleUuid)
 	if err != nil {
-		otel.ErrorLog(ctx, "[Handler layer] - Failed to get Example by example_uuid='%s': %v", req.ExampleUuid, err)
+		otel.ErrorLogWithCtx(ctx, "[Handler layer] - Failed to get Example by example_uuid='%s': %v", req.ExampleUuid, err)
 		return
 	}
 

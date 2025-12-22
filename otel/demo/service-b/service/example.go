@@ -31,13 +31,13 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 	ctx, span := otel.NewSpan(ctx, "GetExampleById-Service")
 	defer span.Done()
 
-	otel.InfoLog(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
+	otel.InfoLogWithCtx(ctx, "[Service layer] Get Example by example_uuid='%s'", exampleUuid)
 
-	otel.RecordCounter(ctx, constant.HTTP_REQUESTS, 1, nil)
+	otel.RecordCounterWithCtx(ctx, constant.HTTP_REQUESTS, 1, nil)
 
 	if rand.IntN(3) == 0 {
 		err := errors.New("simulate error")
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s'", exampleUuid)
 		span.SetError(err)
 		return nil, apperror.ErrInternalServerError(err, "Failed to preprocess", "ERR_PREPROCESS")
 	}
@@ -46,25 +46,25 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 		ctx, span := otel.NewSpan(ctx, "AsyncJob")
 		defer span.Done()
 
-		otel.RecordUpDownCounter(span.Context(), constant.ACTIVE_JOBS, 1, nil)
-		otel.InfoLog(ctx, "[Async job] Start process job")
+		otel.RecordUpDownCounterWithCtx(span.Context(), constant.ACTIVE_JOBS, 1, nil)
+		otel.InfoLogWithCtx(ctx, "[Async job] Start process job")
 
 		N := 3 + rand.IntN(3)
 		for i := 0; i < N; i++ {
 			time.Sleep(time.Duration(3+rand.IntN(3)) * time.Second)
-			otel.RecordHistogram(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
+			otel.RecordHistogramWithCtx(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
 		}
 
-		otel.RecordUpDownCounter(ctx, constant.ACTIVE_JOBS, -1, nil)
-		otel.InfoLog(ctx, "[Async job] End process job")
+		otel.RecordUpDownCounterWithCtx(ctx, constant.ACTIVE_JOBS, -1, nil)
+		otel.InfoLogWithCtx(ctx, "[Async job] End process job")
 	}(ctx)
 
 	example, err := repository.ExampleRepo.GetById(ctx, exampleUuid)
 	if err != nil {
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': %v", exampleUuid, err)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s': %v", exampleUuid, err)
 		return nil, apperror.ErrServiceUnavailable(err, "Failed to get example")
 	} else if example == nil {
-		otel.ErrorLog(ctx, "[Service layer] Failed to get Example by example_uuid='%s': Example not found", exampleUuid)
+		otel.ErrorLogWithCtx(ctx, "[Service layer] Failed to get Example by example_uuid='%s': Example not found", exampleUuid)
 		return nil, apperror.ErrNotFound("Example example_uuid='"+exampleUuid+"' not found", "ERR_EXAMPLE_NOT_FOUND")
 	}
 	return example, nil

@@ -15,9 +15,11 @@ import (
 )
 
 var (
+	// tracer is global Tracer instance for creating tracing span
 	tracer trace.Tracer
 )
 
+// TracerConfig configures the distributed tracing component
 type TracerConfig struct {
 	ServiceName    string            // Name of the service
 	ServiceVersion string            // Version of the service
@@ -26,6 +28,8 @@ type TracerConfig struct {
 	HttpHeader     map[string]string // Additional HTTP headers
 }
 
+// initTracer initializes the global tracer and returns a cleanup function.
+// Spans are exported using OTLP HTTP protocol with batch processing.
 func initTracer(config *TracerConfig) func(ctx context.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

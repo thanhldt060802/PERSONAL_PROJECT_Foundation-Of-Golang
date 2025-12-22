@@ -2,7 +2,6 @@ package otel
 
 import (
 	"context"
-	"sync"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -16,72 +15,73 @@ import (
 )
 
 var (
-	// tracer is the global tracer instance for creating spans
+	// tracer is global Tracer instance for creating tracing span
 	tracer trace.Tracer
-	// tracerOnce makes sure tracer instance only one time
-	tracerOnce sync.Once
 )
 
-// initTracer initializes the OpenTelemetry tracer with OTLP exporter
-// and configures trace context propagation for distributed tracing.
-//
-// Parameters:
-//   - config: Configuration including service info and OTLP endpoint
-//
-// Returns:
-//   - func(ctx context.Context): A cleanup function to shutdown the tracer provider
+// TracerConfig configures the distributed tracing component
+type TracerConfig struct {
+	ServiceName    string            // Name of the service
+	ServiceVersion string            // Version of the service
+	EndPoint       string            // OTLP endpoint for exporting tracing data
+	Insecure       bool              // Allow HTTP schema, instead of HTTPS
+	HttpHeader     map[string]string // Additional HTTP headers
+}
 
-func initTracer(config *ObserverConfig) func(ctx context.Context) {
-	var shutdown func(ctx context.Context)
+// initTracer initializes the global tracer and returns a cleanup function.
+// Spans are exported using OTLP HTTP protocol with batch processing.
+func initTracer(config *TracerConfig) func(ctx context.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-	tracerOnce.Do(func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
+	opts := []otlptracehttp.Option{
+		otlptracehttp.WithEndpoint(config.EndPoint),
+	}
+	if config.Insecure {
+		opts = append(opts, otlptracehttp.WithInsecure())
+	}
+	if len(config.HttpHeader) > 0 {
+		opts = append(opts, otlptracehttp.WithHeaders(config.HttpHeader))
+	}
 
-		// Create OTLP HTTP exporter for sending traces
-		exporter, err := otlptracehttp.New(
-			ctx,
-			otlptracehttp.WithInsecure(),
-			otlptracehttp.WithEndpoint(config.EndPoint),
-		)
-		if err != nil {
-			stdLog.Fatalf("Failed to create exporter for Tracer: %v", err)
-		}
+	// Create OTLP HTTP exporter for sending traces
+	exporter, err := otlptracehttp.New(ctx, opts...)
+	if err != nil {
+		stdLog.Fatalf("Failed to create exporter for Tracer: %v", err)
+	}
 
-		// Create resource with service metadata
-		resource := resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceName(config.ServiceName),
-			semconv.ServiceVersion(config.ServiceVersion),
-			attribute.String("host.ip", getLocalIP()),
-		)
+	// Create resource with service metadata
+	resource := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		semconv.ServiceName(config.ServiceName),
+		semconv.ServiceVersion(config.ServiceVersion),
+		attribute.String("host.ip", getLocalIP()),
+	)
 
-		// Create tracer provider with batch span processor for efficient export
-		tracerProvider := sdktrace.NewTracerProvider(
-			sdktrace.WithBatcher(exporter),
-			sdktrace.WithResource(resource),
-		)
+	// Create tracer provider with batch span processor for efficient export
+	tracerProvider := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(exporter),
+		sdktrace.WithResource(resource),
+	)
 
-		otel.SetTracerProvider(tracerProvider)
+	// Init Tracer
+	otel.SetTracerProvider(tracerProvider)
 
-		// Configure trace context propagation for cross-service tracing (HTTP, gRPC)
-		// This enables distributed tracing across service boundaries
-		otel.SetTextMapPropagator(
-			propagation.NewCompositeTextMapPropagator(
-				propagation.TraceContext{},
-				propagation.Baggage{},
-			),
-		)
+	// Configure trace context propagation for cross-service tracing (HTTP, gRPC)
+	// This enables distributed tracing across service boundaries
+	otel.SetTextMapPropagator(
+		propagation.NewCompositeTextMapPropagator(
+			propagation.TraceContext{},
+			propagation.Baggage{},
+		),
+	)
 
-		tracer = otel.Tracer(config.ServiceName + "/otel")
-
-		shutdown = func(ctx context.Context) {
-			if err := tracerProvider.Shutdown(ctx); err != nil {
-				stdLog.Printf("Error occurred when shutting down Tracer provider: %v", err)
-			}
-		}
-	})
+	tracer = otel.Tracer(config.ServiceName + "/otel")
 
 	// Return cleanup function
-	return shutdown
+	return func(ctx context.Context) {
+		if err := tracerProvider.Shutdown(ctx); err != nil {
+			stdLog.Printf("Error occurred when shutting down Tracer provider: %v", err)
+		}
+	}
 }

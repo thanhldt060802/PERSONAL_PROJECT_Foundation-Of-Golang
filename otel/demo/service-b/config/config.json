@@ -5,10 +5,21 @@
         "port": 8002
     },
     "observer": {
-        "end_point": "sdvasdvasdv",
-        "local_log_file": "tmp/console.log",
-        "local_log_level": "info",
-        "metric_collection_interval_sec": 5
+        "tracer": {
+            "end_point": "192.168.1.38:4318",
+            "bearer_token": "3b942b034fe4d6dc24e5046935f99efff8e8188d74335e2391c11345ec259b5f"
+        },
+        "logger": {
+            "end_point": "192.168.1.38:4318",
+            "bearer_token": "3b942b034fe4d6dc24e5046935f99efff8e8188d74335e2391c11345ec259b5f",
+            "local_log_file": "tmp/console.log",
+            "local_log_level": "info"
+        },
+        "meter": {
+            "end_point": "192.168.1.38:4318",
+            "bearer_token": "3b942b034fe4d6dc24e5046935f99efff8e8188d74335e2391c11345ec259b5f",
+            "metric_collection_interval_sec": 5
+        }
     },
     "db": {
         "host": "localhost",

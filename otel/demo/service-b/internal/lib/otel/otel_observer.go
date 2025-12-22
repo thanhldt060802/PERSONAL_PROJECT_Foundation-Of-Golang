@@ -2,56 +2,144 @@ package otel
 
 import (
 	"context"
+	"sync"
 	"time"
+
+	"go.opentelemetry.io/otel"
 )
 
-// ObserverConfig holds the configuration for initializing OpenTelemetry observability components.
-// It includes settings for tracer, logger, and meter.
-type ObserverConfig struct {
-	ServiceName    string // Name of the service
-	ServiceVersion string // Version of the service
-	EndPoint       string // OTLP endpoint for exporting telemetry data
+var (
+	// observerOnce ensures observer is initialized only once
+	observerOnce sync.Once
+)
 
-	LocalLogFile  string   // Path to local log file (optional)
-	LocalLogLevel LogLevel // Log level for local file logging
-
-	MetricCollectionInterval time.Duration // Interval for collecting and exporting metrics
-	metricDefs               []*MetricDef  // List of metric definitions to register
+// observer manages lifecycle of all OpenTelemetry components
+type observer struct {
+	shutdowns []func(context.Context) // Cleanup functions for graceful shutdown
 }
 
-// AddMetricCollecter adds a metric definition to the configuration.
-// Call this method before initializing the observer to register custom metrics.
-//
-// Parameters:
-//   - metricDef: Definition of the metric to register
-func (config *ObserverConfig) AddMetricCollecter(metricDef *MetricDef) {
-	config.metricDefs = append(config.metricDefs, metricDef)
+// ObserverOption configures the observer during initialization
+type ObserverOption interface {
+	apply(obsv *observer)
 }
 
-// NewOtelObserver initializes all OpenTelemetry components (tracer, logger, meter)
-// and returns a cleanup function to gracefully shutdown all components.
-//
-// Parameters:
-//   - config: Configuration for all observability components
-//
-// Returns:
-//   - func(): A cleanup function that should be called when the application is shutting down
+// observerOptionFunc implements ObserverOption using a function
+type observerOptionFunc func(*observer)
+
+func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
+	obsvOptFunc(obsv)
+}
+
+// WithTracer enables distributed tracing with the given configuration.
+// Returns nil if config is nil.
+func WithTracer(config *TracerConfig) ObserverOption {
+	return observerOptionFunc(func(o *observer) {
+		if config == nil {
+			return
+		}
+
+		shutdown := initTracer(config)
+		o.shutdowns = append(o.shutdowns, shutdown)
+	})
+}
+
+// WithLogger enables structured logging with OpenTelemetry integration.
+// Logs are exported to OTLP endpoint and optionally written to local file.
+// Returns nil if config is nil.
+func WithLogger(config *LoggerConfig) ObserverOption {
+	return observerOptionFunc(func(o *observer) {
+		if config == nil {
+			return
+		}
+
+		shutdown := initLogger(config)
+		o.shutdowns = append(o.shutdowns, shutdown)
+	})
+}
+
+// WithMeter enables metrics collection and export.
+// Supports Counter, UpDownCounter, Histogram, and Gauge metric types.
+// Returns nil if config is nil.
+func WithMeter(config *MeterConfig) ObserverOption {
+	return observerOptionFunc(func(o *observer) {
+		if config == nil {
+			return
+		}
+
+		if config.MetricCollectionInterval <= 0 {
+			config.MetricCollectionInterval = defaultMeterInterval
+		}
+
+		shutdown := initMeter(config)
+		o.shutdowns = append(o.shutdowns, shutdown)
+	})
+}
+
+// WithRedisCache enables Redis-based trace context storage for async operations.
+// Useful for propagating trace context across message queues or job systems.
+// Returns nil if config is nil.
+func WithRedisCache(config *RedisConfig) ObserverOption {
+	return observerOptionFunc(func(o *observer) {
+		if config == nil {
+			return
+		}
+
+		if config.PoolSize <= 0 {
+			config.PoolSize = defaultRedisPoolSize
+		}
+		if config.PoolTimeoutSec <= 0 {
+			config.PoolTimeoutSec = defaultRedisPoolTimeoutSec
+		}
+		if config.IdleTimeoutSec <= 0 {
+			config.IdleTimeoutSec = defaultRedisIdleTimeoutSec
+		}
+		if config.ReadTimeoutSec <= 0 {
+			config.ReadTimeoutSec = defaultRedisReadTimeoutSec
+		}
+		if config.WriteTimeoutSec <= 0 {
+			config.WriteTimeoutSec = defaultRedisWriteTimeoutSec
+		}
+
+		initRedisCache(config)
+	})
+}
+
+// NewOtelObserver initializes OpenTelemetry with the given options.
+// It can only be called once (singleton pattern).
+// Returns a shutdown function that must be called before application exit.
 //
 // Example:
 //
-//	shutdown := NewOtelObserver(config)
+//	shutdown := NewOtelObserver(
+//	    WithTracer(&TracerConfig{...}),
+//	    WithLogger(&LoggerConfig{...}),
+//	)
 //	defer shutdown()
-func NewOtelObserver(config *ObserverConfig) func() {
-	shutdownTracer := initTracer(config)
-	shutdownLogger := initLogger(config)
-	shutdownMeter := initMeter(config)
+func NewOtelObserver(opts ...ObserverOption) func() {
+	var shutdown func()
 
-	return func() {
-		shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
+	observerOnce.Do(func() {
+		otel.SetErrorHandler(otel.ErrorHandlerFunc(func(cause error) {
+			stdLog.Printf("Error occurred: %v", cause)
+		}))
 
-		shutdownTracer(shutdownCtx)
-		shutdownLogger(shutdownCtx)
-		shutdownMeter(shutdownCtx)
-	}
+		obsv := &observer{
+			shutdowns: make([]func(context.Context), 0),
+		}
+
+		for _, opt := range opts {
+			opt.apply(obsv)
+		}
+
+		shutdown = func() {
+			shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancel()
+
+			for _, shutdown := range obsv.shutdowns {
+				shutdown(shutdownCtx)
+			}
+		}
+	})
+
+	return shutdown
 }

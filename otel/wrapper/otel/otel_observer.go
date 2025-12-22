@@ -9,86 +9,112 @@ import (
 )
 
 var (
+	// observerOnce ensures observer is initialized only once
 	observerOnce sync.Once
 )
 
+// observer manages lifecycle of all OpenTelemetry components
 type observer struct {
-	shutdowns []func(context.Context)
+	shutdowns []func(context.Context) // Cleanup functions for graceful shutdown
 }
 
+// ObserverOption configures the observer during initialization
 type ObserverOption interface {
 	apply(obsv *observer)
 }
 
+// observerOptionFunc implements ObserverOption using a function
 type observerOptionFunc func(*observer)
 
 func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
 	obsvOptFunc(obsv)
 }
 
-func WithTracer(cfg *TracerConfig) ObserverOption {
+// WithTracer enables distributed tracing with the given configuration.
+// Returns nil if config is nil.
+func WithTracer(config *TracerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
-		if cfg == nil {
+		if config == nil {
 			return
 		}
 
-		shutdown := initTracer(cfg)
+		shutdown := initTracer(config)
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
 
-func WithLogger(cfg *LoggerConfig) ObserverOption {
+// WithLogger enables structured logging with OpenTelemetry integration.
+// Logs are exported to OTLP endpoint and optionally written to local file.
+// Returns nil if config is nil.
+func WithLogger(config *LoggerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
-		if cfg == nil {
+		if config == nil {
 			return
 		}
 
-		shutdown := initLogger(cfg)
+		shutdown := initLogger(config)
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
 
-func WithMeter(cfg *MeterConfig) ObserverOption {
+// WithMeter enables metrics collection and export.
+// Supports Counter, UpDownCounter, Histogram, and Gauge metric types.
+// Returns nil if config is nil.
+func WithMeter(config *MeterConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
-		if cfg == nil {
+		if config == nil {
 			return
 		}
 
-		if cfg.MetricCollectionInterval <= 0 {
-			cfg.MetricCollectionInterval = defaultMeterInterval
+		if config.MetricCollectionInterval <= 0 {
+			config.MetricCollectionInterval = defaultMeterInterval
 		}
 
-		shutdown := initMeter(cfg)
+		shutdown := initMeter(config)
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
 
-func WithRedisCache(cfg *RedisConfig) ObserverOption {
+// WithRedisCache enables Redis-based trace context storage for async operations.
+// Useful for propagating trace context across message queues or job systems.
+// Returns nil if config is nil.
+func WithRedisCache(config *RedisConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
-		if cfg == nil {
+		if config == nil {
 			return
 		}
 
-		if cfg.PoolSize <= 0 {
-			cfg.PoolSize = defaultRedisPoolSize
+		if config.PoolSize <= 0 {
+			config.PoolSize = defaultRedisPoolSize
 		}
-		if cfg.PoolTimeoutSec <= 0 {
-			cfg.PoolTimeoutSec = defaultRedisPoolTimeoutSec
+		if config.PoolTimeoutSec <= 0 {
+			config.PoolTimeoutSec = defaultRedisPoolTimeoutSec
 		}
-		if cfg.IdleTimeoutSec <= 0 {
-			cfg.IdleTimeoutSec = defaultRedisIdleTimeoutSec
+		if config.IdleTimeoutSec <= 0 {
+			config.IdleTimeoutSec = defaultRedisIdleTimeoutSec
 		}
-		if cfg.ReadTimeoutSec <= 0 {
-			cfg.ReadTimeoutSec = defaultRedisReadTimeoutSec
+		if config.ReadTimeoutSec <= 0 {
+			config.ReadTimeoutSec = defaultRedisReadTimeoutSec
 		}
-		if cfg.WriteTimeoutSec <= 0 {
-			cfg.WriteTimeoutSec = defaultRedisWriteTimeoutSec
+		if config.WriteTimeoutSec <= 0 {
+			config.WriteTimeoutSec = defaultRedisWriteTimeoutSec
 		}
 
-		initRedisCache(cfg)
+		initRedisCache(config)
 	})
 }
 
+// NewOtelObserver initializes OpenTelemetry with the given options.
+// It can only be called once (singleton pattern).
+// Returns a shutdown function that must be called before application exit.
+//
+// Example:
+//
+//	shutdown := NewOtelObserver(
+//	    WithTracer(&TracerConfig{...}),
+//	    WithLogger(&LoggerConfig{...}),
+//	)
+//	defer shutdown()
 func NewOtelObserver(opts ...ObserverOption) func() {
 	var shutdown func()
 

@@ -23,17 +23,17 @@ var AuthMdw IAuthMiddleware
 
 func NewAuthMiddleware(api hureg.APIGen) func(ctx huma.Context, next func(huma.Context)) {
 	return func(ctx huma.Context, next func(huma.Context)) {
-		otel.InfoLog(ctx.Context(), "========> standard-auth middelware request")
+		otel.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware request")
 		isAuthorizationRequired := false
 		for _, opScheme := range ctx.Operation().Security {
 			var ok bool
 			if _, ok = opScheme["standard-auth"]; ok {
-				otel.InfoLog(ctx.Context(), "========> standard-auth middelware validate")
+				otel.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware validate")
 				isAuthorizationRequired = true
 				break
 			}
 		}
-		otel.InfoLog(ctx.Context(), "========> require authorization: %v", isAuthorizationRequired)
+		otel.InfoLogWithCtx(ctx.Context(), "========> require authorization: %v", isAuthorizationRequired)
 		if isAuthorizationRequired {
 			HumaAuthMiddleware(api, ctx, next)
 		} else {
@@ -50,7 +50,7 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 	span.SetAttribute("header.authorization", authHeaderValue)
 
 	if len(authHeaderValue) < 1 {
-		otel.ErrorLog(spanCtx, "========> invalid credentials")
+		otel.ErrorLogWithCtx(spanCtx, "========> invalid credentials")
 		err := errors.New("missing token")
 		span.SetError(err)
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
@@ -66,7 +66,7 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
 		return
 	}
-	otel.InfoLog(spanCtx, "========> authorize success")
+	otel.InfoLogWithCtx(spanCtx, "========> authorize success")
 
 	next(ctx)
 }

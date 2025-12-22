@@ -19,9 +19,11 @@ import (
 )
 
 var (
+	// logger is global Logger instance for logging
 	logger *slog.Logger
 )
 
+// LogLevel defines the severity level for logging
 type LogLevel string
 
 const (
@@ -31,6 +33,7 @@ const (
 	LOG_LEVEL_ERROR LogLevel = "error" // Error messages
 )
 
+// LoggerConfig configures structured logging with OpenTelemetry integration
 type LoggerConfig struct {
 	ServiceName    string            // Name of the service
 	ServiceVersion string            // Version of the service
@@ -42,6 +45,9 @@ type LoggerConfig struct {
 	LocalLogLevel LogLevel // Log level for local file logging
 }
 
+// initLogger initializes the global logger and returns a cleanup function.
+// Logs are sent to both OTLP endpoint and local output (stdout + optional file).
+// Each log entry includes trace_id and span_id for correlation with traces.
 func initLogger(config *LoggerConfig) func(ctx context.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -151,6 +157,7 @@ func initLogger(config *LoggerConfig) func(ctx context.Context) {
 	}
 }
 
+// multiHandler dispatches log records to multiple handlers
 type multiHandler struct {
 	handlers []slog.Handler
 }
@@ -159,6 +166,7 @@ func newMultiHandler(handlers ...slog.Handler) *multiHandler {
 	return &multiHandler{handlers: handlers}
 }
 
+// Enabled returns true if any handler is enabled for the given level
 func (h *multiHandler) Enabled(ctx context.Context, level slog.Level) bool {
 	for _, handler := range h.handlers {
 		if handler.Enabled(ctx, level) {
@@ -168,6 +176,7 @@ func (h *multiHandler) Enabled(ctx context.Context, level slog.Level) bool {
 	return false
 }
 
+// Handle enriches the log record with trace context and dispatches to all handlers
 func (h *multiHandler) Handle(ctx context.Context, record slog.Record) error {
 	traceID, spanID := getTraceInfo(ctx)
 
@@ -203,38 +212,53 @@ func (h *multiHandler) WithGroup(name string) slog.Handler {
 	return &multiHandler{handlers: handlers}
 }
 
+// Context-aware logging functions
+// These functions extract trace_id and span_id from context automatically
+
+// InfoLogWithCtx logs an informational message with trace context
 func InfoLogWithCtx(ctx context.Context, format string, args ...any) {
 	logWithMeta(ctx, slog.LevelInfo, format, args...)
 }
 
+// WarnLogWithCtx logs a warning message with trace context
 func WarnLogWithCtx(ctx context.Context, format string, args ...any) {
 	logWithMeta(ctx, slog.LevelWarn, format, args...)
 }
 
+// DebugLogWithCtx logs a debug message with trace context
 func DebugLogWithCtx(ctx context.Context, format string, args ...any) {
 	logWithMeta(ctx, slog.LevelDebug, format, args...)
 }
 
+// ErrorLogWithCtx logs an error message with trace context
 func ErrorLogWithCtx(ctx context.Context, format string, args ...any) {
 	logWithMeta(ctx, slog.LevelError, format, args...)
 }
 
+// Context-less logging functions
+// Use these when context is not available
+
+// InfoLog logs an informational message without trace context
 func InfoLog(format string, args ...any) {
 	logWithMeta(context.Background(), slog.LevelInfo, format, args...)
 }
 
+// WarnLog logs a warning message without trace context
 func WarnLog(format string, args ...any) {
 	logWithMeta(context.Background(), slog.LevelWarn, format, args...)
 }
 
+// DebugLog logs a debug message without trace contex
 func DebugLog(format string, args ...any) {
 	logWithMeta(context.Background(), slog.LevelDebug, format, args...)
 }
 
+// ErrorLog logs an error message without trace context
 func ErrorLog(format string, args ...any) {
 	logWithMeta(context.Background(), slog.LevelError, format, args...)
 }
 
+// logWithMeta adds source file location to log entries
 func logWithMeta(ctx context.Context, level slog.Level, format string, args ...any) {
 	_, path, numLine, _ := runtime.Caller(2)
 	srcFile := filepath.Base(path)

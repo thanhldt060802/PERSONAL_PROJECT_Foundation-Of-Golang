@@ -62,7 +62,7 @@ func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*mode
 	ctx, span := otel.NewSpan(ctx, "GetExampleById-Repository")
 	defer span.Done()
 
-	otel.InfoLog(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
+	otel.InfoLogWithCtx(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
 
 	example := new(model.Example)
 
@@ -77,7 +77,7 @@ func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*mode
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
-		otel.ErrorLog(ctx, "[Repository layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		otel.ErrorLogWithCtx(ctx, "[Repository layer] Failed to get Example by example_uuid='%s'", exampleUuid)
 		span.SetError(err)
 		return nil, err
 	} else {

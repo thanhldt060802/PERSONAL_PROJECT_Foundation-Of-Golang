@@ -9,14 +9,13 @@ import (
 	"thanhldt060802/repository"
 	"thanhldt060802/repository/db"
 	"thanhldt060802/service"
-	"time"
 
 	log "github.com/sirupsen/logrus"
 
 	"github.com/spf13/viper"
 )
 
-var ShutdownObserver func()
+var shutdownObserver func()
 
 func init() {
 	viper.SetConfigName("config")
@@ -42,19 +41,32 @@ func init() {
 	})
 	pubsub.RedisSubInstance = pubsub.NewRedisSub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	otelObserverConfig := otel.ObserverConfig{
-		ServiceName:              viper.GetString("app.name"),
-		ServiceVersion:           viper.GetString("app.version"),
-		EndPoint:                 viper.GetString("observer.end_point"),
-		LocalLogFile:             viper.GetString("observer.local_log_file"),
-		LocalLogLevel:            otel.LogLevel(viper.GetString("observer.local_log_level")),
-		MetricCollectionInterval: time.Duration(viper.GetInt("observer.metric_collection_interval_sec")) * time.Second,
-	}
-	ShutdownObserver = otel.NewOtelObserver(&otelObserverConfig)
+	shutdownObserver = otel.NewOtelObserver(
+		otel.WithTracer(&otel.TracerConfig{
+			ServiceName:    viper.GetString("app.name"),
+			ServiceVersion: viper.GetString("app.version"),
+			EndPoint:       viper.GetString("observer.tracer.end_point"),
+			Insecure:       true,
+			HttpHeader: map[string]string{
+				"Authorization": "Bearer " + viper.GetString("observer.tracer.bearer_token"),
+			},
+		}),
+		otel.WithLogger(&otel.LoggerConfig{
+			ServiceName:    viper.GetString("app.name"),
+			ServiceVersion: viper.GetString("app.version"),
+			EndPoint:       viper.GetString("observer.logger.end_point"),
+			Insecure:       true,
+			HttpHeader: map[string]string{
+				"Authorization": "Bearer " + viper.GetString("observer.logger.bearer_token"),
+			},
+			LocalLogFile:  viper.GetString("observer.logger.local_log_file"),
+			LocalLogLevel: otel.LogLevel(viper.GetString("observer.local_log_level")),
+		}),
+	)
 }
 
 func main() {
-	defer ShutdownObserver()
+	defer shutdownObserver()
 
 	initRepository()
 
