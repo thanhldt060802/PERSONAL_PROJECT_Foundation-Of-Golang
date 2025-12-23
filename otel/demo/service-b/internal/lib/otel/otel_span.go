@@ -129,3 +129,11 @@ func ExportTraceCarrier(ctx context.Context) TraceCarrier {
 func (traceCarrier TraceCarrier) ExtractContext() context.Context {
 	return otel.GetTextMapPropagator().Extract(context.Background(), propagation.MapCarrier(traceCarrier))
 }
+
+// IsZero reports whether the TraceCarrier contains no propagation data.
+//
+// It returns true when the carrier is either nil or empty (len == 0).
+// In both cases, the carrier is considered to have no trace context.
+func (traceCarrier TraceCarrier) IsZero() bool {
+	return len(traceCarrier) == 0
+}
