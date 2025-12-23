@@ -32,6 +32,7 @@ func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
 
 // WithTracer enables distributed tracing with the given configuration.
 // Returns nil if config is nil.
+// This is mandatory if using Tracer; otherwise, it will crash if Tracer is used without configuring it when initializing Observer.
 func WithTracer(config *TracerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -46,6 +47,7 @@ func WithTracer(config *TracerConfig) ObserverOption {
 // WithLogger enables structured logging with OpenTelemetry integration.
 // Logs are exported to OTLP endpoint and optionally written to local file.
 // Returns nil if config is nil.
+// This is mandatory if using Logger; otherwise, it will crash if Logger is used without configuring it when initializing Observer.
 func WithLogger(config *LoggerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -60,6 +62,7 @@ func WithLogger(config *LoggerConfig) ObserverOption {
 // WithMeter enables metrics collection and export.
 // Supports Counter, UpDownCounter, Histogram, and Gauge metric types.
 // Returns nil if config is nil.
+// This is mandatory if using Meter; otherwise, it will crash if Meter is used without configuring it when initializing Observer.
 func WithMeter(config *MeterConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {

@@ -14,6 +14,10 @@ var (
 	cache Cache
 )
 
+var (
+	ErrCacheUnconfigured = errors.New("cache is unconfigured")
+)
+
 // Cache provides storage for trace carriers across async boundaries
 type Cache interface {
 	getTraceCarrierFromGroup(group string, key string) (TraceCarrier, error)
@@ -39,10 +43,6 @@ type RedisConfig struct {
 type redisCache struct {
 	redisClient *redis.Client
 }
-
-var (
-	ErrRedisUnconfigured = errors.New("redis is unconfigured")
-)
 
 // Default Redis settings
 const (
@@ -144,7 +144,7 @@ func (rCache *redisCache) deleteTraceCarrierGroup(group string) error {
 //	}
 func GetCacheTraceCarrierFromGroup(group string, key string) (TraceCarrier, error) {
 	if cache == nil {
-		return TraceCarrier{}, ErrRedisUnconfigured
+		return TraceCarrier{}, ErrCacheUnconfigured
 	}
 
 	return cache.getTraceCarrierFromGroup(group, key)
@@ -159,7 +159,7 @@ func GetCacheTraceCarrierFromGroup(group string, key string) (TraceCarrier, erro
 //	err := otel.SetCacheTraceCarrierFromGroup("jobs", "job-123", carrier)
 func SetCacheTraceCarrierFromGroup(group string, key string, traceCarrier TraceCarrier) error {
 	if cache == nil {
-		return ErrRedisUnconfigured
+		return ErrCacheUnconfigured
 	}
 
 	return cache.setTraceCarrierFromGroup(group, key, traceCarrier)
@@ -169,7 +169,7 @@ func SetCacheTraceCarrierFromGroup(group string, key string, traceCarrier TraceC
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 func DeleteCacheTraceCarrierFromGroup(group string, key string) error {
 	if cache == nil {
-		return ErrRedisUnconfigured
+		return ErrCacheUnconfigured
 	}
 
 	return cache.deleteTraceCarrierFromGroup(group, key)
@@ -179,7 +179,7 @@ func DeleteCacheTraceCarrierFromGroup(group string, key string) error {
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 func DeleteCacheTraceCarrierGroup(group string) error {
 	if cache == nil {
-		return ErrRedisUnconfigured
+		return ErrCacheUnconfigured
 	}
 
 	return cache.deleteTraceCarrierGroup(group)
