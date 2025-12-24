@@ -57,7 +57,7 @@ func (s *ExampleService) GetById(ctx context.Context, exampleUuid string) (*mode
 		N := 3 + rand.IntN(3)
 		for i := 0; i < N; i++ {
 			time.Sleep(time.Duration(3+rand.IntN(3)) * time.Second)
-			otel.RecordHistogramWithCtx(ctx, constant.JOB_PROCESS_DATA_SIZE, float64(100+rand.IntN(100)), nil)
+			otel.RecordHistogramWithCtx(ctx, constant.JOB_PROCESS_DATA_SIZE, rand.Float64()*float64(rand.IntN(10000)), nil)
 		}
 
 		otel.RecordUpDownCounterWithCtx(ctx, constant.ACTIVE_JOBS, -1, nil)

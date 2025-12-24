@@ -10,7 +10,7 @@ import (
 func StartGaugeCollector() {
 	go func() {
 		for {
-			otel.RecordGauge(constant.CPU_USAGE, float64(runtime.NumGoroutine()), nil)
+			otel.RecordGauge(constant.CPU_USAGE, 0.5*float64(runtime.NumGoroutine()), nil)
 			time.Sleep(1 * time.Second)
 		}
 	}()
