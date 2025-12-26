@@ -3,6 +3,8 @@ package otel
 import (
 	"context"
 	"fmt"
+	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -24,7 +26,8 @@ var (
 
 // Default Meter settings
 const (
-	defaultMeterInterval = time.Millisecond * 10000
+	defaultMeterInterval  = time.Millisecond * 10000
+	defaultGaugeMetricTTL = time.Millisecond * 60000
 )
 
 // MetricName is a type-safe metric name identifier
@@ -167,9 +170,9 @@ type gaugeValue struct {
 
 // observableGaugeState wraps an observable gauge with its current value
 type observableGaugeState struct {
-	instrument metric.Float64ObservableGauge
-	currentVal *gaugeValue
-	mu         sync.RWMutex
+	instrument  metric.Float64ObservableGauge
+	currentVals map[string]*gaugeValue
+	mu          sync.RWMutex
 }
 
 func newMetricCollector() *metricCollector {
@@ -274,8 +277,8 @@ func (mc *metricCollector) registerGauge(metricDef *MetricDef) error {
 	}
 
 	gaugeState := &observableGaugeState{
-		instrument: gauge,
-		currentVal: &gaugeValue{},
+		instrument:  gauge,
+		currentVals: make(map[string]*gaugeValue),
 	}
 
 	// Register callback to observe gauge values during collection
@@ -284,9 +287,19 @@ func (mc *metricCollector) registerGauge(metricDef *MetricDef) error {
 			gaugeState.mu.RLock()
 			defer gaugeState.mu.RUnlock()
 
-			o.ObserveFloat64(gaugeState.instrument, gaugeState.currentVal.value,
-				metric.WithAttributes(gaugeState.currentVal.attrs...),
-			)
+			now := time.Now()
+
+			for key, gaugeValue := range gaugeState.currentVals {
+				if now.Sub(gaugeValue.updatedAt) > defaultGaugeMetricTTL {
+					delete(gaugeState.currentVals, key)
+				}
+			}
+
+			for _, gaugeValue := range gaugeState.currentVals {
+				o.ObserveFloat64(gaugeState.instrument, gaugeValue.value,
+					metric.WithAttributes(gaugeValue.attrs...),
+				)
+			}
 			return nil
 		},
 		gauge,
@@ -358,30 +371,6 @@ func RecordHistogramWithCtx(ctx context.Context, name MetricName, value float64,
 	histogram.Record(ctx, value, metric.WithAttributes(attrs...))
 }
 
-// RecordGauge updates a gauge to the given value.
-// Gauges represent current state (e.g., CPU usage, queue size).
-//
-// Example:
-//
-//	otel.RecordGauge("memory_usage", 75.5, map[string]any{"host": "server-1"})
-func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
-	gaugeState, ok := mCollector.gauges[name.Get()]
-	if !ok {
-		stdLog.Printf("Gauge '%s' not found", name)
-		return
-	}
-
-	attrs := mapToAttribute(metricAttrs)
-
-	gaugeState.mu.Lock()
-	defer gaugeState.mu.Unlock()
-
-	// Update gauge value
-	gaugeState.currentVal.value = value
-	gaugeState.currentVal.attrs = attrs
-	gaugeState.currentVal.updatedAt = time.Now()
-}
-
 // Context-less metric recording functions
 // Use these when context is not available
 
@@ -398,4 +387,44 @@ func RecordUpDownCounter(name MetricName, value int64, metricAttrs map[string]an
 // RecordHistogram records a histogram value without trace context
 func RecordHistogram(name MetricName, value float64, metricAttrs map[string]any) {
 	RecordHistogramWithCtx(context.Background(), name, value, metricAttrs)
+}
+
+// RecordGauge updates a gauge to the given value.
+// Gauges represent current state (e.g., CPU usage, queue size).
+//
+// Example:
+//
+//	otel.RecordGauge("memory_usage", 75.5, map[string]any{"host": "server-1"})
+func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
+	gaugeState, ok := mCollector.gauges[name.Get()]
+	if !ok {
+		stdLog.Printf("Gauge '%s' not found", name)
+		return
+	}
+
+	attrs := mapToAttribute(metricAttrs)
+	key := hashAttrs(attrs)
+
+	gaugeState.mu.Lock()
+	defer gaugeState.mu.Unlock()
+
+	// Update gauge value
+	gaugeState.currentVals[key].value = value
+	gaugeState.currentVals[key].attrs = attrs
+	gaugeState.currentVals[key].updatedAt = time.Now()
+}
+
+func hashAttrs(attrs []attribute.KeyValue) string {
+	sort.Slice(attrs, func(i, j int) bool {
+		return attrs[i].Key < attrs[j].Key
+	})
+
+	b := strings.Builder{}
+	for _, a := range attrs {
+		b.WriteString(string(a.Key))
+		b.WriteString("=")
+		b.WriteString(a.Value.Emit())
+		b.WriteString("|")
+	}
+	return b.String()
 }
