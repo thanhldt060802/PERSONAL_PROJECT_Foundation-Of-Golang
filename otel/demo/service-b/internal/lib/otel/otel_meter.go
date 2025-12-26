@@ -409,6 +409,9 @@ func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
 	defer gaugeState.mu.Unlock()
 
 	// Update gauge value
+	if _, ok := gaugeState.currentVals[key]; !ok {
+		gaugeState.currentVals[key] = &gaugeValue{}
+	}
 	gaugeState.currentVals[key].value = value
 	gaugeState.currentVals[key].attrs = attrs
 	gaugeState.currentVals[key].updatedAt = time.Now()
