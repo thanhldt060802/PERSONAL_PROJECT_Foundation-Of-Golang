@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -24,6 +25,7 @@ type Cache interface {
 	setTraceCarrierFromGroup(group string, key string, traceCarrier TraceCarrier) error
 	deleteTraceCarrierFromGroup(group string, key string) error
 	deleteTraceCarrierGroup(group string) error
+	clearTraceCarrier() error
 }
 
 // RedisConfig configures Redis connection for trace context storage
@@ -131,6 +133,30 @@ func (rCache *redisCache) deleteTraceCarrierGroup(group string) error {
 	return rCache.redisClient.Del(context.Background(), getGroupKey(group)).Err()
 }
 
+// clearTraceCarrier removes all groups of trace carriers
+func (rCache *redisCache) clearTraceCarrier() error {
+	ctx := context.Background()
+
+	var cursor uint64
+	pattern := fmt.Sprintf("%s*", TraceCarrierCacheKey)
+	keys := make([]string, 0)
+
+	for {
+		existingKeys, nextCursor, err := rCache.redisClient.Scan(context.Background(), cursor, pattern, 100).Result()
+		if err != nil {
+			return nil
+		}
+		keys = append(keys, existingKeys...)
+
+		cursor = nextCursor
+		if cursor == 0 {
+			break
+		}
+	}
+
+	return rCache.redisClient.Del(ctx, keys...).Err()
+}
+
 // Public API functions with nil-safety checks
 
 // GetCacheTraceCarrierFromGroup retrieves a trace carrier from cache.
@@ -183,4 +209,14 @@ func DeleteCacheTraceCarrierGroup(group string) error {
 	}
 
 	return cache.deleteTraceCarrierGroup(group)
+}
+
+// ClearCacheTraceCarrier removes all groups of trace carriers.
+// Returns ErrRedisUnconfigured if Redis was not initialized.
+func ClearCacheTraceCarrier() error {
+	if cache == nil {
+		return ErrCacheUnconfigured
+	}
+
+	return cache.clearTraceCarrier()
 }
