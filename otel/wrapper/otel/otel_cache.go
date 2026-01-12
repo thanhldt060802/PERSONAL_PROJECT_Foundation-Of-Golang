@@ -144,7 +144,7 @@ func (rCache *redisCache) clearTraceCarrier() error {
 	for {
 		existingKeys, nextCursor, err := rCache.redisClient.Scan(context.Background(), cursor, pattern, 100).Result()
 		if err != nil {
-			return nil
+			stdLog.Printf("Failed to scan partten '%s' with cursor '%d': %v", pattern, cursor, err)
 		}
 		keys = append(keys, existingKeys...)
 
