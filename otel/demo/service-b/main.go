@@ -76,7 +76,7 @@ func init() {
 				"Authorization": "Bearer " + viper.GetString("observer.logger.bearer_token"),
 			},
 			LocalLogFile:  viper.GetString("observer.logger.local_log_file"),
-			LocalLogLevel: otel.LogLevel(viper.GetString("observer.local_log_level")),
+			LocalLogLevel: otel.LogLevel(viper.GetString("observer.logger.local_log_level")),
 		}),
 		otel.WithMeter(&otel.MeterConfig{
 			ServiceName:    viper.GetString("app.name"),
@@ -86,7 +86,7 @@ func init() {
 			HttpHeader: map[string]string{
 				"Authorization": "Bearer " + viper.GetString("observer.meter.bearer_token"),
 			},
-			MetricCollectionInterval: time.Duration(viper.GetInt("observer.metric_collection_interval_sec")) * time.Second,
+			MetricCollectionInterval: time.Duration(viper.GetInt("observer.meter.metric_collection_interval_sec")) * time.Second,
 			MetricDefs: []*otel.MetricDef{
 				{
 					Type:        otel.METRIC_TYPE_COUNTER,
