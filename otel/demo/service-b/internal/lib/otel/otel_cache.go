@@ -13,7 +13,7 @@ import (
 // cache is global Cache instance for internal storage.
 var cache Cache
 
-// Err definitions for Cache.
+// Error definitions for Cache.
 var (
 	// ErrCacheUnconfigured occurs when using Cache without including Cache option when initializing Otel Observer.
 	ErrCacheUnconfigured = errors.New("cache is unconfigured")
