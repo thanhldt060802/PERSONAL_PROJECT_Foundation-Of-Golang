@@ -14,12 +14,10 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-var (
-	// tracer is global Tracer instance for creating tracing span
-	tracer trace.Tracer
-)
+// tracer is global Tracer instance for creating tracing span.
+var tracer trace.Tracer
 
-// TracerConfig configures the distributed tracing component
+// TracerConfig configures the distributed tracing component.
 type TracerConfig struct {
 	ServiceName    string            // Name of the service
 	ServiceVersion string            // Version of the service
@@ -28,7 +26,7 @@ type TracerConfig struct {
 	HttpHeader     map[string]string // Additional HTTP headers
 }
 
-// initTracer initializes the global tracer and returns a cleanup function.
+// initTracer initializes the global Tracer and returns a cleanup function.
 // Spans are exported using OTLP HTTP protocol with batch processing.
 func initTracer(config *TracerConfig) func(ctx context.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -58,13 +56,12 @@ func initTracer(config *TracerConfig) func(ctx context.Context) {
 		attribute.String("host.ip", getLocalIP()),
 	)
 
-	// Create tracer provider with batch span processor for efficient export
+	// Create Tracer provider with batch span processor for efficient export
 	tracerProvider := sdktrace.NewTracerProvider(
 		sdktrace.WithBatcher(exporter),
 		sdktrace.WithResource(resource),
 	)
 
-	// Init Tracer
 	otel.SetTracerProvider(tracerProvider)
 
 	// Configure trace context propagation for cross-service tracing (HTTP, gRPC)
@@ -76,6 +73,7 @@ func initTracer(config *TracerConfig) func(ctx context.Context) {
 		),
 	)
 
+	// Init Tracer
 	tracer = otel.Tracer(config.ServiceName + "/otel")
 
 	// Return cleanup function

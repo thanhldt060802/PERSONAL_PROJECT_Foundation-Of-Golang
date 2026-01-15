@@ -10,16 +10,16 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var (
-	// cache is global cache instance for internal storage
-	cache Cache
-)
+// cache is global Cache instance for internal storage.
+var cache Cache
 
+// Err definitions for Cache.
 var (
+	// ErrCacheUnconfigured occurs when using Cache without including Cache option when initializing Otel Observer.
 	ErrCacheUnconfigured = errors.New("cache is unconfigured")
 )
 
-// Cache provides storage for trace carriers across async boundaries
+// Cache provides storage for Trace Carriers across async boundaries.
 type Cache interface {
 	getTraceCarrierFromGroup(group string, key string) (TraceCarrier, error)
 	setTraceCarrierFromGroup(group string, key string, traceCarrier TraceCarrier) error
@@ -28,7 +28,7 @@ type Cache interface {
 	clearTraceCarrier() error
 }
 
-// RedisConfig configures Redis connection for trace context storage
+// RedisConfig configures Redis connection for trace context storage.
 type RedisConfig struct {
 	Address         string // Redis connection address
 	Database        int    // Redis database index
@@ -41,31 +41,34 @@ type RedisConfig struct {
 	WriteTimeoutSec int    // Redis connection pool write timeout second
 }
 
-// redisCache implements Cache using Redis hash maps
+// redisCache implements Cache using Redis Cache
 type redisCache struct {
 	redisClient *redis.Client
 }
 
 // Default Redis settings
 const (
-	defaultRedisPoolSize        = 10
-	defaultRedisPoolTimeoutSec  = 20
-	defaultRedisIdleTimeoutSec  = 10
-	defaultRedisReadTimeoutSec  = 20
+	// defaultRedisPoolSize is pool size of connection
+	defaultRedisPoolSize = 10
+	// defaultRedisPoolTimeoutSec is pool connection timeout
+	defaultRedisPoolTimeoutSec = 20
+	// defaultRedisIdleTimeoutSec is pool connection idle timeout
+	defaultRedisIdleTimeoutSec = 10
+	// defaultRedisReadTimeoutSec is pool connection read timeout
+	defaultRedisReadTimeoutSec = 20
+	// defaultRedisWriteTimeoutSec is pool connection write timeout
 	defaultRedisWriteTimeoutSec = 20
 )
 
-const (
-	// Redis key prefix for trace carriers
-	TraceCarrierCacheKey = "OTEL:TRACECARRIER"
-)
+// Key prefix for Cache Trace Carriers
+const traceCarrierRedisCacheKey = "OTEL:TRACECARRIER"
 
-// getGroupKey constructs the full Redis key for a trace carrier group
+// getGroupKey constructs the full Redis key for a Trace Carrier group
 func getGroupKey(group string) string {
-	return TraceCarrierCacheKey + ":" + group
+	return traceCarrierRedisCacheKey + ":" + group
 }
 
-// initRedisCache initializes Redis connection and sets the global cache
+// initRedisCache initializes Redis connection and sets the global Cache
 func initRedisCache(config *RedisConfig) {
 	// Create Redis client
 	redisClient := redis.NewClient(&redis.Options{
@@ -87,13 +90,13 @@ func initRedisCache(config *RedisConfig) {
 		stdLog.Fatalf("Failed to ping to Redis: %v", err)
 	}
 
-	// Init Redis cache
+	// Init redisCache
 	cache = &redisCache{
 		redisClient: redisClient,
 	}
 }
 
-// getTraceCarrierFromGroup retrieves a trace carrier from Redis hash
+// getTraceCarrierFromGroup retrieves a Trace Carrier from Redis hash
 func (rCache *redisCache) getTraceCarrierFromGroup(group string, key string) (TraceCarrier, error) {
 	rawValue, err := rCache.redisClient.HGet(context.Background(), getGroupKey(group), key).Result()
 
@@ -113,7 +116,7 @@ func (rCache *redisCache) getTraceCarrierFromGroup(group string, key string) (Tr
 	return carrier, nil
 }
 
-// setTraceCarrierFromGroup stores a trace carrier in Redis hash
+// setTraceCarrierFromGroup stores a Trace Carrier in Redis.
 func (rCache *redisCache) setTraceCarrierFromGroup(group string, key string, traceCarrier TraceCarrier) error {
 	byteValue, err := json.Marshal(traceCarrier)
 	if err != nil {
@@ -123,22 +126,22 @@ func (rCache *redisCache) setTraceCarrierFromGroup(group string, key string, tra
 	return rCache.redisClient.HSet(context.Background(), getGroupKey(group), key, string(byteValue)).Err()
 }
 
-// deleteTraceCarrierFromGroup removes a specific trace carrier from Redis has
+// deleteTraceCarrierFromGroup removes a specific Trace Carrier from Redis.
 func (rCache *redisCache) deleteTraceCarrierFromGroup(group string, key string) error {
 	return rCache.redisClient.HDel(context.Background(), getGroupKey(group), key).Err()
 }
 
-// deleteTraceCarrierGroup removes an entire group of trace carriers
+// deleteTraceCarrierGroup removes an entire group of Trace Carriers.
 func (rCache *redisCache) deleteTraceCarrierGroup(group string) error {
 	return rCache.redisClient.Del(context.Background(), getGroupKey(group)).Err()
 }
 
-// clearTraceCarrier removes all groups of trace carriers
+// clearTraceCarrier removes all groups of Trace Carriers.
 func (rCache *redisCache) clearTraceCarrier() error {
 	ctx := context.Background()
 
 	var cursor uint64
-	pattern := fmt.Sprintf("%s*", TraceCarrierCacheKey)
+	pattern := fmt.Sprintf("%s*", traceCarrierRedisCacheKey)
 	keys := make([]string, 0)
 
 	for {
@@ -157,9 +160,9 @@ func (rCache *redisCache) clearTraceCarrier() error {
 	return rCache.redisClient.Del(ctx, keys...).Err()
 }
 
-// Public API functions with nil-safety checks
+// Public API functions with nil-safety checks.
 
-// GetCacheTraceCarrierFromGroup retrieves a trace carrier from cache.
+// GetCacheTraceCarrierFromGroup retrieves a Trace Carrier from Cache.
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 //
 // Example:
@@ -176,7 +179,7 @@ func GetCacheTraceCarrierFromGroup(group string, key string) (TraceCarrier, erro
 	return cache.getTraceCarrierFromGroup(group, key)
 }
 
-// SetCacheTraceCarrierFromGroup stores a trace carrier in cache.
+// SetCacheTraceCarrierFromGroup stores a Trace Carrier in Cache.
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 //
 // Example:
@@ -191,7 +194,7 @@ func SetCacheTraceCarrierFromGroup(group string, key string, traceCarrier TraceC
 	return cache.setTraceCarrierFromGroup(group, key, traceCarrier)
 }
 
-// DeleteCacheTraceCarrierFromGroup removes a trace carrier from cache.
+// DeleteCacheTraceCarrierFromGroup removes a Trace Carrier from Cache.
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 func DeleteCacheTraceCarrierFromGroup(group string, key string) error {
 	if cache == nil {
@@ -201,7 +204,7 @@ func DeleteCacheTraceCarrierFromGroup(group string, key string) error {
 	return cache.deleteTraceCarrierFromGroup(group, key)
 }
 
-// DeleteCacheTraceCarrierGroup removes all trace carriers in a group.
+// DeleteCacheTraceCarrierGroup removes all Trace Carriers in a group.
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 func DeleteCacheTraceCarrierGroup(group string) error {
 	if cache == nil {
@@ -211,7 +214,7 @@ func DeleteCacheTraceCarrierGroup(group string) error {
 	return cache.deleteTraceCarrierGroup(group)
 }
 
-// ClearCacheTraceCarrier removes all groups of trace carriers.
+// ClearCacheTraceCarrier removes all groups of Trace Carriers.
 // Returns ErrRedisUnconfigured if Redis was not initialized.
 func ClearCacheTraceCarrier() error {
 	if cache == nil {

@@ -8,22 +8,20 @@ import (
 	"go.opentelemetry.io/otel"
 )
 
-var (
-	// observerOnce ensures observer is initialized only once
-	observerOnce sync.Once
-)
+// observerOnce ensures Otel Observer is initialized only once.
+var observerOnce sync.Once
 
-// observer manages lifecycle of all OpenTelemetry components
+// observer manages lifecycle of all OpenTelemetry components.
 type observer struct {
-	shutdowns []func(context.Context) // Cleanup functions for graceful shutdown
+	shutdowns []func(context.Context)
 }
 
-// ObserverOption configures the observer during initialization
+// ObserverOption configures the Otel Observer during initialization.
 type ObserverOption interface {
 	apply(obsv *observer)
 }
 
-// observerOptionFunc implements ObserverOption using a function
+// observerOptionFunc implements ObserverOption using a function.
 type observerOptionFunc func(*observer)
 
 func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
@@ -32,7 +30,7 @@ func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
 
 // WithTracer enables distributed tracing with the given configuration.
 // Returns nil if config is nil.
-// This is mandatory if using Tracer; otherwise, it will crash if Tracer is used without configuring it when initializing Observer.
+// This is mandatory if using Tracer; otherwise, it will no effect if Tracer is used without configuring it when initializing Otel Observer.
 func WithTracer(config *TracerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -47,7 +45,7 @@ func WithTracer(config *TracerConfig) ObserverOption {
 // WithLogger enables structured logging with OpenTelemetry integration.
 // Logs are exported to OTLP endpoint and optionally written to local file.
 // Returns nil if config is nil.
-// This is mandatory if using Logger; otherwise, it will crash if Logger is used without configuring it when initializing Observer.
+// This is mandatory if using Logger; otherwise, it will no effect if Logger is used without configuring it when initializing Otel Observer.
 func WithLogger(config *LoggerConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -62,7 +60,7 @@ func WithLogger(config *LoggerConfig) ObserverOption {
 // WithMeter enables metrics collection and export.
 // Supports Counter, UpDownCounter, Histogram, and Gauge metric types.
 // Returns nil if config is nil.
-// This is mandatory if using Meter; otherwise, it will crash if Meter is used without configuring it when initializing Observer.
+// This is mandatory if using Meter; otherwise, it will no effect if Meter is used without configuring it when initializing Otel Observer.
 func WithMeter(config *MeterConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -81,6 +79,7 @@ func WithMeter(config *MeterConfig) ObserverOption {
 // WithRedisCache enables Redis-based trace context storage for async operations.
 // Useful for propagating trace context across message queues or job systems.
 // Returns nil if config is nil.
+// This is mandatory if using Cache; otherwise, it will crash if Cache is used without configuring it when initializing Otel Observer.
 func WithRedisCache(config *RedisConfig) ObserverOption {
 	return observerOptionFunc(func(o *observer) {
 		if config == nil {
@@ -107,7 +106,7 @@ func WithRedisCache(config *RedisConfig) ObserverOption {
 	})
 }
 
-// NewOtelObserver initializes OpenTelemetry with the given options.
+// NewOtelObserver initializes Otel Observer (OpenTelemetry Observer) with the given options.
 // It can only be called once (singleton pattern).
 // Returns a shutdown function that must be called before application exit.
 //

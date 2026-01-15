@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// stdLog is used for internal logging (errors, warnings)
+// stdLog is used for internal logging
 var stdLog = log.New(os.Stdout, "[otel] ", log.LstdFlags)
 
 // mapToAttribute converts a map to OpenTelemetry attributes.

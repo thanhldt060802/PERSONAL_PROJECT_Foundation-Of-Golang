@@ -10,8 +10,8 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// NewSpan creates a new trace span for the given operation.
-// Returns the span context and a Span wrapper that must be closed with Done().
+// NewSpan creates a new tracing Span for the given operation.
+// Returns the Span context and a Span wrapper that must be closed with Done().
 //
 // Example:
 //
@@ -30,24 +30,24 @@ func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
 	return spanCtx, &span
 }
 
-// Span wraps an OpenTelemetry span with additional functionality.
+// Span wraps an OpenTelemetry Span with additional functionality.
 // Attributes and errors are accumulated and applied when Done() is called.
 type Span struct {
-	coreSpan trace.Span // The underlying OpenTelemetry span
+	coreSpan trace.Span // The underlying OpenTelemetry Span
 
-	parentCtx context.Context // Parent context of this span
-	spanCtx   context.Context // Context containing this span
-	err       error           // Error to be recorded when span ends
+	parentCtx context.Context // Parent context of this Span
+	spanCtx   context.Context // Context containing this Span
+	err       error           // Error to be recorded when Span ends
 
-	spanAttributes map[string]any // Attributes to be added to the span
+	spanAttributes map[string]any // Attributes to be added to the Span
 }
 
-// Done finalizes the span by:
+// Done finalizes the Span by:
 //   - Applying all accumulated attributes
 //   - Recording any error and setting error status
-//   - Ending the span with timestamp
+//   - Ending the Span with timestamp
 //
-// Must be called to ensure span is exported.
+// Must be called to ensure Span is exported.
 func (span *Span) Done() {
 	// Convert and set all accumulated attributes
 	attrs := mapToAttribute(span.spanAttributes)
@@ -65,32 +65,32 @@ func (span *Span) Done() {
 	}
 }
 
-// ParentContext returns the context before this span was created.
+// ParentContext returns the context before this Span was created.
 // Useful for creating sibling spans instead of child spans.
 func (span *Span) ParentContext() context.Context {
 	return span.parentCtx
 }
 
-// Context returns the context containing this span.
+// Context returns the context containing this Span.
 // Use this context to create child spans or propagate trace context.
 func (span *Span) Context() context.Context {
 	return span.spanCtx
 }
 
-// SetError marks the span as failed.
+// SetError marks the Span as failed.
 // The error will be recorded when Done() is called.
 func (span *Span) SetError(err error) {
 	span.err = err
 }
 
-// SetAttribute adds a key-value attribute to the span.
+// SetAttribute adds a key-value attribute to the Span.
 // Attributes provide additional context about the operation.
 // Common attributes: user_id, request_id, http.status_code, db.statement
 func (span *Span) SetAttribute(key string, value any) {
 	span.spanAttributes[key] = value
 }
 
-// AddEvent records a point-in-time event within the span.
+// AddEvent records a point-in-time event within the Span.
 // Useful for marking important moments like cache hits or retry attempts.
 //
 // Example:
