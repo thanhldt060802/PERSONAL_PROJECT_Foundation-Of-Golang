@@ -2,6 +2,7 @@ package otel
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log/slog"
@@ -20,6 +21,12 @@ import (
 
 // logger is global Logger instance for logging.
 var logger *slog.Logger
+
+// Error definitions for Logger.
+var (
+	// ErrLoggerUnconfigured occurs when using Logger without including Logger option when initializing Otel Observer.
+	ErrLoggerUnconfigured = errors.New("logger is unconfigured")
+)
 
 // LogLevel defines the severity level for logging using Logger.
 type LogLevel string
@@ -263,6 +270,11 @@ func ErrorLog(format string, args ...any) {
 
 // logWithMeta adds source file location to log entries.
 func logWithMeta(ctx context.Context, level slog.Level, format string, args ...any) {
+	if logger == nil {
+		stdLog.Printf("Error occurred when using Logger: %v", ErrLoggerUnconfigured)
+		return
+	}
+
 	_, path, numLine, _ := runtime.Caller(2)
 	srcFile := filepath.Base(path)
 	meta := fmt.Sprintf("%s:%d", srcFile, numLine)

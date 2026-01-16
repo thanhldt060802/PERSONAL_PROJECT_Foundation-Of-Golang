@@ -2,6 +2,7 @@ package otel
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -14,8 +15,18 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
+// defaultTracer is global default Tracer instance for creating tracing span.
+// But it's pointless, it's just to prevent it from breaking where it's used.
+var defaultTracer = otel.Tracer("default-tracer")
+
 // tracer is global Tracer instance for creating tracing span.
 var tracer trace.Tracer
+
+// Error definitions for Tracer.
+var (
+	// ErrTracerUnconfigured occurs when using Tracer without including Tracer option when initializing Otel Observer.
+	ErrTracerUnconfigured = errors.New("tracer is unconfigured")
+)
 
 // TracerConfig configures the distributed tracing component.
 type TracerConfig struct {

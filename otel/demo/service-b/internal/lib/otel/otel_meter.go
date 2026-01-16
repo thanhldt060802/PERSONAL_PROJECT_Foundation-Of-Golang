@@ -2,6 +2,7 @@ package otel
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 	"strings"
@@ -22,6 +23,12 @@ var meter metric.Meter
 
 // mCollector is global metric manager for all registered metric.
 var mCollector *metricCollector
+
+// Error definitions for Meter.
+var (
+	// ErrMeterUnconfigured occurs when using Meter without including Meter option when initializing Otel Observer.
+	ErrMeterUnconfigured = errors.New("meter is unconfigured")
+)
 
 // Default Meter settings.
 const (
@@ -327,6 +334,11 @@ func (mc *metricCollector) registerGauge(metricDef *MetricDef) error {
 //
 //	otel.RecordCounterWithCtx(ctx, "requests", 1, map[string]any{"method": "GET"})
 func RecordCounterWithCtx(ctx context.Context, name MetricName, value int64, metricAttrs map[string]any) {
+	if meter == nil {
+		stdLog.Printf("Error occurred when using Meter: %v", ErrMeterUnconfigured)
+		return
+	}
+
 	counter, ok := mCollector.counters[name.Get()]
 	if !ok {
 		stdLog.Printf("Counter '%s' not found", name)
@@ -350,6 +362,11 @@ func RecordCounterWithCtx(ctx context.Context, name MetricName, value int64, met
 //	otel.RecordUpDownCounterWithCtx(ctx, "connections", 1, map[string]any{"type": "websocket"})
 //	otel.RecordUpDownCounterWithCtx(ctx, "connections", -1, map[string]any{"type": "websocket"})
 func RecordUpDownCounterWithCtx(ctx context.Context, name MetricName, value int64, metricAttrs map[string]any) {
+	if meter == nil {
+		stdLog.Printf("Error occurred when using Meter: %v", ErrMeterUnconfigured)
+		return
+	}
+
 	upDownCounter, ok := mCollector.upDownCounters[name.Get()]
 	if !ok {
 		stdLog.Printf("UpDownCounter '%s' not found", name)
@@ -367,6 +384,11 @@ func RecordUpDownCounterWithCtx(ctx context.Context, name MetricName, value int6
 //
 //	otel.RecordHistogramWithCtx(ctx, "latency", 123.45, map[string]any{"endpoint": "/api/users"})
 func RecordHistogramWithCtx(ctx context.Context, name MetricName, value float64, metricAttrs map[string]any) {
+	if meter == nil {
+		stdLog.Printf("Error occurred when using Meter: %v", ErrMeterUnconfigured)
+		return
+	}
+
 	histogram, ok := mCollector.histograms[name.Get()]
 	if !ok {
 		stdLog.Printf("Histogram '%s' not found", name)
@@ -402,6 +424,11 @@ func RecordHistogram(name MetricName, value float64, metricAttrs map[string]any)
 //
 //	otel.RecordGauge("memory_usage", 75.5, map[string]any{"host": "server-1"})
 func RecordGauge(name MetricName, value float64, metricAttrs map[string]any) {
+	if meter == nil {
+		stdLog.Printf("Error occurred when using Meter: %v", ErrMeterUnconfigured)
+		return
+	}
+
 	gaugeState, ok := mCollector.gauges[name.Get()]
 	if !ok {
 		stdLog.Printf("Gauge '%s' not found", name)
