@@ -224,21 +224,37 @@ func (h *multiHandler) WithGroup(name string) slog.Handler {
 // These functions extract trace_id and span_id from context automatically.
 
 // InfoLogWithCtx logs an informational message with trace context.
+//
+// Example:
+//
+//	observer.InfoLogWithCtx(ctx, "User logged in: %s", "john.doe")
 func (o *Observer) InfoLogWithCtx(ctx context.Context, format string, args ...any) {
 	o.logWithMeta(ctx, slog.LevelInfo, format, args...)
 }
 
 // WarnLogWithCtx logs a warning message with trace context.
+//
+// Example:
+//
+//	observer.WarnLogWithCtx(ctx, "User logged in: %s", "john.doe")
 func (o *Observer) WarnLogWithCtx(ctx context.Context, format string, args ...any) {
 	o.logWithMeta(ctx, slog.LevelWarn, format, args...)
 }
 
 // DebugLogWithCtx logs a debug message with trace context.
+//
+// Example:
+//
+//	observer.DebugLogWithCtx(ctx, "User logged in: %s", "john.doe")
 func (o *Observer) DebugLogWithCtx(ctx context.Context, format string, args ...any) {
 	o.logWithMeta(ctx, slog.LevelDebug, format, args...)
 }
 
 // ErrorLogWithCtx logs an error message with trace context.
+//
+// Example:
+//
+//	observer.ErrorLogWithCtx(ctx, "User logged in: %s", "john.doe")
 func (o *Observer) ErrorLogWithCtx(ctx context.Context, format string, args ...any) {
 	o.logWithMeta(ctx, slog.LevelError, format, args...)
 }
@@ -246,22 +262,22 @@ func (o *Observer) ErrorLogWithCtx(ctx context.Context, format string, args ...a
 // Context-less logging functions.
 // Use these when context is not available.
 
-// InfoLog logs an informational message without trace context.
+// InfoLog logs an informational message without trace context. (callback: InfoLogWithCtx)
 func (o *Observer) InfoLog(format string, args ...any) {
 	o.logWithMeta(context.Background(), slog.LevelInfo, format, args...)
 }
 
-// WarnLog logs a warning message without trace context.
+// WarnLog logs a warning message without trace context. (callback: WarnLogWithCtx)
 func (o *Observer) WarnLog(format string, args ...any) {
 	o.logWithMeta(context.Background(), slog.LevelWarn, format, args...)
 }
 
-// DebugLog logs a debug message without trace context.
+// DebugLog logs a debug message without trace context. (callback: DebugLogWithCtx)
 func (o *Observer) DebugLog(format string, args ...any) {
 	o.logWithMeta(context.Background(), slog.LevelDebug, format, args...)
 }
 
-// ErrorLog logs an error message without trace context.
+// ErrorLog logs an error message without trace context. (callback: ErrorLogWithCtx)
 func (o *Observer) ErrorLog(format string, args ...any) {
 	o.logWithMeta(context.Background(), slog.LevelError, format, args...)
 }

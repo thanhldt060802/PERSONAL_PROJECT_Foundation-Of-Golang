@@ -15,7 +15,7 @@ import (
 //
 // Example:
 //
-//	ctx, span := otel.NewSpan(ctx, "database.query")
+//	ctx, span := observer.NewSpan(ctx, "database.query")
 //	defer span.Done()
 //	span.SetAttribute("query", "SELECT * FROM users")
 func (o *Observer) NewSpan(ctx context.Context, operation string) (context.Context, *Span) {

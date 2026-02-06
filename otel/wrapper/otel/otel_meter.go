@@ -397,17 +397,17 @@ func (o *Observer) RecordHistogramWithCtx(ctx context.Context, name MetricName, 
 // Context-less metric recording functions.
 // Use these when context is not available.
 
-// RecordCounter increments a counter without trace context
+// RecordCounter increments a counter without trace context (callback: RecordCounterWithCtx)
 func (o *Observer) RecordCounter(name MetricName, value int64, metricAttrs map[string]any) {
 	o.RecordCounterWithCtx(context.Background(), name, value, metricAttrs)
 }
 
-// RecordUpDownCounter updates an up-down counter without trace context
+// RecordUpDownCounter updates an up-down counter without trace context (callback: RecordUpDownCounterWithCtx)
 func (o *Observer) RecordUpDownCounter(name MetricName, value int64, metricAttrs map[string]any) {
 	o.RecordUpDownCounterWithCtx(context.Background(), name, value, metricAttrs)
 }
 
-// RecordHistogram records a histogram value without trace context
+// RecordHistogram records a histogram value without trace context (callback: RecordHistogramWithCtx)
 func (o *Observer) RecordHistogram(name MetricName, value float64, metricAttrs map[string]any) {
 	o.RecordHistogramWithCtx(context.Background(), name, value, metricAttrs)
 }
