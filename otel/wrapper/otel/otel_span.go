@@ -18,16 +18,8 @@ import (
 //	ctx, span := otel.NewSpan(ctx, "database.query")
 //	defer span.Done()
 //	span.SetAttribute("query", "SELECT * FROM users")
-func NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
-	var spanCtx context.Context
-	var coreSpan trace.Span
-
-	if tracer == nil {
-		spanCtx, coreSpan = defaultTracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
-		stdLog.Printf("Error occurred when using Tracer: %v, using the default alternative Tracer", ErrMeterUnconfigured)
-	} else {
-		spanCtx, coreSpan = tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
-	}
+func (o *Observer) NewSpan(ctx context.Context, operation string) (context.Context, *Span) {
+	spanCtx, coreSpan := o.tracer.Start(ctx, operation, trace.WithTimestamp(time.Now()))
 
 	span := Span{
 		coreSpan:       coreSpan,

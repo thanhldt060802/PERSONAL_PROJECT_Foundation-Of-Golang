@@ -19,9 +19,6 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.18.0"
 )
 
-// logger is global Logger instance for logging.
-var logger *slog.Logger
-
 // Error definitions for Logger.
 var (
 	// ErrLoggerUnconfigured occurs when using Logger without including Logger option when initializing Otel Observer.
@@ -55,10 +52,10 @@ type LoggerConfig struct {
 	LocalLogLevel LogLevel // Log level for local file logging
 }
 
-// initLogger initializes the global Logger and returns a cleanup function.
+// initLogger initializes the Logger, returns Logger and a cleanup function.
 // Logs are sent to both OTLP endpoint and local output (stdout + optional file).
 // Each log entry includes trace_id and span_id for correlation with traces.
-func initLogger(config *LoggerConfig) func(ctx context.Context) {
+func initLogger(config *LoggerConfig) (*slog.Logger, func(ctx context.Context)) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -75,7 +72,7 @@ func initLogger(config *LoggerConfig) func(ctx context.Context) {
 	// Create OTLP HTTP exporter for sending logs to OpenTelemetry collector
 	exporter, err := otlploghttp.New(ctx, opts...)
 	if err != nil {
-		stdLog.Fatalf("Failed to create exporter for Logger: %v", err.Error())
+		stdLog.Fatalf("[error] Failed to create exporter for Logger: %v", err.Error())
 	}
 
 	// Create resource with service metadata
@@ -134,13 +131,13 @@ func initLogger(config *LoggerConfig) func(ctx context.Context) {
 	if config.LocalLogFile != "" {
 		// Create log directory if it doesn't exist
 		if err := os.MkdirAll(filepath.Dir(config.LocalLogFile), 0755); err != nil {
-			stdLog.Fatalf("Failed to create local log file dir for Logger: %v", err.Error())
+			stdLog.Fatalf("[error] Failed to create local log file dir for Logger: %v", err.Error())
 		}
 
 		// Open log file for writing
 		file, err := os.OpenFile(config.LocalLogFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 		if err != nil {
-			stdLog.Fatalf("Failed to open local log file for Logger: %v", err.Error())
+			stdLog.Fatalf("[error] Failed to open local log file for Logger: %v", err.Error())
 		}
 		logFile = file
 		writers = append(writers, logFile)
@@ -153,18 +150,19 @@ func initLogger(config *LoggerConfig) func(ctx context.Context) {
 	localHandler := slog.NewJSONHandler(multiWriter, &localHandlerOption)
 	multiHandler = append(multiHandler, localHandler)
 
-	// Init Logger with multi handler
-	logger = slog.New(newMultiHandler(multiHandler...))
-
-	// Return cleanup function
-	return func(ctx context.Context) {
+	// Init Logger with multi handler, cleanup function for Logger
+	logger := slog.New(newMultiHandler(multiHandler...))
+	shutdown := func(ctx context.Context) {
 		if err := loggerProvider.Shutdown(ctx); err != nil {
-			stdLog.Printf("Error occurred when shutting down Logger provider: %v", err)
+			stdLog.Printf("[error] Failed to shut down Logger provider: %v", err)
 		}
 		if logFile != nil {
 			logFile.Close()
 		}
 	}
+
+	// Return Logger and cleanup function for Logger
+	return logger, shutdown
 }
 
 // multiHandler dispatches log records to multiple handlers.
@@ -226,52 +224,52 @@ func (h *multiHandler) WithGroup(name string) slog.Handler {
 // These functions extract trace_id and span_id from context automatically.
 
 // InfoLogWithCtx logs an informational message with trace context.
-func InfoLogWithCtx(ctx context.Context, format string, args ...any) {
-	logWithMeta(ctx, slog.LevelInfo, format, args...)
+func (o *Observer) InfoLogWithCtx(ctx context.Context, format string, args ...any) {
+	o.logWithMeta(ctx, slog.LevelInfo, format, args...)
 }
 
 // WarnLogWithCtx logs a warning message with trace context.
-func WarnLogWithCtx(ctx context.Context, format string, args ...any) {
-	logWithMeta(ctx, slog.LevelWarn, format, args...)
+func (o *Observer) WarnLogWithCtx(ctx context.Context, format string, args ...any) {
+	o.logWithMeta(ctx, slog.LevelWarn, format, args...)
 }
 
 // DebugLogWithCtx logs a debug message with trace context.
-func DebugLogWithCtx(ctx context.Context, format string, args ...any) {
-	logWithMeta(ctx, slog.LevelDebug, format, args...)
+func (o *Observer) DebugLogWithCtx(ctx context.Context, format string, args ...any) {
+	o.logWithMeta(ctx, slog.LevelDebug, format, args...)
 }
 
 // ErrorLogWithCtx logs an error message with trace context.
-func ErrorLogWithCtx(ctx context.Context, format string, args ...any) {
-	logWithMeta(ctx, slog.LevelError, format, args...)
+func (o *Observer) ErrorLogWithCtx(ctx context.Context, format string, args ...any) {
+	o.logWithMeta(ctx, slog.LevelError, format, args...)
 }
 
 // Context-less logging functions.
 // Use these when context is not available.
 
 // InfoLog logs an informational message without trace context.
-func InfoLog(format string, args ...any) {
-	logWithMeta(context.Background(), slog.LevelInfo, format, args...)
+func (o *Observer) InfoLog(format string, args ...any) {
+	o.logWithMeta(context.Background(), slog.LevelInfo, format, args...)
 }
 
 // WarnLog logs a warning message without trace context.
-func WarnLog(format string, args ...any) {
-	logWithMeta(context.Background(), slog.LevelWarn, format, args...)
+func (o *Observer) WarnLog(format string, args ...any) {
+	o.logWithMeta(context.Background(), slog.LevelWarn, format, args...)
 }
 
 // DebugLog logs a debug message without trace context.
-func DebugLog(format string, args ...any) {
-	logWithMeta(context.Background(), slog.LevelDebug, format, args...)
+func (o *Observer) DebugLog(format string, args ...any) {
+	o.logWithMeta(context.Background(), slog.LevelDebug, format, args...)
 }
 
 // ErrorLog logs an error message without trace context.
-func ErrorLog(format string, args ...any) {
-	logWithMeta(context.Background(), slog.LevelError, format, args...)
+func (o *Observer) ErrorLog(format string, args ...any) {
+	o.logWithMeta(context.Background(), slog.LevelError, format, args...)
 }
 
 // logWithMeta adds source file location to log entries.
-func logWithMeta(ctx context.Context, level slog.Level, format string, args ...any) {
-	if logger == nil {
-		stdLog.Printf("Error occurred when using Logger: %v", ErrLoggerUnconfigured)
+func (o *Observer) logWithMeta(ctx context.Context, level slog.Level, format string, args ...any) {
+	if o.logger == nil {
+		stdLog.Printf("[error] Failed to use Logger: %v", ErrLoggerUnconfigured)
 		return
 	}
 
@@ -279,7 +277,7 @@ func logWithMeta(ctx context.Context, level slog.Level, format string, args ...a
 	srcFile := filepath.Base(path)
 	meta := fmt.Sprintf("%s:%d", srcFile, numLine)
 	msg := fmt.Sprintf(format, args...)
-	logger.LogAttrs(
+	o.logger.LogAttrs(
 		ctx,
 		level,
 		msg,
