@@ -2,29 +2,50 @@ package otel
 
 import (
 	"context"
-	"sync"
+	"log/slog"
 	"time"
 
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/metric"
+	"go.opentelemetry.io/otel/trace"
 )
 
-// observerOnce ensures Otel Observer is initialized only once.
-var observerOnce sync.Once
+// Observer manages lifecycle of all OpenTelemetry components.
+type Observer struct {
+	// Main feature
 
-// observer manages lifecycle of all OpenTelemetry components.
-type observer struct {
-	shutdowns []func(context.Context)
+	tracer                 trace.Tracer            // Tracer instance for creating tracing spans
+	logger                 *slog.Logger            // Logger instance for structured logging
+	meter                  metric.Meter            // Meter instance for collecting metrics
+	metricCollectorManager *metricCollectorManager // Metric collector manager for all registered metric
+
+	// Other feature
+
+	cache Cache // Cache for storing Trace Carriers (trace context)
+
+	shutdowns []func(context.Context) // List of shutdown functions for cleanup
+}
+
+// Shutdown flushes all pending telemetry data and cleans up resources.
+// It should be called before application exit.
+func (o *Observer) Shutdown() {
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+
+	for _, shutdown := range o.shutdowns {
+		shutdown(shutdownCtx)
+	}
 }
 
 // ObserverOption configures the Otel Observer during initialization.
 type ObserverOption interface {
-	apply(obsv *observer)
+	apply(obsv *Observer)
 }
 
 // observerOptionFunc implements ObserverOption using a function.
-type observerOptionFunc func(*observer)
+type observerOptionFunc func(*Observer)
 
-func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
+func (obsvOptFunc observerOptionFunc) apply(obsv *Observer) {
 	obsvOptFunc(obsv)
 }
 
@@ -32,12 +53,14 @@ func (obsvOptFunc observerOptionFunc) apply(obsv *observer) {
 // Returns nil if config is nil.
 // This is mandatory if using Tracer; otherwise, it will no effect if Tracer is used without configuring it when initializing Otel Observer.
 func WithTracer(config *TracerConfig) ObserverOption {
-	return observerOptionFunc(func(o *observer) {
+	return observerOptionFunc(func(o *Observer) {
 		if config == nil {
 			return
 		}
 
-		shutdown := initTracer(config)
+		tracer, shutdown := initTracer(config)
+
+		o.tracer = tracer
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
@@ -47,12 +70,14 @@ func WithTracer(config *TracerConfig) ObserverOption {
 // Returns nil if config is nil.
 // This is mandatory if using Logger; otherwise, it will no effect if Logger is used without configuring it when initializing Otel Observer.
 func WithLogger(config *LoggerConfig) ObserverOption {
-	return observerOptionFunc(func(o *observer) {
+	return observerOptionFunc(func(o *Observer) {
 		if config == nil {
 			return
 		}
 
-		shutdown := initLogger(config)
+		logger, shutdown := initLogger(config)
+
+		o.logger = logger
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
@@ -62,7 +87,7 @@ func WithLogger(config *LoggerConfig) ObserverOption {
 // Returns nil if config is nil.
 // This is mandatory if using Meter; otherwise, it will no effect if Meter is used without configuring it when initializing Otel Observer.
 func WithMeter(config *MeterConfig) ObserverOption {
-	return observerOptionFunc(func(o *observer) {
+	return observerOptionFunc(func(o *Observer) {
 		if config == nil {
 			return
 		}
@@ -71,7 +96,10 @@ func WithMeter(config *MeterConfig) ObserverOption {
 			config.MetricCollectionInterval = defaultMeterInterval
 		}
 
-		shutdown := initMeter(config)
+		meter, metricCollectorManager, shutdown := initMeter(config)
+
+		o.meter = meter
+		o.metricCollectorManager = metricCollectorManager
 		o.shutdowns = append(o.shutdowns, shutdown)
 	})
 }
@@ -81,7 +109,7 @@ func WithMeter(config *MeterConfig) ObserverOption {
 // Returns nil if config is nil.
 // This is mandatory if using Cache; otherwise, it will crash if Cache is used without configuring it when initializing Otel Observer.
 func WithRedisCache(config *RedisConfig) ObserverOption {
-	return observerOptionFunc(func(o *observer) {
+	return observerOptionFunc(func(o *Observer) {
 		if config == nil {
 			return
 		}
@@ -102,46 +130,42 @@ func WithRedisCache(config *RedisConfig) ObserverOption {
 			config.WriteTimeoutSec = defaultRedisWriteTimeoutSec
 		}
 
-		initRedisCache(config)
+		redisCache := initRedisCache(config)
+
+		o.cache = redisCache
 	})
 }
 
+// init sets some configs for OpenTelemetry.
+func init() {
+	otel.SetErrorHandler(otel.ErrorHandlerFunc(func(cause error) {
+		stdLog.Printf("[error] Error occurred: %v", cause)
+	}))
+}
+
 // NewOtelObserver initializes Otel Observer (OpenTelemetry Observer) with the given options.
-// It can only be called once (singleton pattern).
-// Returns a shutdown function that must be called before application exit.
+// Returns a *Observer.
 //
 // Example:
 //
-//	shutdown := NewOtelObserver(
-//	    WithTracer(&TracerConfig{...}),
-//	    WithLogger(&LoggerConfig{...}),
+//	observer := otel.NewOtelObserver(
+//	    otel.WithTracer(&otel.TracerConfig{...}),
+//	    otel.WithLogger(&otel.LoggerConfig{...}),
 //	)
-//	defer shutdown()
-func NewOtelObserver(opts ...ObserverOption) func() {
-	var shutdown func()
+//	defer observer.shutdown()
+func NewOtelObserver(opts ...ObserverOption) *Observer {
+	obsv := &Observer{
+		shutdowns: make([]func(context.Context), 0),
+	}
 
-	observerOnce.Do(func() {
-		otel.SetErrorHandler(otel.ErrorHandlerFunc(func(cause error) {
-			stdLog.Printf("Error occurred: %v", cause)
-		}))
+	for _, opt := range opts {
+		opt.apply(obsv)
+	}
 
-		obsv := &observer{
-			shutdowns: make([]func(context.Context), 0),
-		}
+	if obsv.tracer == nil {
+		obsv.tracer = otel.Tracer("default-tracer")
+		stdLog.Printf("[warning] Tracer is unconfigured, using the default alternative Tracer")
+	}
 
-		for _, opt := range opts {
-			opt.apply(obsv)
-		}
-
-		shutdown = func() {
-			shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-			defer cancel()
-
-			for _, shutdown := range obsv.shutdowns {
-				shutdown(shutdownCtx)
-			}
-		}
-	})
-
-	return shutdown
+	return obsv
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"thanhldt060802/common/constant"
 	"thanhldt060802/common/pubsub"
+	"thanhldt060802/internal"
 	"thanhldt060802/internal/lib/otel"
 	"thanhldt060802/internal/redisclient"
 	"thanhldt060802/internal/sqlclient"
@@ -26,8 +27,6 @@ import (
 
 	apiV1 "thanhldt060802/api/v1"
 )
-
-var shutdownObserver func()
 
 func init() {
 	viper.SetConfigName("config")
@@ -57,7 +56,7 @@ func init() {
 	})
 	pubsub.RedisPubInstance = pubsub.NewRedisPub[*model.ExamplePubSubMessage](redisclient.RedisClientConnInstance.GetClient())
 
-	shutdownObserver = otel.NewOtelObserver(
+	internal.Observer = otel.NewOtelObserver(
 		otel.WithTracer(&otel.TracerConfig{
 			ServiceName:    viper.GetString("app.name"),
 			ServiceVersion: viper.GetString("app.version"),
@@ -118,7 +117,7 @@ func init() {
 }
 
 func main() {
-	defer shutdownObserver()
+	defer internal.Observer.Shutdown()
 
 	router := server.NewHTTPServer()
 

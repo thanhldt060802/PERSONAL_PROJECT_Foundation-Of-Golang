@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strings"
-	"thanhldt060802/internal/lib/otel"
+	"thanhldt060802/internal"
 
 	"github.com/cardinalby/hureg"
 	"github.com/danielgtaylor/huma/v2"
@@ -23,17 +23,17 @@ var AuthMdw IAuthMiddleware
 
 func NewAuthMiddleware(api hureg.APIGen) func(ctx huma.Context, next func(huma.Context)) {
 	return func(ctx huma.Context, next func(huma.Context)) {
-		otel.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware request")
+		internal.Observer.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware request")
 		isAuthorizationRequired := false
 		for _, opScheme := range ctx.Operation().Security {
 			var ok bool
 			if _, ok = opScheme["standard-auth"]; ok {
-				otel.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware validate")
+				internal.Observer.InfoLogWithCtx(ctx.Context(), "========> standard-auth middelware validate")
 				isAuthorizationRequired = true
 				break
 			}
 		}
-		otel.InfoLogWithCtx(ctx.Context(), "========> require authorization: %v", isAuthorizationRequired)
+		internal.Observer.InfoLogWithCtx(ctx.Context(), "========> require authorization: %v", isAuthorizationRequired)
 		if isAuthorizationRequired {
 			HumaAuthMiddleware(api, ctx, next)
 		} else {
@@ -43,14 +43,14 @@ func NewAuthMiddleware(api hureg.APIGen) func(ctx huma.Context, next func(huma.C
 }
 
 func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Context)) {
-	spanCtx, span := otel.NewSpan(ctx.Context(), "HumaAuthMiddleware")
+	spanCtx, span := internal.Observer.NewSpan(ctx.Context(), "HumaAuthMiddleware")
 	defer span.Done()
 
 	authHeaderValue := ctx.Header("Authorization")
 	span.SetAttribute("header.authorization", authHeaderValue)
 
 	if len(authHeaderValue) < 1 {
-		otel.ErrorLogWithCtx(spanCtx, "========> invalid credentials")
+		internal.Observer.ErrorLogWithCtx(spanCtx, "========> invalid credentials")
 		err := errors.New("missing token")
 		span.SetError(err)
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
@@ -66,7 +66,7 @@ func HumaAuthMiddleware(api hureg.APIGen, ctx huma.Context, next func(huma.Conte
 		huma.WriteErr(api.GetHumaAPI(), ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), err)
 		return
 	}
-	otel.InfoLogWithCtx(spanCtx, "========> authorize success")
+	internal.Observer.InfoLogWithCtx(spanCtx, "========> authorize success")
 
 	next(ctx)
 }

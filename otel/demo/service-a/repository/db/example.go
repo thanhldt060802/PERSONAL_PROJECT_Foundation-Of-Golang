@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"thanhldt060802/internal/lib/otel"
+	"thanhldt060802/internal"
 	"thanhldt060802/internal/sqlclient"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
@@ -60,10 +60,10 @@ func (repo *ExampleRepo) GenerateData(ctx context.Context) {
 }
 
 func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*model.Example, error) {
-	ctx, span := otel.NewSpan(ctx, "GetExampleById-Repository")
+	ctx, span := internal.Observer.NewSpan(ctx, "GetExampleById-Repository")
 	defer span.Done()
 
-	otel.InfoLogWithCtx(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
+	internal.Observer.InfoLogWithCtx(ctx, "[Repository layer] Get Example by example_uuid='%s'", exampleUuid)
 
 	example := new(model.Example)
 
@@ -78,7 +78,7 @@ func (repo *ExampleRepo) GetById(ctx context.Context, exampleUuid string) (*mode
 	if err == sql.ErrNoRows {
 		return nil, nil
 	} else if err != nil {
-		otel.ErrorLogWithCtx(ctx, "[Repository layer] Failed to get Example by example_uuid='%s'", exampleUuid)
+		internal.Observer.ErrorLogWithCtx(ctx, "[Repository layer] Failed to get Example by example_uuid='%s'", exampleUuid)
 		span.SetError(err)
 		return nil, err
 	} else {

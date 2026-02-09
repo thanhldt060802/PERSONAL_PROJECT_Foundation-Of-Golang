@@ -2,7 +2,6 @@ package otel
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"go.opentelemetry.io/otel"
@@ -15,19 +14,6 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// defaultTracer is global default Tracer instance for creating tracing span.
-// But it's pointless, it's just to prevent it from breaking where it's used.
-var defaultTracer = otel.Tracer("default-tracer")
-
-// tracer is global Tracer instance for creating tracing span.
-var tracer trace.Tracer
-
-// Error definitions for Tracer.
-var (
-	// ErrTracerUnconfigured occurs when using Tracer without including Tracer option when initializing Otel Observer.
-	ErrTracerUnconfigured = errors.New("tracer is unconfigured")
-)
-
 // TracerConfig configures the distributed tracing component.
 type TracerConfig struct {
 	ServiceName    string            // Name of the service
@@ -37,9 +23,9 @@ type TracerConfig struct {
 	HttpHeader     map[string]string // Additional HTTP headers
 }
 
-// initTracer initializes the global Tracer and returns a cleanup function.
+// initTracer initializes the Trace, returns Tracer and a cleanup function.
 // Spans are exported using OTLP HTTP protocol with batch processing.
-func initTracer(config *TracerConfig) func(ctx context.Context) {
+func initTracer(config *TracerConfig) (trace.Tracer, func(ctx context.Context)) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -56,7 +42,7 @@ func initTracer(config *TracerConfig) func(ctx context.Context) {
 	// Create OTLP HTTP exporter for sending traces
 	exporter, err := otlptracehttp.New(ctx, opts...)
 	if err != nil {
-		stdLog.Fatalf("Failed to create exporter for Tracer: %v", err)
+		stdLog.Fatalf("[error] Failed to create exporter for Tracer: %v", err)
 	}
 
 	// Create resource with service metadata
@@ -84,13 +70,14 @@ func initTracer(config *TracerConfig) func(ctx context.Context) {
 		),
 	)
 
-	// Init Tracer
-	tracer = otel.Tracer(config.ServiceName + "/otel")
-
-	// Return cleanup function
-	return func(ctx context.Context) {
+	// Init Tracer, cleanup function for Tracer
+	tracer := otel.Tracer(config.ServiceName + "/otel")
+	shutdown := func(ctx context.Context) {
 		if err := tracerProvider.Shutdown(ctx); err != nil {
-			stdLog.Printf("Error occurred when shutting down Tracer provider: %v", err)
+			stdLog.Printf("[error] Failed to shut down Tracer provider: %v", err)
 		}
 	}
+
+	// Return Tracer and cleanup function for Tracer
+	return tracer, shutdown
 }

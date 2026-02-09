@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"thanhldt060802/common/pubsub"
-	"thanhldt060802/internal/lib/otel"
+	"thanhldt060802/internal"
 	"thanhldt060802/model"
 	"thanhldt060802/repository"
 )
@@ -23,7 +23,7 @@ func NewExampleService() IExampleService {
 
 func (s *ExampleService) InitSubscriber() {
 	pubsub.RedisSubInstance.Subscribe(context.Background(), "otel.pubsub.testing", func(message *model.ExamplePubSubMessage) {
-		subCtx, span := otel.NewSpan(message.ExtractContext(), "SubscribeMessage")
+		subCtx, span := internal.Observer.NewSpan(message.ExtractContext(), "SubscribeMessage")
 		defer span.Done()
 
 		span.AddEvent("Subscribe message from Redis", map[string]any{

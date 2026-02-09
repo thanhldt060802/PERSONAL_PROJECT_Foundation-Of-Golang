@@ -103,7 +103,7 @@ func mapToAttribute(attrMap map[string]any) []attribute.KeyValue {
 
 		// Unsupported type
 		default:
-			stdLog.Printf("Pair[key:value] with value type is not allowed, key '%s' will be dropped", k)
+			stdLog.Printf("[warning] Pair[key:value] with value type is not allowed, key '%s' will be dropped", k)
 		}
 	}
 
